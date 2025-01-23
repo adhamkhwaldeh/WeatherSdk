@@ -24,7 +24,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adham.gini.weatherginisdk.R
 import com.adham.gini.weatherginisdk.WeatherGiniSDKBuilder
@@ -77,6 +79,7 @@ fun ForecastScreen(
                     }
                 },
                 title = { Text(stringResource(R.string.TwentyFourHoursForecast)) },
+                modifier = Modifier.shadow(elevation = 2.dp)
             )
         },
         contentWindowInsets = WindowInsets(4.dp, 4.dp, 4.dp, 4.dp)
@@ -85,12 +88,12 @@ fun ForecastScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(padding),
         ) {
 
             StatesLayoutCompose(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(padding)
                     .wrapContentHeight(),
                 customAction = object : StatesLayoutCustomActionInterface {
                     override fun retry() {
@@ -111,15 +114,17 @@ fun ForecastScreen(
                                     R.string.IS
                                 )
                             }",
-                            style = MaterialTheme.typography.bodyMedium
+                            modifier = Modifier.padding(4.dp),
+                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
                         )
                         Text(
                             "${model.temp}${stringResource(R.string.celsius)}",
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                         )
                         Text(
                             text = model.weather.description,
-                            style = MaterialTheme.typography.bodyMedium
+                            modifier = Modifier.padding(4.dp),
+                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
                         )
                         Text(
                             text = "${stringResource(R.string.At)} ${
@@ -127,7 +132,8 @@ fun ForecastScreen(
                                     model.ts
                                 )
                             }",
-                            style = MaterialTheme.typography.labelLarge
+//                            modifier = Modifier.padding(2.dp),
+                            style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
                         )
 
                     }

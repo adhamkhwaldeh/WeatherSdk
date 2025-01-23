@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.adham.gini.weatherSDK.R
@@ -41,6 +42,7 @@ fun EnterCityScreen() {
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(R.string.ExampleApp)) },
+                modifier = Modifier.shadow(elevation = 2.dp)
             )
         },
         contentWindowInsets = WindowInsets(4.dp, 4.dp, 4.dp, 4.dp)
@@ -92,7 +94,7 @@ fun EnterCityScreen() {
                     }
                 },
             ) {
-                Text(text =stringResource(R.string.WeatherForecast) )
+                Text(text = stringResource(R.string.WeatherForecast))
             }
         }
     }
