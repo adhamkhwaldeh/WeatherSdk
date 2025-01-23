@@ -129,7 +129,11 @@ sealed class BaseState<out T> {
                 }
 
                 else -> {
-                    InternalServerError(errorMessage ?: (it.message ?: ""))
+                    if (retrofit != null) {
+                        InternalServerError(errorMessage ?: (it.message ?: ""))
+                    } else {
+                        InternalServerError(errorMessage ?: (it.message ?: ""))
+                    }
                 }
             }
         }

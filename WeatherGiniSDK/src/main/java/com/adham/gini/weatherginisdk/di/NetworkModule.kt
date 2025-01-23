@@ -15,7 +15,7 @@ val networkModule = module {
 
     single { OkHttpClient.Builder() }
 
-    single { params ->
+    single {
 
         val logger = HttpLoggingInterceptor().apply {
 
