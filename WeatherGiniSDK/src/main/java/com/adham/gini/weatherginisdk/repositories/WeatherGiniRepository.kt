@@ -7,6 +7,13 @@ import retrofit2.Retrofit
 import com.adham.gini.weatherginisdk.data.dtos.CurrentWeatherResponse
 import com.adham.gini.weatherginisdk.data.dtos.ForecastResponse
 
+/**
+ * Weather gini repository
+ *
+ * @property apiService
+ * @property retrofit
+ * @constructor Create empty Weather gini repository
+ */
 class WeatherGiniRepository(
     private val apiService: WeatherService,
     private val retrofit: Retrofit

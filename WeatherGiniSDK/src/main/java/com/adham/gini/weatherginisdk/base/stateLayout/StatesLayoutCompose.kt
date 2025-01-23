@@ -13,6 +13,16 @@ import com.adham.gini.weatherginisdk.base.states.BaseState
 import com.adham.gini.weatherginisdk.base.stateLayout.defaultStates.NoInternetConnectionCompose
 import com.adham.gini.weatherginisdk.base.stateLayout.defaultStates.Progress
 
+/**
+ * States layout compose
+ *
+ * @param T
+ * @param modifier
+ * @param baseState
+ * @param customContent
+ * @param customAction
+ * @param content
+ */
 @Composable
 fun <T> StatesLayoutCompose(
     modifier: Modifier = Modifier,

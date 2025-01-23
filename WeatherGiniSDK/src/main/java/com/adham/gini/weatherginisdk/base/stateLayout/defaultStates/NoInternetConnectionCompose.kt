@@ -15,6 +15,12 @@ import androidx.compose.ui.unit.dp
 import com.adham.gini.weatherginisdk.ui.navigations.NavigationItem
 
 
+/**
+ * No internet connection compose
+ *
+ * @param retry
+ * @receiver
+ */
 @Composable
 fun NoInternetConnectionCompose(retry: () -> Unit) {
 

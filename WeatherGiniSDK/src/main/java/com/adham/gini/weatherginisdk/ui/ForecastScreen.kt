@@ -1,9 +1,7 @@
 package com.adham.gini.weatherginisdk.ui
 
-import android.util.Log
-import androidx.compose.foundation.background
+
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -26,19 +24,22 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.adham.gini.weatherginisdk.WeatherGiniSDKBuilder
 import com.adham.gini.weatherginisdk.base.stateLayout.StatesLayoutCompose
 import com.adham.gini.weatherginisdk.base.stateLayout.StatesLayoutCustomActionInterface
-import com.adham.gini.weatherginisdk.data.dtos.HourlyForecastModel
 import com.adham.gini.weatherginisdk.data.states.WeatherSdkStatus
 import com.adham.gini.weatherginisdk.helpers.DateHelpers
 import com.adham.gini.weatherginisdk.useCases.ForecastWeatherUseCase
 import com.adham.gini.weatherginisdk.viewModels.WeatherViewModel
 import org.koin.androidx.compose.koinViewModel
 
+/**
+ * Forecast screen
+ *
+ * @param cityName
+ * @param viewModel
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForecastScreen(
@@ -52,7 +53,7 @@ fun ForecastScreen(
 
     LaunchedEffect({}) {
         viewModel.loadCurrentWeather(cityName)
-        viewModel.loadForeCast(
+        viewModel.loadForecast(
             ForecastWeatherUseCase.ForecastWeatherUseCaseParams(
                 cityName, 24
             )
@@ -83,8 +84,6 @@ fun ForecastScreen(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(padding),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Top,
         ) {
 
             StatesLayoutCompose(
@@ -92,9 +91,8 @@ fun ForecastScreen(
                     .fillMaxWidth()
                     .wrapContentHeight(),
                 customAction = object : StatesLayoutCustomActionInterface {
-                    override fun retry(): (() -> Unit?)? {
+                    override fun retry() {
                         viewModel.loadCurrentWeather(cityName)
-                        return super.retry()
                     }
                 },
                 baseState = currentWeatherState.value!!
@@ -132,13 +130,12 @@ fun ForecastScreen(
                     .fillMaxHeight()
                     .padding(top = 8.dp),
                 customAction = object : StatesLayoutCustomActionInterface {
-                    override fun retry(): (() -> Unit?)? {
-                        viewModel.loadForeCast(
+                    override fun retry() {
+                        viewModel.loadForecast(
                             ForecastWeatherUseCase.ForecastWeatherUseCaseParams(
                                 cityName, 24
                             )
                         )
-                        return super.retry()
                     }
                 },
                 baseState = forecastState.value!!

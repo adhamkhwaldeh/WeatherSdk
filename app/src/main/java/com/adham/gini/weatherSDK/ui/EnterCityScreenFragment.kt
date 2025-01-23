@@ -12,6 +12,11 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.adham.gini.weatherSDK.ui.theme.WeatherSDKTheme
 
+/**
+ * Enter city screen fragment
+ *
+ * @constructor Create empty Enter city screen fragment
+ */
 class EnterCityScreenFragment : Fragment() {
 
     override fun onCreateView(

@@ -10,8 +10,19 @@ import java.time.temporal.Temporal
 import java.time.temporal.TemporalField
 import java.util.*
 
+/**
+ * Date helpers
+ *
+ * @constructor Create empty Date helpers
+ */
 object DateHelpers {
 
+    /**
+     * Convert timestamp to local time
+     *
+     * @param timestamp
+     * @return
+     */
     fun convertTimestampToLocalTime(timestamp: Long): String {
         // Create an Instant from the timestamp (in milliseconds)
         val instant = Instant.ofEpochMilli(timestamp)
@@ -27,6 +38,12 @@ object DateHelpers {
         return localDateTime.format(formatter)
     }
 
+    /**
+     * Get hours only from stander format
+     *
+     * @param dateStr
+     * @return
+     */
     fun getHoursOnlyFromStanderFormat(dateStr: String): String {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
         val date = LocalDateTime.parse(dateStr, formatter)

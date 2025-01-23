@@ -1,9 +1,16 @@
 package com.adham.gini.weatherginisdk.base.stateLayout
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.UiComposable
-
+/**
+ * States layout custom action interface
+ *
+ * @constructor Create empty States layout custom action interface
+ */
 interface StatesLayoutCustomActionInterface {
+    /**
+     * Retry
+     *
+     * @return
+     */
+    fun retry(): Unit? = null
 
-    fun retry(): (() -> Unit?)? = null
 }

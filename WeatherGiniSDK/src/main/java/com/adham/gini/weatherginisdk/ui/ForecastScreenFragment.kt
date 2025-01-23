@@ -11,6 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 
+/**
+ * Forecast screen fragment
+ *
+ * @constructor Create empty Forecast screen fragment
+ */
 class ForecastScreenFragment : Fragment() {
 
     companion object {
@@ -37,19 +42,12 @@ class ForecastScreenFragment : Fragment() {
         val composeView = ComposeView(requireContext())
         composeView.isTransitionGroup = true
         composeView.setContent {
-//            WeatherSDKTheme {
-//
-////                AppNavHost(
-////                    modifier = Modifier.fillMaxSize(),
-////                )
-
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
                 ForecastScreen(cityName = cityName)
             }
-//            }
         }
         return composeView
     }

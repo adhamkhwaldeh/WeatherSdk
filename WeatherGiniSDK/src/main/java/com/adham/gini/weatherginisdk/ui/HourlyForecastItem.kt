@@ -12,6 +12,11 @@ import com.adham.gini.weatherginisdk.helpers.DateHelpers
 import java.util.Date
 
 
+/**
+ * Hourly forecast item
+ *
+ * @param item
+ */
 @Composable
 fun HourlyForecastItem(item: HourlyForecastModel) {
     Row(

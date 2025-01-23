@@ -23,10 +23,7 @@ class WeatherViewModel(
     private val forecastWeatherUseCase: ForecastWeatherUseCase,
 ) : BaseRefactorViewModel(application) {
 
-//    val currentWeather: MutableLiveData<BaseState<CurrentWeatherResponse>> =
-//        MutableLiveData()
-
-    val currentWeather  = MutableLiveData<BaseState<CurrentWeatherResponse>>(BaseState.Initial())
+    val currentWeather = MutableLiveData<BaseState<CurrentWeatherResponse>>(BaseState.Initial())
 
     /**
      * Load current weather
@@ -40,16 +37,14 @@ class WeatherViewModel(
         }
     }
 
-//    val forecast: MutableLiveData<BaseState<ForecastResponse>> =
-//        MutableLiveData()
     val forecast = MutableLiveData<BaseState<ForecastResponse>>(BaseState.Initial())
 
     /**
-     * Load fore cast
+     * Load forecast
      *
      * @param params
      */
-    fun loadForeCast(params: ForecastWeatherUseCase.ForecastWeatherUseCaseParams) {
+    fun loadForecast(params: ForecastWeatherUseCase.ForecastWeatherUseCaseParams) {
         forecast.value = BaseState.Loading()
         forecastWeatherUseCase(params) {
             forecast.value = it

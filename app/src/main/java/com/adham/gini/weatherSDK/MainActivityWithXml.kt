@@ -13,6 +13,11 @@ import com.adham.gini.weatherginisdk.ui.ForecastScreenFragment
 import com.adham.gini.weatherginisdk.ui.navigations.NavigationItem
 import kotlin.math.log
 
+/**
+ * Main activity with xml
+ *
+ * @constructor Create empty Main activity with xml
+ */
 class MainActivityWithXml : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

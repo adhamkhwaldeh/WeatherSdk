@@ -8,16 +8,91 @@ import androidx.annotation.StringRes
 import retrofit2.Retrofit
 import java.net.UnknownHostException
 
+/**
+ * Base state
+ *
+ * @param T
+ * @constructor Create empty Base state
+ */
+
+//TODO need to be reviewed
 sealed class BaseState<out T> {
 
+    /**
+     * Initial
+     *
+     * @param T
+     * @constructor Create empty Initial
+     */
     class Initial<T> : BaseState<T>()
+
+    /**
+     * Loading
+     *
+     * @param T
+     * @constructor Create empty Loading
+     */
     class Loading<T> : BaseState<T>()
+
+    /**
+     * Loading dismiss
+     *
+     * @param T
+     * @constructor Create empty Loading dismiss
+     */
     class LoadingDismiss<T> : BaseState<T>()
+
+    /**
+     * No internet error
+     *
+     * @param T
+     * @constructor Create empty No internet error
+     */
     class NoInternetError<T> : BaseState<T>()
+
+    /**
+     * Not data found
+     *
+     * @param T
+     * @constructor Create empty Not data found
+     */
     class NotDataFound<T> : BaseState<T>()
+
+    /**
+     * Internal server error
+     *
+     * @param T
+     * @property errorMessage
+     * @constructor Create empty Internal server error
+     */
     data class InternalServerError<T>(var errorMessage: String) : BaseState<T>()
+
+    /**
+     * No authorized
+     *
+     * @param T
+     * @property responseMessage
+     * @constructor Create empty No authorized
+     */
     data class NoAuthorized<T>(var responseMessage: String) : BaseState<T>()
+
+    /**
+     * Invalid data
+     *
+     * @param T
+     * @property responseMessage
+     * @constructor Create empty Invalid data
+     */
     data class InvalidData<T>(var responseMessage: String) : BaseState<T>()
+
+    /**
+     * Validation error
+     *
+     * @param T
+     * @property responseMessage
+     * @property errorId
+     * @constructor Create empty Validation error
+     */
     data class ValidationError<T>(
         var responseMessage: String = "",
         @StringRes var errorId: Int = 0
@@ -29,7 +104,13 @@ sealed class BaseState<out T> {
 //    abstract class FeaturedState<T> : BaseState<T>()
 //    data class BaseStateLoadedSuccessfully<T>(var data: T?) : BaseState.FeaturedState<T>()
 
-    //So to simplify the solution we have on case which is load the response
+    /**
+     * Base state loaded successfully
+     *
+     * @param T
+     * @property data
+     * @constructor Create empty Base state loaded successfully
+     *///So to simplify the solution we have on case which is load the response
     data class BaseStateLoadedSuccessfully<T>(var data: T) : BaseState<T>()
 
     companion object {
@@ -46,6 +127,7 @@ sealed class BaseState<out T> {
 //                    handleErrorBody(errorBody, retrofit, response?.code())
                     NoInternetError()
                 }
+
                 else -> {
                     InternalServerError(errorMessage ?: (it.message ?: ""))
                 }

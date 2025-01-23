@@ -4,8 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import org.koin.core.component.KoinComponent
 
-//import org.koin.core.KoinComponent
 
+/**
+ * Base refactor view model
+ *
+ * @constructor
+ *
+ * @param androidApplication
+ */
 abstract class BaseRefactorViewModel(androidApplication: Application) :
     AndroidViewModel(androidApplication), KoinComponent {
 

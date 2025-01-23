@@ -21,6 +21,11 @@ import androidx.compose.ui.window.DialogProperties
 import com.adham.gini.weatherginisdk.R
 
 
+/**
+ * Progress
+ *
+ * @param value
+ */
 @Composable
 fun Progress(value: Boolean = true) {
     val showDialog = remember { mutableStateOf(value) }

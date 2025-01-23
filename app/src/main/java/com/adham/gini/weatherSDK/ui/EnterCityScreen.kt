@@ -25,6 +25,10 @@ import com.adham.gini.weatherginisdk.WeatherGiniSDKBuilder
 import com.adham.gini.weatherginisdk.data.states.WeatherSdkStatus
 import com.adham.gini.weatherginisdk.ui.navigations.NavigationItem
 
+/**
+ * Enter city screen
+ *
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EnterCityScreen() {

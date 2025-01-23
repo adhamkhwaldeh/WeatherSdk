@@ -1,12 +1,10 @@
 package com.adham.gini.weatherSDK.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -21,6 +19,13 @@ import com.adham.gini.weatherginisdk.ui.ForecastScreen
 import com.adham.gini.weatherginisdk.ui.navigations.NavigationItem
 
 
+/**
+ * App nav host
+ *
+ * @param modifier
+ * @param navController
+ * @param startDestination
+ */
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,

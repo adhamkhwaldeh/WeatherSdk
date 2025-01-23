@@ -7,9 +7,18 @@ import com.adham.gini.weatherginisdk.repositories.WeatherGiniLocalRepository
 import com.adham.gini.weatherginisdk.repositories.WeatherGiniRepository
 import kotlinx.coroutines.CoroutineScope
 
+/**
+ * Forecast weather use case
+ *
+ * @property weatherGiniRepository
+ * @property weatherGiniLocalRepository
+ * @constructor
+ *
+ * @param ioScope
+ */
 class ForecastWeatherUseCase(
     ioScope: CoroutineScope,
-    val weatherGiniRepository: WeatherGiniRepository,
+    private val weatherGiniRepository: WeatherGiniRepository,
     val weatherGiniLocalRepository: WeatherGiniLocalRepository
 ) : BaseSealedUseCase<ForecastResponse, ForecastWeatherUseCase.ForecastWeatherUseCaseParams>(ioScope) {
     override suspend fun run(params: ForecastWeatherUseCaseParams): BaseState<ForecastResponse>? {
@@ -20,6 +29,13 @@ class ForecastWeatherUseCase(
         )
     }
 
+    /**
+     * Forecast weather use case params
+     *
+     * @property city
+     * @property hours
+     * @constructor Create empty Forecast weather use case params
+     */
     data class ForecastWeatherUseCaseParams(
         val city: String,
         val hours: Int,

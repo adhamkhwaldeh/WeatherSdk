@@ -23,7 +23,12 @@ import org.koin.core.context.startKoin
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
+/**
+ * Weather gini s d k builder
+ *
+ */
 object WeatherGiniSDKBuilder {
+
     val sdkStatus: MutableLiveData<WeatherSdkStatus> = MutableLiveData()
 
 //    var sdkStatusListener: OnSdkStatusChangeListener? = null
@@ -31,7 +36,7 @@ object WeatherGiniSDKBuilder {
 //    Also we can use EventBus or broadcast receiver
 
     /**
-     * TODO
+     * Initialize
      *
      * @param application
      * @param apiKey
