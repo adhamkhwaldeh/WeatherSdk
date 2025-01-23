@@ -24,7 +24,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.adham.gini.weatherginisdk.R
 import com.adham.gini.weatherginisdk.WeatherGiniSDKBuilder
 import com.adham.gini.weatherginisdk.base.stateLayout.StatesLayoutCompose
 import com.adham.gini.weatherginisdk.base.stateLayout.StatesLayoutCustomActionInterface
@@ -69,12 +71,12 @@ fun ForecastScreen(
                     }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack, // Replace with your desired icon
-                            contentDescription = "Menu",
+                            contentDescription = "Back",
 //                            tint = Color.White
                         )
                     }
                 },
-                title = { Text("Example App") },
+                title = { Text(stringResource(R.string.TwentyFourHoursForecast)) },
             )
         },
         contentWindowInsets = WindowInsets(4.dp, 4.dp, 4.dp, 4.dp)
@@ -104,11 +106,15 @@ fun ForecastScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
-                            text = "The weather in $cityName is",
+                            text = "${stringResource(R.string.TheWeatherIn)} $cityName ${
+                                stringResource(
+                                    R.string.IS
+                                )
+                            }",
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Text(
-                            "${model.temp}°C",
+                            "${model.temp}${stringResource(R.string.celsius)}",
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Text(
@@ -116,7 +122,11 @@ fun ForecastScreen(
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Text(
-                            text = "At ${DateHelpers.convertTimestampToLocalTime(model.ts)}",
+                            text = "${stringResource(R.string.At)} ${
+                                DateHelpers.convertTimestampToLocalTime(
+                                    model.ts
+                                )
+                            }",
                             style = MaterialTheme.typography.labelLarge
                         )
 

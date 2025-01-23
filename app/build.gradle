@@ -14,7 +14,7 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -43,9 +43,39 @@ android {
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += 'META-INF/NOTICE.md'
+            excludes += 'META-INF/LICENSE.md'
         }
     }
 
+
+    dokka {
+        dokkaPublications.html {
+            outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
+        }
+        moduleName.set("Project Name")
+        dokkaSourceSets.main {
+            includes.from("README.md")
+//            sourceLink {
+//                localDirectory.set(file("src/main/java"))
+//            remoteUrl("https://example.com/src")
+//            remoteLineSuffix.set("#L")
+//            }
+        }
+//        pluginsConfiguration.html {
+//            customStyleSheets.from("styles.css")
+//            customAssets.from("logo.png")
+//            footerMessage.set("(c) Your Company")
+//        }
+
+//    // Dokka generates a new process managed by Gradle
+//    dokkaGeneratorIsolation = ProcessIsolation {
+//        // Configures heap size
+//        maxHeapSize = "4g"
+//    }
+//    // Runs Dokka in the current Gradle process
+//    dokkaGeneratorIsolation = ClassLoaderIsolation()
+    }
 
 }
 
@@ -85,7 +115,7 @@ dependencies {
 
     //region Documentation
 
-    implementation("org.jetbrains.dokka:dokka-gradle-plugin:2.0.0")
+//    implementation("org.jetbrains.dokka:dokka-gradle-plugin:2.0.0")
     dokka(project(":WeatherGiniSDK:"))
 
     //endregion
@@ -93,32 +123,32 @@ dependencies {
 }
 
 
-dokka {
-    dokkaPublications.html {
-        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
-    }
-    moduleName.set("Project Name")
-    dokkaSourceSets.main {
-        includes.from("README.md")
-        sourceLink {
-            localDirectory.set(file("src/main/kotlin"))
-//            remoteUrl("https://example.com/src")
-            remoteLineSuffix.set("#L")
-        }
-    }
-    pluginsConfiguration.html {
-        customStyleSheets.from("styles.css")
-        customAssets.from("logo.png")
-        footerMessage.set("(c) Your Company")
-    }
-//    // Dokka generates a new process managed by Gradle
-//    dokkaGeneratorIsolation = ProcessIsolation {
-//        // Configures heap size
-//        maxHeapSize = "4g"
+//dokka {
+//    dokkaPublications.html {
+//        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
 //    }
-//    // Runs Dokka in the current Gradle process
-//    dokkaGeneratorIsolation = ClassLoaderIsolation()
-}
+//    moduleName.set("Project Name")
+//    dokkaSourceSets.main {
+//        includes.from("README.md")
+//        sourceLink {
+//            localDirectory.set(file("src/main/java"))
+////            remoteUrl("https://example.com/src")
+////            remoteLineSuffix.set("#L")
+//        }
+//    }
+//    pluginsConfiguration.html {
+//        customStyleSheets.from("styles.css")
+//        customAssets.from("logo.png")
+//        footerMessage.set("(c) Your Company")
+//    }
+////    // Dokka generates a new process managed by Gradle
+////    dokkaGeneratorIsolation = ProcessIsolation {
+////        // Configures heap size
+////        maxHeapSize = "4g"
+////    }
+////    // Runs Dokka in the current Gradle process
+////    dokkaGeneratorIsolation = ClassLoaderIsolation()
+//}
 
 //dokka {
 //    outputDirectory.set(buildDir.resolve("dokka")) // Output folder

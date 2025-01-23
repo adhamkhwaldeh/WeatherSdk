@@ -20,10 +20,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavHostController
+import androidx.compose.ui.res.stringResource
+import com.adham.gini.weatherSDK.R
 import com.adham.gini.weatherginisdk.WeatherGiniSDKBuilder
 import com.adham.gini.weatherginisdk.data.states.WeatherSdkStatus
-import com.adham.gini.weatherginisdk.ui.navigations.NavigationItem
 
 /**
  * Enter city screen
@@ -40,7 +40,7 @@ fun EnterCityScreen() {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Example App") },
+                title = { Text(stringResource(R.string.ExampleApp)) },
             )
         },
         contentWindowInsets = WindowInsets(4.dp, 4.dp, 4.dp, 4.dp)
@@ -59,8 +59,8 @@ fun EnterCityScreen() {
                     cityName = it
                     isError = false
                 },
-                label = { Text(text = "Enter your city name") },
-                placeholder = { Text(text = "City Name") },
+                label = { Text(text = stringResource(R.string.EnterYourCityName)) },
+                placeholder = { Text(text = stringResource(R.string.CityName)) },
                 singleLine = true,
                 isError = isError,
                 trailingIcon = {
@@ -78,7 +78,7 @@ fun EnterCityScreen() {
             )
 
             Text(
-                text = "Enter the city name for the weather forecast",
+                text = stringResource(R.string.EnterTheCityNameForTheWeatherForecast),
                 style = MaterialTheme.typography.labelLarge
             )
             OutlinedButton(
@@ -92,7 +92,7 @@ fun EnterCityScreen() {
                     }
                 },
             ) {
-                Text(text = "Weather forecast")
+                Text(text =stringResource(R.string.WeatherForecast) )
             }
         }
     }

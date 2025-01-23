@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.adham.gini.weatherginisdk.R
 import com.adham.gini.weatherginisdk.ui.navigations.NavigationItem
 
 
@@ -33,7 +35,7 @@ fun NoInternetConnectionCompose(retry: () -> Unit) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Apparently you have connectivity issue \n Could you press retry to load the data?",
+            text = stringResource(R.string.noConnection),
             style = MaterialTheme.typography.labelLarge
         )
         OutlinedButton(
@@ -42,7 +44,7 @@ fun NoInternetConnectionCompose(retry: () -> Unit) {
                 retry()
             },
         ) {
-            Text(text = "Retry")
+            Text(text = stringResource(R.string.Retry))
         }
     }
 }

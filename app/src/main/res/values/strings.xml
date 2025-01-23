@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WeatherSDK</string>
+    <string name="ExampleApp">Example App</string>
+    <string name="EnterYourCityName">Enter your city name</string>
+    <string name="CityName">City Name</string>
+    <string name="EnterTheCityNameForTheWeatherForecast">Enter the city name for the weather forecast</string>
+    <string name="WeatherForecast">Weather forecast</string>
 </resources>
