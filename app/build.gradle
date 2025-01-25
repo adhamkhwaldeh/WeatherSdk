@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.dokka' //version "2.0.0"
 }
+import org.jetbrains.dokka.gradle.DokkaTask
 
 android {
     namespace 'com.adham.gini.weatherSDK'
@@ -45,28 +46,32 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
             excludes += 'META-INF/NOTICE.md'
             excludes += 'META-INF/LICENSE.md'
+            excludes += 'META-INF/LICENSE-notice.md'
+            excludes += 'mockito-extensions/org.mockito.plugins.MemberAccessor'
         }
     }
 
-
     dokka {
+        moduleName.set("Project Name")
         dokkaPublications.html {
             outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
         }
-        moduleName.set("Project Name")
+//    outputFormat.set("html") // Supported formats: html, gfm, javadoc, markdown
+//    outputDirectory.set(buildDir.resolve("dokka"))
         dokkaSourceSets.main {
             includes.from("README.md")
-//            sourceLink {
-//                localDirectory.set(file("src/main/java"))
+            sourceLink {
+                localDirectory.set(file("src/main/kotlin"))
+//            localDirectory.set(file("src/main/java"))
 //            remoteUrl("https://example.com/src")
 //            remoteLineSuffix.set("#L")
-//            }
+            }
         }
-//        pluginsConfiguration.html {
-//            customStyleSheets.from("styles.css")
-//            customAssets.from("logo.png")
-//            footerMessage.set("(c) Your Company")
-//        }
+        pluginsConfiguration.html {
+            customStyleSheets.from("styles.css")
+            customAssets.from("logo.png")
+            footerMessage.set("(c) Your Company")
+        }
 
 //    // Dokka generates a new process managed by Gradle
 //    dokkaGeneratorIsolation = ProcessIsolation {
@@ -75,6 +80,7 @@ android {
 //    }
 //    // Runs Dokka in the current Gradle process
 //    dokkaGeneratorIsolation = ClassLoaderIsolation()
+
     }
 
 }
@@ -101,6 +107,7 @@ dependencies {
 
     //endregion
 
+    /*
     //region Testing package
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -110,18 +117,87 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
     //endregion
+    */
+
 
     implementation project(":WeatherGiniSDK")
 
     //region Documentation
 
 //    implementation("org.jetbrains.dokka:dokka-gradle-plugin:2.0.0")
+    dokkaPlugin 'org.jetbrains.dokka:android-documentation-plugin:2.0.0'
+    // Is applied universally
+    dokkaPlugin 'org.jetbrains.dokka:mathjax-plugin:2.0.0'
+
+    // Is applied for the single-module dokkaHtml task only
+    dokkaHtmlPlugin 'org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0'
+
+//    // Is applied for HTML format in multi-project builds
+//    dokkaHtmlPartialPlugin 'org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0'
+
     dokka(project(":WeatherGiniSDK:"))
 
     //endregion
 
 }
 
+
+dokka {
+    moduleName.set("Project Name")
+    dokkaPublications.html {
+        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
+    }
+//    outputFormat.set("html") // Supported formats: html, gfm, javadoc, markdown
+//    outputDirectory.set(buildDir.resolve("dokka"))
+    dokkaSourceSets.main {
+        includes.from("README.md")
+        sourceLink {
+            localDirectory.set(file("src/main/kotlin"))
+//            localDirectory.set(file("src/main/java"))
+//            remoteUrl("https://example.com/src")
+//            remoteLineSuffix.set("#L")
+        }
+    }
+    pluginsConfiguration.html {
+        customStyleSheets.from("styles.css")
+        customAssets.from("logo.png")
+        footerMessage.set("(c) Your Company")
+    }
+
+//    // Dokka generates a new process managed by Gradle
+//    dokkaGeneratorIsolation = ProcessIsolation {
+//        // Configures heap size
+//        maxHeapSize = "4g"
+//    }
+//    // Runs Dokka in the current Gradle process
+//    dokkaGeneratorIsolation = ClassLoaderIsolation()
+
+}
+
+//tasks.withType<DokkaTask>().configureEach {
+//    dokkaSourceSets {
+//        named("test") {
+//            sourceRoots.from(file("src/test/"))
+//        }
+//    }
+//}
+
+tasks.withType(DokkaTask.class) {
+    String dokkaBaseConfiguration = """
+    {
+      "customAssets": ["${file("assets/my-image.png")}"],
+      "customStyleSheets": ["${file("assets/my-styles.css")}"],
+      "footerMessage": "(c) 2022 MyOrg"
+      "separateInheritedMembers": false,
+      "templatesDir": "${file("dokka/templates")}",
+      "mergeImplicitExpectActualDeclarations": false
+    }
+    """
+    pluginsMapConfiguration.set(
+            // fully qualified plugin name to json configuration
+            ["org.jetbrains.dokka.base.DokkaBase": dokkaBaseConfiguration]
+    )
+}
 
 //dokka {
 //    dokkaPublications.html {
@@ -164,29 +240,6 @@ dependencies {
 //            sourceRoots.from(file("src/main/java"), file("src/main/kotlin"))
 //            jdkVersion.set(17)                    // Set the Java version
 //        }
-//    }
-//}
-
-//dokka {
-//    moduleName.set("Project Name")
-//    dokkaPublications.html {
-//        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
-//    }
-////    outputFormat.set("html") // Supported formats: html, gfm, javadoc, markdown
-////    outputDirectory.set(buildDir.resolve("dokka"))
-//    dokkaSourceSets.main {
-//        includes.from("README.md")
-//        sourceLink {
-//            localDirectory.set(file("src/main/kotlin"))
-////            localDirectory.set(file("src/main/java"))
-////            remoteUrl("https://example.com/src")
-////            remoteLineSuffix.set("#L")
-//        }
-//    }
-//    pluginsConfiguration.html {
-//        customStyleSheets.from("styles.css")
-//        customAssets.from("logo.png")
-//        footerMessage.set("(c) Your Company")
 //    }
 //}
 

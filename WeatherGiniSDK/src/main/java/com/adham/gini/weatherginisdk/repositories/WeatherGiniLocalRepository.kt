@@ -8,7 +8,7 @@ import com.adham.gini.weatherginisdk.localStorages.SharedPrefsManager
  * @property sharedPrefsManager
  * @constructor Create empty Weather gini local repository
  */
-class WeatherGiniLocalRepository(private val sharedPrefsManager: SharedPrefsManager) {
+final class WeatherGiniLocalRepository(private val sharedPrefsManager: SharedPrefsManager) {
 
     /**
      * Save api key
