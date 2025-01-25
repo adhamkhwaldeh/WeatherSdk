@@ -33,6 +33,11 @@ import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 
 
+/**
+ * Weather view model current weather test
+ *
+ * @constructor Create empty Weather view model current weather test
+ */
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 class WeatherViewModelCurrentWeatherTest : KoinTest {
@@ -54,6 +59,10 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
 
     private val application = ApplicationProvider.getApplicationContext<Application>()
 
+    /**
+     * Set up
+     *
+     */
     @Before
     fun setUp() {
         WeatherGiniSDKTestingBuilder.initialize(
@@ -62,23 +71,39 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
         Dispatchers.setMain(testDispatcher)
     }
 
+    /**
+     * Tear down
+     *
+     */
     @After
     fun tearDown() {
         Dispatchers.resetMain()
         stopKoin() // Stop Koin after each test
     }
 
+    /**
+     * Test_sdk_is_not_initialized
+     *
+     */
     @Test
     fun test_sdk_is_not_initialized() = runTest {
         assert(localRepository.getApiKey().isBlank())
     }
 
+    /**
+     * Test_sdk_is_initialized_successfully
+     *
+     */
     @Test
     fun test_sdk_is_initialized_successfully() = runTest {
         localRepository.saveApiKey(ConstantsHelpers.testApiKey)
         assert(localRepository.getApiKey().isNotBlank())
     }
 
+    /**
+     * Test_load_data_successfully
+     *
+     */
     @Test
     fun test_load_data_successfully() = runTest {
 
@@ -108,6 +133,10 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
         assertEquals(viewModel.currentWeather.value, DummyDataHelper.weatherSuccessState)
     }
 
+    /**
+     * Test_load_data_no internet
+     *
+     */
     @Test
     fun test_load_data_NoInternet() = runTest {
         coEvery {
@@ -139,6 +168,10 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
         )
     }
 
+    /**
+     * Test_not_authorized
+     *
+     */
     @Test
     fun test_Not_Authorized() = runTest {
         coEvery {
@@ -170,6 +203,10 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
         )
     }
 
+    /**
+     * Test_internal_server_error
+     *
+     */
     @Test
     fun test_Internal_Server_Error() = runTest {
         coEvery {

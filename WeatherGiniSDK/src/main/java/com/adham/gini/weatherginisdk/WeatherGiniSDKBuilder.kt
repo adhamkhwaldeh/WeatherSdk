@@ -46,14 +46,14 @@ object WeatherGiniSDKBuilder {
         application: Application,
         apiKey: String
     ): WeatherGiniSDKBuilder {
-
-        val sdkModule = module {
-            single {
-                val localStorage: WeatherGiniLocalRepository by inject()
-                localStorage.saveApiKey(apiKey)
-                this@WeatherGiniSDKBuilder
-            }
-        }
+//
+//        val sdkModule = module {
+//            single {
+//                val localStorage: WeatherGiniLocalRepository by inject()
+//                localStorage.saveApiKey(apiKey)
+//                this@WeatherGiniSDKBuilder
+//            }
+//        }
 
         startKoin {
             androidContext(application)
@@ -65,11 +65,12 @@ object WeatherGiniSDKBuilder {
                     repositoriesModule,
                     useCasesModule,
                     viewModelsModule,
-                    sdkModule
+//                    sdkModule
                 )
             )
         }
 
+        //I avoid to inject the local storage here because It will force the user to Use koin in his solution
         val localStorage = WeatherGiniLocalRepository(
             SharedPrefsManager(
                 application.getSharedPreferences(
@@ -79,7 +80,6 @@ object WeatherGiniSDKBuilder {
             )
         )
 
-//        localStorage.saveBaseUrl(baseUrl)
         localStorage.saveApiKey(apiKey)
 
         return this

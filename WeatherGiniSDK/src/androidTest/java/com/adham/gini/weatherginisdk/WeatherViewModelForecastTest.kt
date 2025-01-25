@@ -33,6 +33,11 @@ import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 
 
+/**
+ * Weather view model forecast test
+ *
+ * @constructor Create empty Weather view model forecast test
+ */
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 class WeatherViewModelForecastTest : KoinTest {
@@ -54,6 +59,10 @@ class WeatherViewModelForecastTest : KoinTest {
 
     private val application = ApplicationProvider.getApplicationContext<Application>()
 
+    /**
+     * Set up
+     *
+     */
     @Before
     fun setUp() {
         WeatherGiniSDKTestingBuilder.initialize(
@@ -62,23 +71,39 @@ class WeatherViewModelForecastTest : KoinTest {
         Dispatchers.setMain(testDispatcher)
     }
 
+    /**
+     * Tear down
+     *
+     */
     @After
     fun tearDown() {
         Dispatchers.resetMain()
         stopKoin() // Stop Koin after each test
     }
 
+    /**
+     * Test_sdk_is_not_initialized
+     *
+     */
     @Test
     fun test_sdk_is_not_initialized() = runTest {
         assert(localRepository.getApiKey().isBlank())
     }
 
+    /**
+     * Test_sdk_is_initialized_successfully
+     *
+     */
     @Test
     fun test_sdk_is_initialized_successfully() = runTest {
         localRepository.saveApiKey(ConstantsHelpers.testApiKey)
         assert(localRepository.getApiKey().isNotBlank())
     }
 
+    /**
+     * Test_load_data_successfully
+     *
+     */
     @Test
     fun test_load_data_successfully() = runTest {
 
@@ -109,6 +134,10 @@ class WeatherViewModelForecastTest : KoinTest {
         assertEquals(viewModel.forecast.value, DummyDataHelper.forecastSuccessState)
     }
 
+    /**
+     * Test_load_data_no internet
+     *
+     */
     @Test
     fun test_load_data_NoInternet() = runTest {
         coEvery {
@@ -140,6 +169,10 @@ class WeatherViewModelForecastTest : KoinTest {
         )
     }
 
+    /**
+     * Test_not_authorized
+     *
+     */
     @Test
     fun test_Not_Authorized() = runTest {
 
@@ -172,6 +205,10 @@ class WeatherViewModelForecastTest : KoinTest {
         )
     }
 
+    /**
+     * Test_internal_server_error
+     *
+     */
     @Test
     fun test_Internal_Server_Error() = runTest {
         coEvery {

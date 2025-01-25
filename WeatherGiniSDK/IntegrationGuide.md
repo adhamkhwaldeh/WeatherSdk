@@ -32,15 +32,16 @@ Before you begin the integration process, make sure you have the following:
 ### Step 1: Install Dependencies
 Start by installing the required dependencies to your project. 
 Use one of the following commands based on your package manager.
-use Gradle:
-   repositories {
-   google()
-   mavenCentral()
-   }
-   
-   dependencies {
-      implementation 'com.gini.weatherSdk:latest'
-   }
+    use Gradle:
+
+       repositories {
+           google()
+           mavenCentral()
+       }
+       
+       dependencies {
+          implementation 'com.gini.weatherSdk:latest'
+       }
 
 ### Step 2: Configure the Integration
 
