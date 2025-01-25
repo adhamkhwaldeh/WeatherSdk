@@ -79,6 +79,8 @@ Add the following details in your application class .
         }
     }
 
+#### You can replace ForecastScreenFragment.newInstance(it.cityName) or ForecastScreen compose directly
+
 ## Authorization
    You need to get Gini Weather Api key (e.g register to website )
 
