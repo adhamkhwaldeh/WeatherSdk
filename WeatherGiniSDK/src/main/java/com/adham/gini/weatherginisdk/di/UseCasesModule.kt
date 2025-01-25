@@ -8,5 +8,5 @@ val useCasesModule = module {
 
     single { CurrentWeatherUseCase(get(),get(),get()) }
 
-    single { ForecastWeatherUseCase(get(),get(),get()) }
+    single { ForecastWeatherUseCase(get(), get(), get()) }
 }

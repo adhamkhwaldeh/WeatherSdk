@@ -2,11 +2,7 @@ package com.adham.gini.weatherginisdk.networking
 
 import com.adham.gini.weatherginisdk.data.dtos.CurrentWeatherResponse
 import com.adham.gini.weatherginisdk.data.dtos.ForecastResponse
-import retrofit2.Call
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.PUT
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -14,7 +10,7 @@ import retrofit2.http.Query
  *
  * @constructor Create empty Weather service
  */
-interface WeatherService {
+interface WeatherServiceApi {
 
     /**
      * Current

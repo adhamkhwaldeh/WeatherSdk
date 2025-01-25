@@ -47,6 +47,7 @@ abstract class BaseSealedUseCase<out Type, in Params>(
      *
      * @constructor Create empty None
      */
+    @Suppress("unused")
     class None
 
 }

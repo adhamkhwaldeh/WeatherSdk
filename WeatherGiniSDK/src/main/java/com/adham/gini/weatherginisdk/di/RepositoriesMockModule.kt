@@ -2,19 +2,16 @@ package com.adham.gini.weatherginisdk.di
 
 import com.adham.gini.weatherginisdk.repositories.WeatherGiniLocalRepository
 import com.adham.gini.weatherginisdk.repositories.WeatherGiniRepository
+import io.mockk.mockk
 import org.koin.dsl.module
 
 
-val repositoriesModule = module {
+val repositoriesMockModule = module {
 
     single { WeatherGiniLocalRepository(get()) }
 
     single {
-//        if (ActivityManager.isRunningInTestHarness()) {
-//            mockk<WeatherGiniRepository>()
-//        } else {
-            WeatherGiniRepository(get())
-//        }
+        mockk<WeatherGiniRepository>()
     }
 
 }

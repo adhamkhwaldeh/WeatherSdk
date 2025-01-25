@@ -45,7 +45,7 @@ class WeatherViewModel(
      * @param params
      */
     fun loadForecast(params: ForecastWeatherUseCase.ForecastWeatherUseCaseParams) {
-        forecast.value = BaseState.Loading()
+//        forecast.value = BaseState.Loading()
         forecastWeatherUseCase(params) {
             forecast.value = it
         }

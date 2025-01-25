@@ -1,11 +1,6 @@
 package com.adham.gini.weatherginisdk.base.states
 
 import androidx.annotation.StringRes
-//import com.tatweer.common.apiServices.interceptors.NetworkConnectionInterceptor
-//import com.tatweer.common.data.enums.HttpResponseCodeEnum
-//import com.tatweer.common.data.response.BaseResponse
-//import com.tatweer.common.infrastructure.exception.Failure
-import retrofit2.Retrofit
 import java.net.UnknownHostException
 
 /**
@@ -116,100 +111,28 @@ sealed class BaseState<out T> {
     companion object {
         fun <T> getStateByThrowable(
             it: Throwable,
-            retrofit: Retrofit? = null,
             errorMessage: String? = null
         ): BaseState<T> {
             return when (it) {
-                is retrofit2.HttpException,
+                is retrofit2.HttpException -> {
+                    if (it.code() == 403) {
+                        NoAuthorized(it.message())
+                    } else if (it.code() == 500) {
+                        InternalServerError(errorMessage ?: (it.message ?: ""))
+                    } else {
+                        NoInternetError()
+                    }
+                }
+
                 is UnknownHostException -> {
-//                    val response = it.response()
-//                    val errorBody = response?.errorBody()
-//                    handleErrorBody(errorBody, retrofit, response?.code())
                     NoInternetError()
                 }
 
                 else -> {
-                    if (retrofit != null) {
-                        InternalServerError(errorMessage ?: (it.message ?: ""))
-                    } else {
-                        InternalServerError(errorMessage ?: (it.message ?: ""))
-                    }
+                    InternalServerError(errorMessage ?: (it.message ?: ""))
                 }
             }
         }
-
-//        fun <T> handleErrorBody(
-//            errorBody: ResponseBody?,
-//            retrofit: Retrofit? = null, code: Int?,
-//        ): BaseState<T> {
-//            return try {
-//                val converter: Converter<ResponseBody, BaseResponse<*>>? =
-//                    retrofit?.responseBodyConverter(
-//                        BaseResponse::class.java,
-//                        arrayOf()
-//                    )
-//                val result: BaseResponse<*>? = errorBody?.let { converter?.convert(it) }
-//                return when (code) {
-//                    HttpResponseCodeEnum.UN_AUTHORIZED.code -> {
-//                        NoAuthorized(result?.getErrorsCollections() ?: "")
-//                    }
-//
-//                    HttpResponseCodeEnum.NO_DATA_FOUND.code -> {
-//                        NotDataFound() //result?.getErrorsCollections()?: ""
-//                    }
-//
-//                    HttpResponseCodeEnum.FORBIDDEN.code -> {
-//                        NoAuthorized(result?.getErrorsCollections() ?: "")
-//                    }
-//
-//                    HttpResponseCodeEnum.INTERNAL_SERVER_ERROR.code -> {
-//                        InternalServerError(result?.getErrorsCollections() ?: "")
-//                    }
-//
-//                    HttpResponseCodeEnum.BAD_REQUEST.code -> {
-//                        InternalServerError(result?.getErrorsCollections() ?: "")
-//                    }
-//
-//                    else -> NoInternetError()
-//                }
-//            } catch (ex: Exception) {
-//                NoInternetError()
-//            }
-//
-//        }
-//
-//        //TODO need to be changed
-//        fun <T> handleByEither(failure: Failure?): BaseState<T> {
-//            return NoInternetError<T>()
-//        }
-//
-//        inline fun <reified T> getOtherThanFeature(baseState: BaseState<*>): BaseState<T>? {
-//            return when (baseState) {
-//                is FeaturedState -> null
-//                is InternalServerError -> InternalServerError(baseState.errorMessage)
-//                is Loading -> Loading()
-//                is LoadingDismiss -> LoadingDismiss()
-//                is NoAuthorized -> NoAuthorized(baseState.responseMessage)
-//                is NoInternetError -> NoInternetError()
-//                is NotDataFound -> NotDataFound()
-//                is InvalidData -> InvalidData(baseState.responseMessage)
-//                is ValidationError -> ValidationError(baseState.responseMessage, baseState.errorId)
-//            }
-//        }
-//
-//        inline fun <reified T> getOtherAndFeature(baseState: BaseState<*>, data: T): BaseState<T> {
-//            return when (baseState) {
-//                is FeaturedState -> BaseStateLoadedSuccessfully(data)
-//                is InternalServerError -> InternalServerError(baseState.errorMessage)
-//                is Loading -> Loading()
-//                is LoadingDismiss -> LoadingDismiss()
-//                is NoAuthorized -> NoAuthorized(baseState.responseMessage)
-//                is NoInternetError -> NoInternetError()
-//                is NotDataFound -> NotDataFound()
-//                is InvalidData -> InvalidData(baseState.responseMessage)
-//                is ValidationError -> ValidationError(baseState.responseMessage, baseState.errorId)
-//            }
-//        }
 
     }
 

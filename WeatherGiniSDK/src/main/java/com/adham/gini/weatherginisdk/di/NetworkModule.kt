@@ -1,11 +1,9 @@
 package com.adham.gini.weatherginisdk.di
 
 import com.adham.gini.weatherginisdk.helpers.ConstantsHelpers
-import com.adham.gini.weatherginisdk.networking.WeatherService
-import com.adham.gini.weatherginisdk.repositories.WeatherGiniLocalRepository
+import com.adham.gini.weatherginisdk.networking.WeatherServiceApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.BuildConfig
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -47,5 +45,7 @@ val networkModule = module {
         retrofitBuilder.build()
     }
 
-    single { get<Retrofit>().create(WeatherService::class.java) }
+    single {
+        get<Retrofit>().create(WeatherServiceApi::class.java)
+    }
 }

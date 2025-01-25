@@ -11,6 +11,7 @@ import androidx.compose.ui.UiComposable
 import androidx.compose.ui.platform.LocalContext
 import com.adham.gini.weatherginisdk.base.states.BaseState
 import com.adham.gini.weatherginisdk.base.stateLayout.defaultStates.NoInternetConnectionCompose
+import com.adham.gini.weatherginisdk.base.stateLayout.defaultStates.NotAuthorizedCompose
 import com.adham.gini.weatherginisdk.base.stateLayout.defaultStates.Progress
 
 /**
@@ -57,7 +58,7 @@ fun <T> StatesLayoutCompose(
             }
 
             is BaseState.NoAuthorized -> {
-                customContent?.notAuthorized() ?: Box {}
+                customContent?.notAuthorized() ?: NotAuthorizedCompose()
             }
 
             is BaseState.NoInternetError -> {

@@ -2,6 +2,7 @@ package com.adham.gini.weatherginisdk.useCases
 
 import com.adham.gini.weatherginisdk.base.BaseSealedUseCase
 import com.adham.gini.weatherginisdk.base.states.BaseState
+import com.adham.gini.weatherginisdk.base.states.asBasState
 import com.adham.gini.weatherginisdk.data.dtos.CurrentWeatherResponse
 import com.adham.gini.weatherginisdk.repositories.WeatherGiniLocalRepository
 import com.adham.gini.weatherginisdk.repositories.WeatherGiniRepository
@@ -22,10 +23,10 @@ class CurrentWeatherUseCase(
     private val weatherGiniLocalRepository: WeatherGiniLocalRepository
 ) : BaseSealedUseCase<CurrentWeatherResponse, String>(ioScope) {
 
-    override suspend fun run(params: String): BaseState<CurrentWeatherResponse>? {
+    override suspend fun run(params: String): BaseState<CurrentWeatherResponse> {
         return weatherGiniRepository.current(
             city = params,
             apiKey = weatherGiniLocalRepository.getApiKey()
-        )
+        ).asBasState()
     }
 }

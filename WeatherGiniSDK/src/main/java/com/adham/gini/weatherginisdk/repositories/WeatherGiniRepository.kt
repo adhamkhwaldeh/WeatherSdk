@@ -1,9 +1,6 @@
 package com.adham.gini.weatherginisdk.repositories
 
-import com.adham.gini.weatherginisdk.base.states.BaseState
-import com.adham.gini.weatherginisdk.base.states.asBasState
-import com.adham.gini.weatherginisdk.networking.WeatherService
-import retrofit2.Retrofit
+import com.adham.gini.weatherginisdk.networking.WeatherServiceApi
 import com.adham.gini.weatherginisdk.data.dtos.CurrentWeatherResponse
 import com.adham.gini.weatherginisdk.data.dtos.ForecastResponse
 
@@ -11,28 +8,32 @@ import com.adham.gini.weatherginisdk.data.dtos.ForecastResponse
  * Weather gini repository
  *
  * @property apiService
- * @property retrofit
  * @constructor Create empty Weather gini repository
  */
-final class WeatherGiniRepository(
-    private val apiService: WeatherService,
-    private val retrofit: Retrofit
+class WeatherGiniRepository(
+    private val apiService: WeatherServiceApi
 ) : WeatherGiniRepositoryImp {
 
+    // I used to return the state from the repository but I've faced an issue mocking the apiService: WeatherServiceApi
+    // to make the test cases more realistic I've return Result
     override
-    suspend final fun current(city: String, apiKey: String): BaseState<CurrentWeatherResponse> {
-        return kotlin.runCatching { apiService.current(city, apiKey) }.asBasState(retrofit)
+    suspend fun current(city: String, apiKey: String): Result<CurrentWeatherResponse> {
+        return kotlin.runCatching { apiService.current(city, apiKey) }//.asBasState()
     }
 
     override
-    suspend final fun forecast(city: String, hours: Int, apiKey: String): BaseState<ForecastResponse> {
+    suspend fun forecast(
+        city: String,
+        hours: Int,
+        apiKey: String
+    ): Result<ForecastResponse> {
         return kotlin.runCatching {
             apiService.forecast(
                 city,
                 hours,
                 apiKey
             )
-        }.asBasState(retrofit)
+        }//.asBasState()
     }
 
 }
