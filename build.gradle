@@ -19,9 +19,9 @@ dokka {
     dokkaPublications.html {
         outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
     }
-////    dokkaSourceSets.main {
-//    dokkaSourceSets.named("main") {
-////        includes.from("README.md")
+//    dokkaSourceSets.main {
+////    dokkaSourceSets.named("main") {
+//        includes.from("README.md")
 ////        includes.from("IntegrationGuide.md")
 //        sourceLink {
 //            localDirectory.set(file("src/main/java"))
