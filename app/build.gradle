@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.dokka' //version "2.0.0"
+    id 'org.jetbrains.dokka' version "2.0.0"
 }
 android {
     namespace 'com.adham.gini.weatherSDK'
@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.adham.gini.weatherSDK"
-        minSdk 26
+        minSdk 30
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -54,30 +54,15 @@ android {
         dokkaPublications.html {
             outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
         }
-//    outputFormat.set("html") // Supported formats: html, gfm, javadoc, markdown
-//    outputDirectory.set(buildDir.resolve("dokka"))
         dokkaSourceSets.main {
-            includes.from("README.md")
+//        includes.from("README.md")
+//        includes.from("IntegrationGuide.md")
             sourceLink {
-                localDirectory.set(file("src/main/kotlin"))
-//            localDirectory.set(file("src/main/java"))
-//            remoteUrl("https://example.com/src")
-//            remoteLineSuffix.set("#L")
+                localDirectory.set(file("src/main/java"))
+                remoteUrl("https://github.com/adhamkhwaldeh/WeatherSdk/tree/main/app/src/main/java")
+                remoteLineSuffix.set("#L")
             }
         }
-        pluginsConfiguration.html {
-            customStyleSheets.from("styles.css")
-            customAssets.from("logo.png")
-            footerMessage.set("(c) Your Company")
-        }
-
-//    // Dokka generates a new process managed by Gradle
-//    dokkaGeneratorIsolation = ProcessIsolation {
-//        // Configures heap size
-//        maxHeapSize = "4g"
-//    }
-//    // Runs Dokka in the current Gradle process
-//    dokkaGeneratorIsolation = ClassLoaderIsolation()
 
     }
 
@@ -145,26 +130,20 @@ dokka {
     dokkaPublications.html {
         outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
     }
-//    outputFormat.set("html") // Supported formats: html, gfm, javadoc, markdown
-//    outputDirectory.set(buildDir.resolve("dokka"))
     dokkaSourceSets.main {
-        includes.from("README.md")
-        includes.from("IntegrationGuide.md")
+//        includes.from("README.md")
+//        includes.from("IntegrationGuide.md")
         sourceLink {
             localDirectory.set(file("src/main/java"))
-
             remoteUrl("https://github.com/adhamkhwaldeh/WeatherSdk/tree/main/app/src/main/java")
             remoteLineSuffix.set("#L")
-//            localDirectory.set(file("src/main/java"))
-//            remoteUrl("https://example.com/src")
-//            remoteLineSuffix.set("#L")
         }
     }
-    pluginsConfiguration.html {
+//    pluginsConfiguration.html {
 //        customStyleSheets.from("styles.css")
 //        customAssets.from("logo.png")
 //        footerMessage.set("(c) Your Company")
-    }
+//    }
 
 //    // Dokka generates a new process managed by Gradle
 //    dokkaGeneratorIsolation = ProcessIsolation {
@@ -175,14 +154,6 @@ dokka {
 //    dokkaGeneratorIsolation = ClassLoaderIsolation()
 
 }
-
-//tasks.withType<DokkaTask>().configureEach {
-//    dokkaSourceSets {
-//        named("test") {
-//            sourceRoots.from(file("src/test/"))
-//        }
-//    }
-//}
 
 
 //dokka {

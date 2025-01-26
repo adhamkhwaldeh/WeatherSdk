@@ -9,3 +9,36 @@ plugins {
 subprojects {
     apply plugin: 'org.jetbrains.dokka'
 }
+
+
+dokka {
+    moduleName.set("Project Name")
+    dokkaPublications.html {
+        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
+    }
+////    dokkaSourceSets.main {
+//    dokkaSourceSets.named("main") {
+////        includes.from("README.md")
+////        includes.from("IntegrationGuide.md")
+//        sourceLink {
+//            localDirectory.set(file("src/main/java"))
+//            remoteUrl("https://github.com/adhamkhwaldeh/WeatherSdk/tree/main/app/src/main/java")
+//            remoteLineSuffix.set("#L")
+//        }
+//    }
+//    pluginsConfiguration.html {
+//        customStyleSheets.from("styles.css")
+//        customAssets.from("logo.png")
+//        footerMessage.set("(c) Your Company")
+//    }
+
+//    // Dokka generates a new process managed by Gradle
+//    dokkaGeneratorIsolation = ProcessIsolation {
+//        // Configures heap size
+//        maxHeapSize = "4g"
+//    }
+//    // Runs Dokka in the current Gradle process
+//    dokkaGeneratorIsolation = ClassLoaderIsolation()
+
+}
+
