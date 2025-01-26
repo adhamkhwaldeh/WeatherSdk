@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -72,7 +72,7 @@ fun ForecastScreen(
                         WeatherGiniSDKBuilder.sdkStatus.value = WeatherSdkStatus.OnFinish
                     }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack, // Replace with your desired icon
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack, // Replace with your desired icon
                             contentDescription = "Back",
 //                            tint = Color.White
                         )

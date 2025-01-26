@@ -1,5 +1,7 @@
 package com.adham.gini.weatherginisdk.data.dtos
 
+import com.squareup.moshi.JsonClass
+
 /**
  * Current weather response
  *
@@ -7,6 +9,7 @@ package com.adham.gini.weatherginisdk.data.dtos
  * @property data
  * @constructor Create empty Current weather response
  */
+@JsonClass(generateAdapter = true)
 data class CurrentWeatherResponse(
     val count: Int,
     val data: MutableList<CurrentWeatherModel>

@@ -10,11 +10,7 @@ val repositoriesModule = module {
     single { WeatherGiniLocalRepository(get()) }
 
     single {
-//        if (ActivityManager.isRunningInTestHarness()) {
-//            mockk<WeatherGiniRepository>()
-//        } else {
-            WeatherGiniRepository(get())
-//        }
+        WeatherGiniRepository(get())
     }
 
 }

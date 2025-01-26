@@ -1,5 +1,7 @@
 package com.adham.gini.weatherginisdk.data.dtos
 
+import com.squareup.moshi.JsonClass
+
 /**
  * Hourly forecast model
  *
@@ -8,6 +10,7 @@ package com.adham.gini.weatherginisdk.data.dtos
  * @property weather
  * @constructor Create empty Hourly forecast model
  */
+@JsonClass(generateAdapter = true)
 data class HourlyForecastModel(
 //    val app_temp: Double,
 //    val clouds: Int,

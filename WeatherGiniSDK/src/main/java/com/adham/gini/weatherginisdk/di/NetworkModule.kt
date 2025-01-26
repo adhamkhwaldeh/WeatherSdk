@@ -2,6 +2,8 @@ package com.adham.gini.weatherginisdk.di
 
 import com.adham.gini.weatherginisdk.helpers.ConstantsHelpers
 import com.adham.gini.weatherginisdk.networking.WeatherServiceApi
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -27,10 +29,13 @@ val networkModule = module {
         }
 
         val retrofitBuilder = Retrofit.Builder()
+        val moshi = Moshi.Builder() // adapter
+            .add(KotlinJsonAdapterFactory())
+            .build()
         retrofitBuilder.apply {
 //            baseUrl(localRepository.getBaseUrl())
             baseUrl(ConstantsHelpers.baseUrl)
-            addConverterFactory(MoshiConverterFactory.create())
+            addConverterFactory(MoshiConverterFactory.create(moshi))
         }.also {
             val okHttpClientBuilder = OkHttpClient.Builder()
 

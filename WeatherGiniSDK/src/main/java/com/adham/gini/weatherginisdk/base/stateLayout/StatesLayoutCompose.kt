@@ -36,7 +36,7 @@ fun <T> StatesLayoutCompose(
     Column(modifier = modifier) {
         when (baseState) {
             is BaseState.Initial -> {
-                Box() {
+                Box {
 
                 }
             }
