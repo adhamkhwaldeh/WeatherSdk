@@ -51,23 +51,6 @@ android {
         }
     }
 
-    dokka {
-        moduleName.set("Project Name")
-        dokkaPublications.html {
-            outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
-        }
-        dokkaSourceSets.main {
-//        includes.from("README.md")
-//        includes.from("IntegrationGuide.md")
-            sourceLink {
-                localDirectory.set(file("src/main/java"))
-                remoteUrl("https://github.com/adhamkhwaldeh/WeatherSdk/tree/main/app/src/main/java")
-                remoteLineSuffix.set("#L")
-            }
-        }
-
-    }
-
 }
 
 dependencies {
@@ -126,102 +109,36 @@ dependencies {
 
 }
 
+subprojects {
+    apply plugin: 'org.jetbrains.dokka'
+}
 
 dokka {
-    moduleName.set("Project Name")
+    moduleName.set("App")
     dokkaPublications.html {
         outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
     }
+
     dokkaSourceSets.main {
-//        includes.from("README.md")
+        // Only set the actual Kotlin/Java dirs once
+        sourceRoots.from("src/main/java")
+//    dokkaSourceSets.named("main") {
+        includes.from("IntegrationGuide.md")
+        skipEmptyPackages.set(true)
+//        includeNonPublic.set(false)
 //        includes.from("IntegrationGuide.md")
         sourceLink {
-            localDirectory.set(file("src/main/java"))
+//            localDirectory.set(file("src/main/java"))
             remoteUrl("https://github.com/adhamkhwaldeh/WeatherSdk/tree/main/app/src/main/java")
             remoteLineSuffix.set("#L")
         }
-    }
-//    pluginsConfiguration.html {
-//        customStyleSheets.from("styles.css")
-//        customAssets.from("logo.png")
-//        footerMessage.set("(c) Your Company")
-//    }
 
-//    // Dokka generates a new process managed by Gradle
-//    dokkaGeneratorIsolation = ProcessIsolation {
-//        // Configures heap size
-//        maxHeapSize = "4g"
-//    }
-//    // Runs Dokka in the current Gradle process
-//    dokkaGeneratorIsolation = ClassLoaderIsolation()
+        reportUndocumented.set(true)          // Warn about undocumented public APIs
+        skipDeprecated.set(true)              // Exclude deprecated elements
+        suppress.set(false)                   // Include suppressed elements
+        sourceRoots.from(file("src/main/java"))
+        sourceRoots.from("src/main/java")
+        jdkVersion.set(17)
+    }
 
 }
-
-
-//dokka {
-//    dokkaPublications.html {
-//        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
-//    }
-//    moduleName.set("Project Name")
-//    dokkaSourceSets.main {
-//        includes.from("README.md")
-//        sourceLink {
-//            localDirectory.set(file("src/main/java"))
-////            remoteUrl("https://example.com/src")
-////            remoteLineSuffix.set("#L")
-//        }
-//    }
-//    pluginsConfiguration.html {
-//        customStyleSheets.from("styles.css")
-//        customAssets.from("logo.png")
-//        footerMessage.set("(c) Your Company")
-//    }
-////    // Dokka generates a new process managed by Gradle
-////    dokkaGeneratorIsolation = ProcessIsolation {
-////        // Configures heap size
-////        maxHeapSize = "4g"
-////    }
-////    // Runs Dokka in the current Gradle process
-////    dokkaGeneratorIsolation = ClassLoaderIsolation()
-//}
-
-//dokka {
-//    outputDirectory.set(buildDir.resolve("dokka")) // Output folder
-//    plugins {
-//        // Add specific plugins if needed (e.g., for linking with Javadoc or Markdown output)
-//    }
-//    dokkaSourceSets {
-//        configureEach {
-//            includes.from("docs/documentation.md") // Include custom documentation
-//            reportUndocumented.set(true)          // Warn about undocumented public APIs
-//            skipDeprecated.set(true)              // Exclude deprecated elements
-//            suppress.set(false)                   // Include suppressed elements
-//            sourceRoots.from(file("src/main/java"), file("src/main/kotlin"))
-//            jdkVersion.set(17)                    // Set the Java version
-//        }
-//    }
-//}
-
-
-//dokka {
-//    outputFormat.set("html") // Supported formats: html, gfm, javadoc, markdown
-//    outputDirectory.set(buildDir.resolve("dokka"))
-//
-//    dokkaSourceSets {
-//        configureEach {
-//            includeNonPublic.set(false) // Exclude private/internal APIs
-//            skipDeprecated.set(true)   // Exclude deprecated APIs
-//            reportUndocumented.set(true) // Warn about undocumented members
-//            jdkVersion.set(8)           // Set the JDK version used
-//        }
-//    }
-//
-//    dokkaSourceSets {
-//        named("main") {
-//            kotlinSrcDirs.from("src/main/java", "src/main/kotlin")
-//            noAndroidSdkLink.set(false) // Link Android SDK documentation
-//            includes.from("docs/documentation.md") // Add custom documentation
-//        }
-//    }
-//
-//}

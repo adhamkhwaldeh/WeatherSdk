@@ -179,5 +179,35 @@ dependencies {
 }
 
 subprojects {
-    apply(plugin = "org.jetbrains.dokka")
+    apply plugin: 'org.jetbrains.dokka'
+}
+
+dokka {
+    moduleName.set("WeatherGiniSDK")
+    dokkaPublications.html {
+        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
+    }
+
+    dokkaSourceSets.main {
+        // Only set the actual Kotlin/Java dirs once
+        sourceRoots.from("src/main/java")
+//    dokkaSourceSets.named("main") {
+        includes.from("IntegrationGuide.md")
+        skipEmptyPackages.set(true)
+//        includeNonPublic.set(false)
+//        includes.from("IntegrationGuide.md")
+        sourceLink {
+//            localDirectory.set(file("src/main/java"))
+            remoteUrl("https://github.com/adhamkhwaldeh/WeatherSdk/tree/main/app/src/main/java")
+            remoteLineSuffix.set("#L")
+        }
+
+        reportUndocumented.set(true)          // Warn about undocumented public APIs
+        skipDeprecated.set(true)              // Exclude deprecated elements
+        suppress.set(false)                   // Include suppressed elements
+        sourceRoots.from(file("src/main/java"))
+        sourceRoots.from("src/main/java")
+        jdkVersion.set(17)
+    }
+
 }

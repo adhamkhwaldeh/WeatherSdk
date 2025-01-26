@@ -2,11 +2,11 @@
 plugins {
     id 'com.android.application' version '8.8.0' apply false
     id 'com.android.library' version '8.8.0' apply false
-//    id 'org.jetbrains.kotlin.android' version '1.9.0' apply false
     id 'org.jetbrains.kotlin.android' version '2.1.0' apply false
-    id 'org.jetbrains.compose'  version "1.8.0-alpha02"
+    id 'org.jetbrains.compose' version "1.8.0-alpha02"
+    id "org.jetbrains.kotlin.jvm" version "2.1.0"
     id 'org.jetbrains.dokka' version "2.0.0"
-    id 'org.jetbrains.kotlin.plugin.compose' version '2.1.0' apply false
+    id 'org.jetbrains.kotlin.plugin.compose' version '2.1.0' //apply false
 }
 
 subprojects {
@@ -15,20 +15,37 @@ subprojects {
 
 
 dokka {
-    moduleName.set("Project Name")
+    moduleName.set("WeatherGiniSDK")
     dokkaPublications.html {
         outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
     }
-//    dokkaSourceSets.main {
-////    dokkaSourceSets.named("main") {
-//        includes.from("README.md")
-////        includes.from("IntegrationGuide.md")
-//        sourceLink {
+
+    dokkaSourceSets.main {
+        // Only set the actual Kotlin/Java dirs once
+        sourceRoots.from("src/main/java")
+//    dokkaSourceSets.named("main") {
+        includes.from("README.md")
+        includes.from("WeatherGiniSDK/IntegrationGuide.md")
+        skipEmptyPackages.set(true)
+//        includeNonPublic.set(false)
+//        includes.from("IntegrationGuide.md")
+        sourceLink {
 //            localDirectory.set(file("src/main/java"))
-//            remoteUrl("https://github.com/adhamkhwaldeh/WeatherSdk/tree/main/app/src/main/java")
-//            remoteLineSuffix.set("#L")
-//        }
-//    }
+            remoteUrl("https://github.com/adhamkhwaldeh/WeatherSdk/tree/main/app/src/main/java")
+            remoteLineSuffix.set("#L")
+        }
+    }
+
+    dokkaSourceSets.configureEach {
+
+        includes.from("IntegrationGuide.md") // Include custom documentation
+        reportUndocumented.set(true)          // Warn about undocumented public APIs
+        skipDeprecated.set(true)              // Exclude deprecated elements
+        suppress.set(false)                   // Include suppressed elements
+        sourceRoots.from(file("src/main/java"))
+        sourceRoots.from("src/main/java")
+        jdkVersion.set(17)
+    }
 //    pluginsConfiguration.html {
 //        customStyleSheets.from("styles.css")
 //        customAssets.from("logo.png")
