@@ -1,6 +1,7 @@
 package com.adham.gini.weatherginisdk.di
 
 import com.adham.gini.weatherginisdk.helpers.ConstantsHelpers
+import com.adham.gini.weatherginisdk.networking.WeatherMockedServiceApi
 import com.adham.gini.weatherginisdk.networking.WeatherServiceApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -53,4 +54,9 @@ val networkModule = module {
     single {
         get<Retrofit>().create(WeatherServiceApi::class.java)
     }
+
+    single {
+        WeatherMockedServiceApi(get())
+    }
+
 }

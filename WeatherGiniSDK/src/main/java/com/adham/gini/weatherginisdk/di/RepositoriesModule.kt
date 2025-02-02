@@ -10,7 +10,7 @@ val repositoriesModule = module {
     single { WeatherGiniLocalRepository(get()) }
 
     single {
-        WeatherGiniRepository(get())
+        WeatherGiniRepository(get(), get())
     }
 
 }
