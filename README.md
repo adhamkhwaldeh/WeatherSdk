@@ -9,7 +9,8 @@
     1. [Step 1: Install Dependencies]
     2. [Step 2: Configure the Integration]
     3. [Step 3: Test the Integration]
-4. [Authentication]
+4. [Demo]
+5. [Authentication]
 5. [API Reference]
 6. [Common Errors & Troubleshooting]
 7. [FAQs]
@@ -83,6 +84,15 @@ this,
     }
 
 #### You can replace ForecastScreenFragment.newInstance(it.cityName) or ForecastScreen compose directly
+
+## Demo
+
+### Screenshots
+
+- **Dashboard View**
+
+| !["](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.gini.weatherSDK.jpg) | !["](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.gini.weatherSDK.jpg) | !["](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.gini.weatherSDK.jpg) |
+|-------------------------------------------------------------------------------|-------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
 
 ## Authorization
 You need to get Gini Weather Api key (e.g register to website )
