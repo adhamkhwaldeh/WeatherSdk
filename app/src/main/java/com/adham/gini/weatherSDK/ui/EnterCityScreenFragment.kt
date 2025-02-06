@@ -18,24 +18,22 @@ import com.adham.gini.weatherSDK.ui.theme.WeatherSDKTheme
  * @constructor Create empty Enter city screen fragment
  */
 class EnterCityScreenFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?,
+    ): View {
         val composeView = ComposeView(requireContext())
         composeView.isTransitionGroup = true
         composeView.setContent {
             WeatherSDKTheme {
-
 //                AppNavHost(
 //                    modifier = Modifier.fillMaxSize(),
 //                )
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     EnterCityScreen()
                 }
@@ -43,5 +41,4 @@ class EnterCityScreenFragment : Fragment() {
         }
         return composeView
     }
-
 }

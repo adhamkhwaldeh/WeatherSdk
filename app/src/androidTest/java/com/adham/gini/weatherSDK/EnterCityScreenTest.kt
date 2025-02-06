@@ -12,10 +12,8 @@ import org.junit.Rule
 import org.junit.runner.RunWith
 import kotlin.test.Test
 
-
 @RunWith(AndroidJUnit4::class)
 class EnterCityScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 //    @get:Rule
@@ -40,8 +38,6 @@ class EnterCityScreenTest {
 
         // Verify that the UI updates correctly
         composeTestRule.onNodeWithText("Clicked!").assertExists()
-
-
     }
 
     @Test
@@ -56,5 +52,4 @@ class EnterCityScreenTest {
         // Verify error message appears
         composeTestRule.onNodeWithText("Please enter a city name").assertExists()
     }
-
 }

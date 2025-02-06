@@ -11,10 +11,10 @@
     3. [Step 3: Test the Integration]
 4. [Demo]
 5. [Authentication]
-5. [API Reference]
-6. [Common Errors & Troubleshooting]
-7. [FAQs]
-8. [Support]
+6. [API Reference]
+7. [Common Errors & Troubleshooting]
+8. [FAQs]
+9. [Support]
 
 ---
 
