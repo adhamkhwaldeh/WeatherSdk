@@ -117,6 +117,8 @@ sealed class BaseState<out T> {
                 is retrofit2.HttpException -> {
                     if (it.code() == 403) {
                         NoAuthorized(it.message())
+                    } else if (it.code() == 400) {
+                        InternalServerError(errorMessage ?: (it.message ?: ""))
                     } else if (it.code() == 500) {
                         InternalServerError(errorMessage ?: (it.message ?: ""))
                     } else {

@@ -15,8 +15,8 @@ class App : Application() {
         super.onCreate()
         WeatherGiniSDKBuilder.initialize(
             this,
-            ""
-//            AppConstantsHelper.apiKey
+//            ""
+            AppConstantsHelper.apiKey
         )
     }
 }

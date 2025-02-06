@@ -9,6 +9,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.UiComposable
 import androidx.compose.ui.platform.LocalContext
+import com.adham.gini.weatherginisdk.base.stateLayout.defaultStates.InternalServerErrorCompose
 import com.adham.gini.weatherginisdk.base.states.BaseState
 import com.adham.gini.weatherginisdk.base.stateLayout.defaultStates.NoInternetConnectionCompose
 import com.adham.gini.weatherginisdk.base.stateLayout.defaultStates.NotAuthorizedCompose
@@ -50,7 +51,8 @@ fun <T> StatesLayoutCompose(
             }
 
             is BaseState.InternalServerError -> {
-                customContent?.internalServerError() ?: Box {}
+                customContent?.internalServerError()
+                    ?: InternalServerErrorCompose(baseState.errorMessage)
             }
 
             is BaseState.InvalidData -> {
