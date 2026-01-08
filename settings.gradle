@@ -14,4 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "WeatherSDK"
 include ':app'
-include ':WeatherGiniSDK'
+include ':WeatherSDK'
+include ':CommonLibrary'
+include ':CommonSDK'

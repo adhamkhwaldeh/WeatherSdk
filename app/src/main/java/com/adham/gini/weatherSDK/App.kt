@@ -1,9 +1,7 @@
-package com.adham.gini.weatherSDK
+package com.adham.weatherSdk
 
 import android.app.Application
-import com.adham.gini.weatherSDK.helpers.AppConstantsHelper
-import com.adham.gini.weatherginisdk.WeatherGiniSDKBuilder
-import com.adham.gini.weatherginisdk.helpers.ConstantsHelpers
+import com.adham.weatherSdk.helpers.AppConstantsHelper
 
 /**
  * App
@@ -13,7 +11,7 @@ import com.adham.gini.weatherginisdk.helpers.ConstantsHelpers
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        WeatherGiniSDKBuilder.initialize(
+        WeatherSDKBuilder.initialize(
             this,
 //            ""
             AppConstantsHelper.apiKey

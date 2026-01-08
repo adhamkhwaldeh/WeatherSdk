@@ -1,4 +1,4 @@
-package com.adham.gini.weatherSDK
+package com.adham.weatherSdk
 
 //import org.junit.Test
 

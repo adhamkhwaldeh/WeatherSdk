@@ -1,4 +1,4 @@
-package com.adham.gini.weatherSDK.helpers
+package com.adham.weatherSdk.helpers
 
 object AppConstantsHelper {
 

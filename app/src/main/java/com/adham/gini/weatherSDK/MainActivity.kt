@@ -1,4 +1,4 @@
-package com.adham.gini.weatherSDK
+package com.adham.weatherSdk
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.adham.gini.weatherSDK.ui.AppNavHost
-import com.adham.gini.weatherSDK.ui.theme.WeatherSDKTheme
+import com.adham.weatherSdk.ui.AppNavHost
+import com.adham.weatherSdk.ui.theme.WeatherSDKTheme
 
 /**
  * Main activity

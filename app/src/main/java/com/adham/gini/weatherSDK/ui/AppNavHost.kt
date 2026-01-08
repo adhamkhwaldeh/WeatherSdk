@@ -1,4 +1,4 @@
-package com.adham.gini.weatherSDK.ui
+package com.adham.weatherSdk.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -13,10 +13,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.adham.gini.weatherginisdk.WeatherGiniSDKBuilder
-import com.adham.gini.weatherginisdk.data.states.WeatherSdkStatus
-import com.adham.gini.weatherginisdk.ui.ForecastScreen
-import com.adham.gini.weatherginisdk.ui.navigations.NavigationItem
+import com.adham.weatherSdk.WeatherSDKBuilder
+import com.adham.weatherSdk.data.states.WeatherSdkStatus
+import com.adham.weatherSdk.ui.navigations.NavigationItem
 
 
 /**
@@ -33,7 +32,7 @@ fun AppNavHost(
     startDestination: String = NavigationItem.City.route,
 ) {
 
-    val sdkStatus = WeatherGiniSDKBuilder.sdkStatus.observeAsState()
+    val sdkStatus = WeatherSDKBuilder.sdkStatus.observeAsState()
     LaunchedEffect(sdkStatus.value) {
         val current = sdkStatus.value
         if (current is WeatherSdkStatus.OnFinish) {

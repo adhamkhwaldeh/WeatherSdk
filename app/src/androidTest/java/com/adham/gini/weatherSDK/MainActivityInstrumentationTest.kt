@@ -1,4 +1,4 @@
-package com.adham.gini.weatherSDK
+package com.adham.weatherSdk
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag

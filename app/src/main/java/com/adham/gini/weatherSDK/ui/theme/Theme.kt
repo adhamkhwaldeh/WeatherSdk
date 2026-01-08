@@ -1,4 +1,4 @@
-package com.adham.gini.weatherSDK.ui.theme
+package com.adham.weatherSdk.ui.theme
 
 import android.app.Activity
 import android.os.Build

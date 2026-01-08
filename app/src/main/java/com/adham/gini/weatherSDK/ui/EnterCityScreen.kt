@@ -1,4 +1,4 @@
-package com.adham.gini.weatherSDK.ui
+package com.adham.weatherSdk.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,9 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import com.adham.gini.weatherSDK.R
-import com.adham.gini.weatherginisdk.WeatherGiniSDKBuilder
-import com.adham.gini.weatherginisdk.data.states.WeatherSdkStatus
+import com.adham.weatherSdk.R
+import com.adham.weatherSdk.WeatherSDKBuilder
+import com.adham.weatherSdk.data.states.WeatherSdkStatus
 
 /**
  * Enter city screen
@@ -89,7 +89,7 @@ fun EnterCityScreen() {
                     if (cityName.isBlank()) {
                         isError = true
                     } else {
-                        WeatherGiniSDKBuilder.sdkStatus.value =
+                        WeatherSDKBuilder.sdkStatus.value =
                             WeatherSdkStatus.OnLaunchForecast(cityName)
                     }
                 },

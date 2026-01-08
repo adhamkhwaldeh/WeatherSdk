@@ -5,7 +5,7 @@
 
     <FrameLayout
         android:id="@+id/container"
-        android:name="com.adham.gini.weatherSDK.ui.EnterCityScreenFragment"
+        android:name="com.adham.weatherSdk.ui.EnterCityScreenFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:tag="AppNavHostFragment" />

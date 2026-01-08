@@ -1,4 +1,4 @@
-package com.adham.gini.weatherSDK
+package com.adham.weatherSdk
 
 //import androidx.test.platform.app.InstrumentationRegistry
 //import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ package com.adham.gini.weatherSDK
 //    fun useAppContext() {
 //        // Context of the app under test.
 //        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-//        assertEquals("com.adham.gini.weatherSDK", appContext.packageName)
+//        assertEquals("com.adham.weatherSdk", appContext.packageName)
 //    }
 //}

@@ -1,6 +1,6 @@
-# Module WeatherGiniSDK
+# Module WeatherSDK
 
-# Integration Guide: [Weather Gini SDK]
+# Integration Guide: [Weather SDK]
 
 ## Table of Contents
 1. [Introduction]
@@ -42,7 +42,7 @@ Use one of the following commands based on your package manager.
        }
        
        dependencies {
-          implementation 'com.gini.weatherSdk:latest'
+          implementation 'com.adham.weatherSdk:latest'
        }
 
 ### Step 2: Configure the Integration

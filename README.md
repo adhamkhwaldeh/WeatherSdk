@@ -1,6 +1,6 @@
-# Module WeatherGiniSDK
+# Module WeatherSDK
 
-# Integration Guide: [Weather Gini SDK]
+# Integration Guide: [Weather SDK]
 
 ## Table of Contents
 1. [Introduction]
@@ -91,7 +91,7 @@ this,
 
 - **Dashboard View**
 
-| !["](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.gini.weatherSDK.jpg) | !["](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.gini.weatherSDK.jpg) | !["](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.gini.weatherSDK.jpg) |
+| !["](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.weatherSdk.jpg) | !["](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.weatherSdk.jpg) | !["](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.weatherSdk.jpg) |
 |-------------------------------------------------------------------------------|-------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
 
 ## Authorization

@@ -1,4 +1,4 @@
-package com.adham.gini.weatherSDK.ui
+package com.adham.weatherSdk.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.adham.gini.weatherSDK.ui.theme.WeatherSDKTheme
+import com.adham.weatherSdk.ui.theme.WeatherSDKTheme
 
 /**
  * Enter city screen fragment

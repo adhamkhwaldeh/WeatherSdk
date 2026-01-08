@@ -1,4 +1,4 @@
-package com.adham.gini.weatherSDK
+package com.adham.weatherSdk
 
 import android.content.Context
 import android.content.Intent
