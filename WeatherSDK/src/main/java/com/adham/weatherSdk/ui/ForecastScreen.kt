@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -70,11 +68,12 @@ fun ForecastScreen(
                     IconButton(onClick = {
                         WeatherSDKBuilder.sdkStatus.value = WeatherSdkStatus.OnFinish
                     }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack, // Replace with your desired icon
-                            contentDescription = "Back",
-//                            tint = Color.White
-                        )
+                        //TODO the icon need to be set
+//                        Icon(
+//                            imageVector = Icons.AutoMirrored.Filled.ArrowBack, // Replace with your desired icon
+//                            contentDescription = "Back",
+////                            tint = Color.White
+//                        )
                     }
                 },
                 title = { Text(stringResource(R.string.TwentyFourHoursForecast)) },
