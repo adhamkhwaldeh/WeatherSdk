@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
 import com.adham.weatherSdk.data.dtos.ForecastResponse
-import com.adham.weatherSdk.useCases.CurrentWeatherUseCase
-import com.adham.weatherSdk.useCases.ForecastWeatherUseCase
+import com.adham.weatherSdk.useCases.CurrentWeatherOldUseCase
+import com.adham.weatherSdk.useCases.ForecastWeatherOldUseCase
 import com.github.adhamkhwaldeh.commonlibrary.base.BaseRefactorViewModel
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 
@@ -19,8 +19,8 @@ import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
  */
 class WeatherViewModel(
     private val application: Application,
-    private val currentWeatherUseCase: CurrentWeatherUseCase,
-    private val forecastWeatherUseCase: ForecastWeatherUseCase,
+    private val currentWeatherUseCase: CurrentWeatherOldUseCase,
+    private val forecastWeatherUseCase: ForecastWeatherOldUseCase,
 ) : BaseRefactorViewModel(application) {
 
     val currentWeather = MutableLiveData<BaseState<CurrentWeatherResponse>>(BaseState.Initial())
@@ -44,7 +44,7 @@ class WeatherViewModel(
      *
      * @param params
      */
-    fun loadForecast(params: ForecastWeatherUseCase.ForecastWeatherUseCaseParams) {
+    fun loadForecast(params: ForecastWeatherOldUseCase.ForecastWeatherUseCaseParams) {
 //        forecast.value = BaseState.Loading()
         forecastWeatherUseCase(params) {
             forecast.value = it

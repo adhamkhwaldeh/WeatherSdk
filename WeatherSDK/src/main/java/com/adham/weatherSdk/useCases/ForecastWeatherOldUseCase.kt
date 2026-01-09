@@ -4,7 +4,7 @@ package com.adham.weatherSdk.useCases
 import com.adham.weatherSdk.data.dtos.ForecastResponse
 import com.adham.weatherSdk.repositories.WeatherGiniLocalRepository
 import com.adham.weatherSdk.repositories.WeatherGiniRepository
-import com.github.adhamkhwaldeh.commonlibrary.base.BaseSealedUseCase
+import com.github.adhamkhwaldeh.commonlibrary.base.BaseSealedOldUseCase
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import com.github.adhamkhwaldeh.commonlibrary.base.states.asBasState
 import kotlinx.coroutines.CoroutineScope
@@ -18,11 +18,11 @@ import kotlinx.coroutines.CoroutineScope
  *
  * @param ioScope
  */
-class ForecastWeatherUseCase(
+class ForecastWeatherOldUseCase(
     ioScope: CoroutineScope,
     private val weatherGiniRepository: WeatherGiniRepository,
     private val weatherGiniLocalRepository: WeatherGiniLocalRepository
-) : BaseSealedUseCase<ForecastResponse, ForecastWeatherUseCase.ForecastWeatherUseCaseParams>(ioScope) {
+) : BaseSealedOldUseCase<ForecastResponse, ForecastWeatherOldUseCase.ForecastWeatherUseCaseParams>(ioScope) {
     override suspend fun run(params: ForecastWeatherUseCaseParams): BaseState<ForecastResponse> {
         return weatherGiniRepository.forecast(
             city = params.city,

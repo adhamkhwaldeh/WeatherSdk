@@ -2,7 +2,7 @@ package com.adham.weatherSdk.helpers
 
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
 import com.adham.weatherSdk.data.dtos.ForecastResponse
-import com.adham.weatherSdk.useCases.ForecastWeatherUseCase
+import com.adham.weatherSdk.useCases.ForecastWeatherOldUseCase
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.ResponseBody
@@ -48,7 +48,7 @@ object DummyDataHelper {
 
 
     //#region forecast properties
-    val forecastWeatherUseCaseParams = ForecastWeatherUseCase.ForecastWeatherUseCaseParams(
+    val forecastWeatherUseCaseParams = ForecastWeatherOldUseCase.ForecastWeatherUseCaseParams(
         city = cityName, defaultHours
     )
     val forecastSuccessData = ForecastResponse(

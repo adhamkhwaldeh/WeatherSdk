@@ -31,7 +31,7 @@ import com.adham.weatherSdk.R
 import com.adham.weatherSdk.WeatherSDKBuilder
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
 import com.adham.weatherSdk.helpers.DateHelpers
-import com.adham.weatherSdk.useCases.ForecastWeatherUseCase
+import com.adham.weatherSdk.useCases.ForecastWeatherOldUseCase
 import com.adham.weatherSdk.viewModels.WeatherViewModel
 import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCompose
 import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCustomActionInterface
@@ -57,7 +57,7 @@ fun ForecastScreen(
     LaunchedEffect({}) {
         viewModel.loadCurrentWeather(cityName)
         viewModel.loadForecast(
-            ForecastWeatherUseCase.ForecastWeatherUseCaseParams(
+            ForecastWeatherOldUseCase.ForecastWeatherUseCaseParams(
                 cityName, 24
             )
         )
@@ -147,7 +147,7 @@ fun ForecastScreen(
                 customAction = object : StatesLayoutCustomActionInterface {
                     override fun retry() {
                         viewModel.loadForecast(
-                            ForecastWeatherUseCase.ForecastWeatherUseCaseParams(
+                            ForecastWeatherOldUseCase.ForecastWeatherUseCaseParams(
                                 cityName, 24
                             )
                         )
