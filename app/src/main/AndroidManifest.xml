@@ -17,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherSDK"
         android:usesCleartextTraffic="true"
-        android:extractNativeLibs="false"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
