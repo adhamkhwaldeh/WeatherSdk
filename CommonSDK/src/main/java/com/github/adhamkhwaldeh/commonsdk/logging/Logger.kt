@@ -1,7 +1,6 @@
 package com.github.adhamkhwaldeh.commonsdk.logging
 
-import com.github.adhamkhwaldeh.commonsdk.config.BaseBehaviorConfig
-import com.github.adhamkhwaldeh.commonsdk.config.UserBehaviorSDKConfig
+import com.github.adhamkhwaldeh.commonsdk.options.BaseSDKOptions
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
@@ -58,25 +57,25 @@ class Logger : ILogger {
         loggers.clear()
     }
 
-    override fun d(tag: String, message: String, config: BaseBehaviorConfig) {
+    override fun d(tag: String, message: String, config: BaseSDKOptions) {
         for (logger in loggers) {
             logger.d(tag, message, config)
         }
     }
 
-    override fun e(tag: String, message: String, config: BaseBehaviorConfig, throwable: Throwable?) {
+    override fun e(tag: String, message: String, config: BaseSDKOptions, throwable: Throwable?) {
         for (logger in loggers) {
             logger.e(tag, message, config, throwable)
         }
     }
 
-    override fun w(tag: String, message: String, config: BaseBehaviorConfig) {
+    override fun w(tag: String, message: String, config: BaseSDKOptions) {
         for (logger in loggers) {
             logger.w(tag, message, config)
         }
     }
 
-    override fun i(tag: String, message: String, config: BaseBehaviorConfig) {
+    override fun i(tag: String, message: String, config: BaseSDKOptions) {
         for (logger in loggers) {
             logger.i(tag, message, config)
         }

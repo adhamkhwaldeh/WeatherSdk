@@ -121,14 +121,6 @@ dependencies {
     //endregion
 
 
-    //region Koin
-    def koinVersion = '3.4.3'
-    implementation "io.insert-koin:koin-core:$koinVersion"
-    implementation libs.koin.android
-    implementation libs.koin.androidx.compose
-    //endregion
-
-
     //region Testing package
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
@@ -140,12 +132,12 @@ dependencies {
 
 
 // Koin dependencies
-    androidTestImplementation("io.insert-koin:koin-test:$koinVersion") // Koin testing tools
+//    androidTestImplementation("io.insert-koin:koin-test:$koinVersion") // Koin testing tools
 //            {
 //                exclude group: 'org.mockito'
 //            }
-    testImplementation "io.insert-koin:koin-test:$koinVersion" // Koin testing tools
-    debugImplementation "io.insert-koin:koin-test:$koinVersion" // Koin testing tools
+//    testImplementation "io.insert-koin:koin-test:$koinVersion" // Koin testing tools
+//    debugImplementation "io.insert-koin:koin-test:$koinVersion" // Koin testing tools
 //    androidTestImplementation "org.koin:koin-test:$koinVersion"
 //    implementation 'org.koin:koin-android:2.0.1'
 //    testImplementation 'org.koin:koin-test:2.0.1'
@@ -225,8 +217,8 @@ dependencies {
     //endregion
 
 
-    implementation project(':CommonLibrary')
-    implementation project(':CommonSDK')
+    api project(':CommonLibrary')
+    api project(':CommonSDK')
 
 }
 
@@ -235,7 +227,7 @@ subprojects {
 }
 
 dokka {
-    moduleName.set("WeatherGiniSDK")
+    moduleName.set("WeatherSDK")
     dokkaPublications.html {
         outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
     }

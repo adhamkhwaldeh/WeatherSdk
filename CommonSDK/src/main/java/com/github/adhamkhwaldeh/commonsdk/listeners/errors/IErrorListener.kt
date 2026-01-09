@@ -1,6 +1,6 @@
 package com.github.adhamkhwaldeh.commonsdk.listeners.errors
 
-import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseUserBehaviorException
+import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseSDKException
 
 interface IErrorListener {
     /**
@@ -8,5 +8,5 @@ interface IErrorListener {
      *
      * @param error
      */
-    fun onError(error: BaseUserBehaviorException)
+    fun onError(error: BaseSDKException)
 }

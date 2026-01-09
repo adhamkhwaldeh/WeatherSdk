@@ -38,10 +38,11 @@ interface IBaseConfigurableManager<T : IManagerConfigInterface> {
      * @return
      */
 
+    fun updateConfig(changeOptions: (options: T) -> T): IBaseConfigurableManager<T>
     fun updateConfig(config: T): IBaseConfigurableManager<T>
 
+    fun updateDefaultConfig(changeOptions: (options: IManagerConfigInterface) -> IManagerConfigInterface): IBaseConfigurableManager<T>
     fun updateDefaultConfig(config: IManagerConfigInterface): IBaseConfigurableManager<T>
-
 
     fun canOverride(): Boolean
 

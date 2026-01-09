@@ -5,7 +5,7 @@ import com.tngtech.archunit.junit.AnalyzeClasses
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition
 import org.junit.jupiter.api.Test
 
-@AnalyzeClasses(packages = ["com.adham.gini.weatherginisdk"])
+@AnalyzeClasses(packages = ["com.adham.weathersdk"])
 class ArchUnitTest {
     @Test
     fun `controllers should only depend on services`() {

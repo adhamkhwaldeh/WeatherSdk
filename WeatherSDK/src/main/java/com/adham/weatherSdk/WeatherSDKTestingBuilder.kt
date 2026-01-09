@@ -2,19 +2,11 @@ package com.adham.weatherSdk
 
 import android.app.Application
 import android.content.Context
-import com.adham.weatherSdk.di.generalModule
-import com.adham.weatherSdk.di.localStorageModule
-import com.adham.weatherSdk.di.networkModule
-import com.adham.weatherSdk.di.repositoriesMockModule
-import com.adham.weatherSdk.di.useCasesModule
-import com.adham.weatherSdk.di.viewModelsModule
-import com.adham.weatherSdk.localStorages.SharedPrefsManager
-import com.adham.weatherSdk.repositories.WeatherGiniLocalRepository
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
+import com.adham.weatherSdk.repositories.WeatherLocalRepositoryImpl
 
 /**
- * Weather gini s d k builder
+ * Weather  s d k builder
  *
  */
 object WeatherSDKTestingBuilder {
@@ -29,24 +21,10 @@ object WeatherSDKTestingBuilder {
         application: Application
     ): WeatherSDKTestingBuilder {
 
-        startKoin {
-            androidContext(application)
-            modules(
-                listOf(
-                    generalModule,
-                    localStorageModule,
-                    networkModule,
-                    repositoriesMockModule,
-                    useCasesModule,
-                    viewModelsModule,
-                )
-            )
-        }
-
-        val localStorage = WeatherGiniLocalRepository(
-            SharedPrefsManager(
+        val localStorage = WeatherLocalRepositoryImpl(
+            SharedPrefsManagerImpl(
                 application.getSharedPreferences(
-                    SharedPrefsManager.sharedPrefsUtilPrefix, //+ BuildConfig.APPLICATION_ID,
+                    SharedPrefsManagerImpl.sharedPrefsUtilPrefix, //+ BuildConfig.APPLICATION_ID,
                     Context.MODE_PRIVATE
                 )
             )

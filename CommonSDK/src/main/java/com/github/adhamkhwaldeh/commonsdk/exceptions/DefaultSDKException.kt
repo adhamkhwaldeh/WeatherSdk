@@ -1,6 +1,6 @@
 package com.github.adhamkhwaldeh.commonsdk.exceptions
 
-class DefaultUserBehaviorException (
+class DefaultSDKException (
     override val message: String?,
     override val cause: Throwable? = null
-) : BaseUserBehaviorException(message, cause)
+) : BaseSDKException(message, cause)

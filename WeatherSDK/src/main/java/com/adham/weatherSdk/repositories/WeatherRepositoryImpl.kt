@@ -3,18 +3,18 @@ package com.adham.weatherSdk.repositories
 import com.adham.weatherSdk.networking.WeatherServiceApi
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
 import com.adham.weatherSdk.data.dtos.ForecastResponse
-import com.adham.weatherSdk.networking.WeatherMockedServiceApi
+import com.adham.weatherSdk.networking.BaseWeatherServiceApi
 
 /**
- * Weather gini repository
+ * Weather repository
  *
  * @property apiService
- * @constructor Create empty Weather gini repository
+ * @constructor Create empty Weather repository
  */
-class WeatherGiniRepository(
+internal class WeatherRepositoryImpl(
     private val apiService: WeatherServiceApi,
-    private val mockedApiService: WeatherMockedServiceApi
-) : WeatherGiniRepositoryImp {
+    private val mockedApiService: BaseWeatherServiceApi
+) : WeatherRepository {
 
     // I used to return the state from the repository but I've faced an issue mocking the apiService: WeatherServiceApi
     // to make the test cases more realistic I've return Result

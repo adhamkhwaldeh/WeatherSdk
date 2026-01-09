@@ -1,6 +1,6 @@
 package com.github.adhamkhwaldeh.commonsdk.managers
 
-import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseUserBehaviorException
+import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseSDKException
 import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.ICallbackListener
 import com.github.adhamkhwaldeh.commonsdk.listeners.configs.IManagerConfigInterface
 import com.github.adhamkhwaldeh.commonsdk.listeners.errors.IErrorListener
@@ -77,7 +77,7 @@ abstract class BaseManager<TCall : ICallbackListener, TError : IErrorListener, T
         errorListeners.clear()
     }
 
-    override fun notifyErrorListeners(error: BaseUserBehaviorException) {
+    override fun notifyErrorListeners(error: BaseSDKException) {
         for (listener in errorListeners) {
             listener.onError(error)
         }
@@ -124,6 +124,10 @@ abstract class BaseManager<TCall : ICallbackListener, TError : IErrorListener, T
         return this
     }
 
+    override fun updateConfig(changeOptions: (TConfig) -> TConfig): IBaseConfigurableManager<TConfig> {
+        updateConfig(changeOptions(config))
+        return this
+    }
     /**
      * Update config
      *
@@ -132,6 +136,11 @@ abstract class BaseManager<TCall : ICallbackListener, TError : IErrorListener, T
      */
     override fun updateConfig(config: TConfig): IBaseConfigurableManager<TConfig> {
         this.config = config
+        return this
+    }
+
+    override fun updateDefaultConfig(changeOptions: (options: IManagerConfigInterface) -> IManagerConfigInterface): IBaseConfigurableManager<TConfig>{
+        this.config.updateDefaultConfig(changeOptions)
         return this
     }
 

@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import com.adham.weatherSdk.ui.EnterCityScreenFragment
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
 import com.adham.weatherSdk.ui.ForecastScreenFragment
+import org.koin.android.ext.android.inject
 
 /**
  * Main activity with xml
@@ -14,12 +15,15 @@ import com.adham.weatherSdk.ui.ForecastScreenFragment
  */
 class MainActivityWithXml : FragmentActivity() {
 
+    val weatherSDK: WeatherSDK by inject()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity_with_xml_layout)
         replace(EnterCityScreenFragment(), EnterCityScreenFragment::class.java.name)
 
-        WeatherSDKBuilder.sdkStatus.observe(this) {
+        weatherSDK.sdkStatus.observe(this) {
             if (it is WeatherSdkStatus.OnFinish) {
                 replace(EnterCityScreenFragment(), EnterCityScreenFragment::class.java.name)
             } else if (it is WeatherSdkStatus.OnLaunchForecast) {

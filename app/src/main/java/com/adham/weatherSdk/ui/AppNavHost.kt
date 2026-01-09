@@ -13,9 +13,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.adham.weatherSdk.WeatherSDKBuilder
+import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
 import com.adham.weatherSdk.ui.navigations.NavigationItem
+import org.koin.compose.koinInject
+import org.koin.core.Koin
 
 
 /**
@@ -30,9 +32,10 @@ fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = NavigationItem.City.route,
+    weatherSDK: WeatherSDK = koinInject(),
 ) {
 
-    val sdkStatus = WeatherSDKBuilder.sdkStatus.observeAsState()
+    val sdkStatus = weatherSDK.sdkStatus.observeAsState()
     LaunchedEffect(sdkStatus.value) {
         val current = sdkStatus.value
         if (current is WeatherSdkStatus.OnFinish) {

@@ -4,11 +4,11 @@ import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
 import com.adham.weatherSdk.data.dtos.ForecastResponse
 
 /**
- * Weather gini repository imp
+ * Weather repository imp
  *
- * @constructor Create empty Weather gini repository imp
+ * @constructor Create empty Weather repository imp
  */
-interface WeatherGiniRepositoryImp {
+interface WeatherRepository {
 
     /**
      * Current

@@ -4,13 +4,11 @@ import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.adham.weatherSdk.base.states.BaseState
 import com.adham.weatherSdk.data.dtos.ForecastResponse
 import com.adham.weatherSdk.helpers.ConstantsHelpers
 import com.adham.weatherSdk.helpers.DummyDataHelper
-import com.adham.weatherSdk.Repositories.WeatherGiniLocalRepository
-import com.adham.weatherSdk.Repositories.WeatherGiniRepository
-import com.adham.weatherSdk.viewModels.WeatherViewModel
+import com.adham.weatherSdk.repositories.WeatherLocalRepository
+import com.adham.weatherSdk.repositories.WeatherRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import kotlinx.coroutines.Dispatchers

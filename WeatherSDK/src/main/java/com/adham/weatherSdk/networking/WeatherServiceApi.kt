@@ -10,7 +10,7 @@ import retrofit2.http.Query
  *
  * @constructor Create empty Weather service
  */
-interface WeatherServiceApi {
+interface WeatherServiceApi : BaseWeatherServiceApi{
 
     /**
      * Current
@@ -20,7 +20,7 @@ interface WeatherServiceApi {
      * @return
      */
     @GET("v2.0/current")
-    suspend fun current(
+   override suspend fun current(
         @Query("city") city: String,
         @Query("key") key: String
     ): CurrentWeatherResponse
@@ -34,7 +34,7 @@ interface WeatherServiceApi {
      * @return
      */
     @GET("v2.0/forecast/hourly")
-    suspend fun forecast(
+    override suspend fun forecast(
         @Query("city") city: String,
         @Query("hours") hours: Int,
         @Query("key") key: String

@@ -1,6 +1,6 @@
 package com.github.adhamkhwaldeh.commonsdk.managers
 
-import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseUserBehaviorException
+import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseSDKException
 import com.github.adhamkhwaldeh.commonsdk.listeners.errors.IErrorListener
 
 interface IBaseErrorManager<T> where T : IErrorListener {
@@ -25,6 +25,6 @@ interface IBaseErrorManager<T> where T : IErrorListener {
      */
     fun clearErrorListeners()
 
-    fun notifyErrorListeners(error: BaseUserBehaviorException)
+    fun notifyErrorListeners(error: BaseSDKException)
 
 }

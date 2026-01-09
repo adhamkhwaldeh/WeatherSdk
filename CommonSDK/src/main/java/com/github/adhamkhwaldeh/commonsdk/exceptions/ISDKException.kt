@@ -1,3 +1,3 @@
 package com.github.adhamkhwaldeh.commonsdk.exceptions
 
-interface IUserBehaviorException
+interface ISDKException

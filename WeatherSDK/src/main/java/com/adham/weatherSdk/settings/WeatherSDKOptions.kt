@@ -1,24 +1,28 @@
-package com.github.adhamkhwaldeh.commonsdk.config
+package com.adham.weatherSdk.settings
 
 import com.github.adhamkhwaldeh.commonsdk.logging.LogLevel
+import com.github.adhamkhwaldeh.commonsdk.options.BaseSDKOptions
 
-class UserBehaviorSDKConfig private constructor(
+class WeatherSDKOptions private constructor(
     isEnabled: Boolean,
     isDebugMode: Boolean,
     isLoggingEnabled: Boolean,
     overridable: Boolean,
     logLevel: LogLevel,
-) : BaseBehaviorConfig(isEnabled, isDebugMode, isLoggingEnabled, overridable, logLevel) {
+    val apiKey: String
+) : BaseSDKOptions(isEnabled, isDebugMode, isLoggingEnabled, overridable, logLevel) {
+
 
     /**
      * The Builder for creating UserBehaviorSDKConfig instances.
      */
-    class Builder : BaseBuilder<Builder, UserBehaviorSDKConfig>() {
+    class Builder(val apiKey: String) : BaseBuilder<Builder, WeatherSDKOptions>() {
         /**
          * Creates the final UserBehaviorSDKConfig object.
          */
-        override fun build(): UserBehaviorSDKConfig {
-            return UserBehaviorSDKConfig(
+        override fun build(): WeatherSDKOptions {
+            return WeatherSDKOptions(
+                apiKey = apiKey,
                 isEnabled = isEnabled,
                 isDebugMode = isDebugMode,
                 isLoggingEnabled = isLoggingEnabled,

@@ -1,6 +1,7 @@
 package com.adham.weatherSdk.networking
 
 import android.app.Application
+import android.content.Context
 import com.adham.weatherSdk.R
 import com.adham.weatherSdk.data.dtos.CurrentWeatherModel
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
@@ -13,7 +14,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
-class WeatherMockedServiceApi(val application: Application) {
+class WeatherMockedServiceApi(private val context: Context): BaseWeatherServiceApi {
 
     /**
      * Current
@@ -22,11 +23,11 @@ class WeatherMockedServiceApi(val application: Application) {
      * @param key
      * @return
      */
-    suspend fun current(
+   override suspend fun current(
         city: String,
         key: String
     ): CurrentWeatherResponse {
-        val json = application.resources.readFromAssets(R.raw.current)
+        val json = context.resources.readFromAssets(R.raw.current)
         val moshi: Moshi = Moshi.Builder()
             .addLast(KotlinJsonAdapterFactory()).build()
         val type = Types.newParameterizedType(
@@ -46,12 +47,12 @@ class WeatherMockedServiceApi(val application: Application) {
      * @param key
      * @return
      */
-    suspend fun forecast(
+    override suspend fun forecast(
         city: String,
         hours: Int,
         key: String
     ): ForecastResponse {
-        val json = application.resources.readFromAssets(R.raw.hourly)
+        val json = context.resources.readFromAssets(R.raw.hourly)
         val moshi: Moshi = Moshi.Builder()
             .addLast(KotlinJsonAdapterFactory()).build()
         val type = Types.newParameterizedType(

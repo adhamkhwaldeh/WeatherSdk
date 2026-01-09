@@ -1,10 +1,10 @@
-package com.github.adhamkhwaldeh.commonsdk.config
+package com.github.adhamkhwaldeh.commonsdk.options
 
 import com.github.adhamkhwaldeh.commonsdk.listeners.configs.IManagerConfigBuilder
 import com.github.adhamkhwaldeh.commonsdk.listeners.configs.IManagerConfigInterface
 import com.github.adhamkhwaldeh.commonsdk.logging.LogLevel
 
-abstract class BaseBehaviorConfig(
+abstract class BaseSDKOptions(
     override var isEnabled: Boolean = true,
     override var isDebugMode: Boolean = false,
     override var isLoggingEnabled: Boolean = true,
@@ -19,7 +19,7 @@ abstract class BaseBehaviorConfig(
      * @param enabled
      * @return
      */
-    fun setEnabled(enabled: Boolean): BaseBehaviorConfig {
+    fun setEnabled(enabled: Boolean): BaseSDKOptions {
         this.isEnabled = enabled
         return this
     }
@@ -30,7 +30,7 @@ abstract class BaseBehaviorConfig(
      * @param debugMode
      * @return
      */
-    fun setDebugMode(debugMode: Boolean): BaseBehaviorConfig {
+    fun setDebugMode(debugMode: Boolean): BaseSDKOptions {
         this.isDebugMode = debugMode
         return this
     }
@@ -41,7 +41,7 @@ abstract class BaseBehaviorConfig(
      * @param loggingEnabled
      * @return
      */
-    fun setLoggingEnabled(loggingEnabled: Boolean): BaseBehaviorConfig {
+    fun setLoggingEnabled(loggingEnabled: Boolean): BaseSDKOptions {
         this.isLoggingEnabled = loggingEnabled
         return this
     }
@@ -52,7 +52,7 @@ abstract class BaseBehaviorConfig(
      * @param logLevel
      * @return
      */
-    fun setLogLevel(logLevel: LogLevel): BaseBehaviorConfig {
+    fun setLogLevel(logLevel: LogLevel): BaseSDKOptions {
         this.logLevel = logLevel
         return this
     }

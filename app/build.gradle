@@ -91,7 +91,13 @@ dependencies {
 
     //endregion
 
+    //region Koin
     def koinVersion = '3.4.3'
+    implementation "io.insert-koin:koin-core:$koinVersion"
+    implementation libs.koin.android
+    implementation libs.koin.androidx.compose
+    //endregion
+
 
     //region Testing package
     testImplementation libs.junit

@@ -8,9 +8,8 @@ import com.adham.weatherSdk.base.states.BaseState
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
 import com.adham.weatherSdk.helpers.ConstantsHelpers
 import com.adham.weatherSdk.helpers.DummyDataHelper
-import com.adham.weatherSdk.Repositories.WeatherGiniLocalRepository
-import com.adham.weatherSdk.Repositories.WeatherGiniRepository
-import com.adham.weatherSdk.viewModels.WeatherViewModel
+import com.adham.weatherSdk.repositories.WeatherLocalRepository
+import com.adham.weatherSdk.repositories.WeatherRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import kotlinx.coroutines.Dispatchers
@@ -50,10 +49,10 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
 
     private val testDispatcher = StandardTestDispatcher()
 
-    private val localRepository: WeatherGiniLocalRepository by inject()
+    private val localRepository: WeatherLocalRepository by inject()
 
     //Please note that I'm injecting RepositoriesMockModule so the repository already mocked
-    private val repository: WeatherGiniRepository by inject()
+    private val repository: WeatherRepository by inject()
 
     private val viewModel: WeatherViewModel by inject()
 

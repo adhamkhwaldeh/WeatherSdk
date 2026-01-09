@@ -1,6 +1,6 @@
-# Module WeatherGiniSDK
+# Module WeatherSDK
 
-# Integration Guide: [Weather Gini SDK]
+# Integration Guide: [Weather SDK]
 
 ## Table of Contents
 1. [Introduction]
@@ -42,25 +42,25 @@ Use one of the following commands based on your package manager.
        }
        
        dependencies {
-          implementation 'com.gini.weatherSdk:latest'
+          implementation 'com.adham.weatherSdk:latest'
        }
 
 ### Step 2: Configure the Integration
 
 Next, you’ll need to configure your integration settings. 
 Add the following details in your application class .
-      WeatherGiniSDKBuilder.initialize(
+      WeatherSDKBuilder.initialize(
             this,
             "your api key"
       )
 ### Step 3: Test the Integration
 
 #### Update sdk status to launch 
-        WeatherGiniSDKBuilder.sdkStatus.value =
+        WeatherSDKBuilder.sdkStatus.value =
                             WeatherSdkStatus.OnLaunchForecast(cityName)
 
 #### Observe SDK status and replace it with  ForecastScreenFragment
-     WeatherGiniSDKBuilder.sdkStatus.observe(this) {
+     WeatherSDKBuilder.sdkStatus.observe(this) {
             if (it is WeatherSdkStatus.OnFinish) {
                 replace(EnterCityScreenFragment(), EnterCityScreenFragment::class.java.name)
             } else if (it is WeatherSdkStatus.OnLaunchForecast) {
@@ -72,7 +72,7 @@ Add the following details in your application class .
         }
 
 #### Observe SDK status and replace it with ForecastScreen if you are using compose 
-    val sdkStatus = WeatherGiniSDKBuilder.sdkStatus.observeAsState()
+    val sdkStatus = WeatherSDKBuilder.sdkStatus.observeAsState()
     LaunchedEffect(sdkStatus.value) {
         val current = sdkStatus.value
         if (current is WeatherSdkStatus.OnFinish) {
@@ -85,7 +85,7 @@ Add the following details in your application class .
 #### You can replace ForecastScreenFragment.newInstance(it.cityName) or ForecastScreen compose directly
 
 ## Authorization
-   You need to get Gini Weather Api key (e.g register to website )
+   You need to get Weather Api key (e.g register to website )
 
 ## Api reference
    https://www.weatherbit.io/

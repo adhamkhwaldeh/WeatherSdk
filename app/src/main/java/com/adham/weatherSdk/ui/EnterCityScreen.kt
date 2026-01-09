@@ -23,8 +23,9 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.adham.weatherSdk.R
-import com.adham.weatherSdk.WeatherSDKBuilder
+import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
+import org.koin.compose.koinInject
 
 /**
  * Enter city screen
@@ -32,7 +33,7 @@ import com.adham.weatherSdk.data.states.WeatherSdkStatus
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EnterCityScreen() {
+fun EnterCityScreen(weatherSDK: WeatherSDK = koinInject()) {
 
     var cityName by remember { mutableStateOf("") }
 
@@ -89,7 +90,7 @@ fun EnterCityScreen() {
                     if (cityName.isBlank()) {
                         isError = true
                     } else {
-                        WeatherSDKBuilder.sdkStatus.value =
+                        weatherSDK.sdkStatus.value =
                             WeatherSdkStatus.OnLaunchForecast(cityName)
                     }
                 },
