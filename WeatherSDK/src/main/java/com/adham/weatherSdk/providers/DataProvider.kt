@@ -75,7 +75,7 @@ internal object DataProvider {
                     .build()
                 retrofitBuilder.apply {
 //            baseUrl(localRepository.getBaseUrl())
-                    baseUrl(ConstantsHelpers.baseUrl)
+                    baseUrl(ConstantsHelpers.BASE_URL)
                     addConverterFactory(MoshiConverterFactory.create(moshi))
                 }.also {
                     val okHttpClientBuilder = OkHttpClient.Builder()

@@ -6,7 +6,7 @@
 
 
     <application
-        android:name="com.adham.weatherSdk.App"
+        android:name="com.adham.weatherSample.App"
         android:allowBackup="true"
         android:allowClearUserData="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="com.adham.weatherSdk.MainActivity"
+            android:name="com.adham.weatherSample.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.WeatherSDK">

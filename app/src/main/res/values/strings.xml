@@ -5,4 +5,10 @@
     <string name="CityName">City Name</string>
     <string name="EnterTheCityNameForTheWeatherForecast">Enter the city name for the weather forecast</string>
     <string name="WeatherForecast">Weather forecast</string>
+
+    <string name="celsius">°C</string>
+    <string name="TwentyFourHoursForecast">24h Forecast</string>
+    <string name="At">At</string>
+    <string name="TheWeatherIn">The weather in</string>
+    <string name="IS">is</string>
 </resources>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="celsius">°C</string>
-    <string name="At">At</string>
-    <string name="TheWeatherIn">The weather in</string>
-    <string name="IS">is</string>
-    <string name="TwentyFourHoursForecast">24h Forecast</string>
+
+
+
 
 </resources>

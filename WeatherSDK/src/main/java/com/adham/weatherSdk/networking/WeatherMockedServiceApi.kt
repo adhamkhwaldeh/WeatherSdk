@@ -1,6 +1,5 @@
 package com.adham.weatherSdk.networking
 
-import android.app.Application
 import android.content.Context
 import com.adham.weatherSdk.R
 import com.adham.weatherSdk.data.dtos.CurrentWeatherModel
