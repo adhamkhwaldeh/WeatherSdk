@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
 import com.adham.weatherSdk.data.dtos.ForecastResponse
+import com.adham.weatherSdk.data.interfaces.OnSdkStatusChangeListener
 import com.adham.weatherSdk.data.params.ForecastWeatherUseCaseParams
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
 import com.adham.weatherSdk.providers.DataProvider
@@ -22,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 class WeatherSDK private constructor(
     context: Context,
     sdkConfig: WeatherSDKOptions
-) : BaseSDK<WeatherSDKOptions>(context, sdkConfig) {
+) : BaseSDK<OnSdkStatusChangeListener, WeatherSDKOptions>(context, sdkConfig) {
 
     val sdkStatus: MutableLiveData<WeatherSdkStatus> = MutableLiveData()
 
@@ -32,11 +33,11 @@ class WeatherSDK private constructor(
      * Builder for creating and configuring a `UserBehaviorCoreSDK` instance.
      * @param context The application context.
      */
-    class Builder(private val context: Context, apiKey: String) {
+    class Builder(context: Context,private val apiKey: String) :
+        BaseSDK.Builder<Builder, OnSdkStatusChangeListener, WeatherSDKOptions, WeatherSDK>(context) {
 
-        private var sdkConfig = WeatherSDKOptions.Builder(apiKey).build()
-
-        private val customLoggers = mutableListOf<ILogger>()
+//
+//        private val customLoggers = mutableListOf<ILogger>()
 
         /**
          * Applies a custom configuration to the SDK. If not called, a default
@@ -45,10 +46,10 @@ class WeatherSDK private constructor(
          * @param config The [UserBehaviorSDKConfig] instance.
          * @return The Builder instance for chaining.
          */
-        fun withConfig(config: WeatherSDKOptions): Builder {
-            this.sdkConfig = config
-            return this
-        }
+//        fun withConfig(config: WeatherSDKOptions): Builder {
+//            this.sdkConfig = config
+//            return this
+//        }
 
         /**
          * Adds a custom logger implementation. Multiple loggers can be added.
@@ -57,17 +58,19 @@ class WeatherSDK private constructor(
          * @param logger The custom logger to add.
          * @return The Builder instance for chaining.
          */
-        fun addLogger(logger: ILogger): Builder {
-            customLoggers.add(logger)
-            return this
-        }
+//        fun addLogger(logger: ILogger): Builder {
+//            customLoggers.add(logger)
+//            return this
+//        }
 
         /**
          * Builds and returns a configured instance of the UserBehaviorCoreSDK.
          *
          * @return A new instance of UserBehaviorCoreSDK.
          */
-        fun build(): WeatherSDK {
+        override fun build(): WeatherSDK {
+
+            val sdkConfig = sdkConfig ?: WeatherSDKOptions.Builder(apiKey).build()
             val sdk = WeatherSDK(context, sdkConfig)
 
             val localStorage = DataProvider.provideWeatherLocalRepository(context)
@@ -77,6 +80,7 @@ class WeatherSDK private constructor(
 
             return sdk
         }
+
     }
 
     suspend fun currentWeatherUseCase(

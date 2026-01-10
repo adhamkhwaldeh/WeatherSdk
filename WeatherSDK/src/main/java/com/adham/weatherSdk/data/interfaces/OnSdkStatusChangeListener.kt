@@ -1,5 +1,6 @@
 package com.adham.weatherSdk.data.interfaces
 
+import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.ICallbackListener
 import java.lang.Exception
 
 /**
@@ -7,17 +8,13 @@ import java.lang.Exception
  *
  * @constructor Create empty On sdk status change listener
  */
-interface OnSdkStatusChangeListener {
-    /**
-     * On finish
-     *
-     */
-    fun onFinish()
+interface OnSdkStatusChangeListener : ICallbackListener {
+
 
     /**
-     * On finish with error
+     * On sdk initialized
      *
-     * @param exception
      */
-    fun onFinishWithError(exception: Exception?)
+    fun onSdkInitialized()
+
 }

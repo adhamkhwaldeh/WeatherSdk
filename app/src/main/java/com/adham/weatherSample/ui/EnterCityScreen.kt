@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -29,8 +30,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 /**
- * Enter city screen
- *
+ * A composable screen that allows users to enter a city name to retrieve weather forecasts.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,19 +73,22 @@ fun EnterCityScreen(weatherSDK: WeatherSDK = koinInject()) {
                 singleLine = true,
                 isError = isError,
                 leadingIcon = {
-                    IconButton(onClick = {
-                        if (cityName.isNotBlank()) {
-                            scope.launch(Dispatchers.IO) {
-                                val trimmedName = cityName.trim()
-                                val existing = addressDao.findByName(trimmedName)
-                                if (existing == null) {
-                                    addressDao.insert(Address(name = trimmedName))
+                    IconButton(
+                        onClick = {
+                            if (cityName.isNotBlank()) {
+                                scope.launch(Dispatchers.IO) {
+                                    val trimmedName = cityName.trim()
+                                    val existing = addressDao.findByName(trimmedName)
+                                    if (existing == null) {
+                                        addressDao.insert(Address(name = trimmedName))
+                                    }
                                 }
+                            } else {
+                                isError = true
                             }
-                        } else {
-                            isError = true
-                        }
-                    }) {
+                        },
+                        modifier = Modifier.testTag("saveAddressButton")
+                    ) {
                         Icon(
                             imageVector = Icons.Default.AddLocation,
                             contentDescription = "Save Address",
@@ -104,7 +107,9 @@ fun EnterCityScreen(weatherSDK: WeatherSDK = koinInject()) {
                         }
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("cityInput")
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -115,7 +120,9 @@ fun EnterCityScreen(weatherSDK: WeatherSDK = koinInject()) {
             )
 
             OutlinedButton(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .testTag("weatherForecastButton"),
                 onClick = {
                     if (cityName.isBlank()) {
                         isError = true
@@ -138,7 +145,9 @@ fun EnterCityScreen(weatherSDK: WeatherSDK = koinInject()) {
                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
                 LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("savedAddressesList"),
                     contentPadding = PaddingValues(vertical = 8.dp)
                 ) {
                     items(
@@ -193,6 +202,7 @@ fun EnterCityScreen(weatherSDK: WeatherSDK = koinInject()) {
                                         weatherSDK.sdkStatus.value =
                                             WeatherSdkStatus.OnLaunchForecast(address.name)
                                     }
+                                    .testTag("addressItem_${address.name}")
                             )
                         }
                     }

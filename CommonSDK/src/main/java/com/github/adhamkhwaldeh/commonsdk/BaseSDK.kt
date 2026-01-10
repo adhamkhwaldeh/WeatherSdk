@@ -15,27 +15,70 @@ import java.util.concurrent.CopyOnWriteArrayList
 /**
  * Base s d k
  *
+ * @param TSdkStatus
  * @param TConfig
  * @property context
  * @property sdkConfig
  * @constructor Create empty Base s d k
  */
-abstract class BaseSDK<TConfig : BaseSDKOptions>(
+abstract class BaseSDK<TSdkStatus : ICallbackListener,
+        TConfig : BaseSDKOptions>(
     val context: Context,
-    private var sdkConfig: TConfig
-) : IBaseSDK<TConfig> {
-    private val globalErrorListeners = CopyOnWriteArrayList<IErrorListener>()
+    protected var sdkConfig: TConfig
+) : IBaseSDK<TSdkStatus, TConfig> {
 
-    private val logger by lazy {
-        Logger()
+    /**
+     * Generic Builder for the SDK.
+     *
+     * @param T The concrete builder type for chaining.
+     * @param TSdkStatus The type of SDK status listener.
+     * @param TConfig The type of SDK options.
+     * @param C The type of SDK being built.
+     * @property context The application context.
+     */
+    abstract class Builder<
+            T : Builder<T, TSdkStatus, TConfig, C>,
+            TSdkStatus : ICallbackListener,
+            TConfig : BaseSDKOptions,
+            C : IBaseSDK<TSdkStatus, TConfig>
+            >(protected val context: Context) : IBaseSDKOptionBuilder<T, TSdkStatus, TConfig, C> {
+
+        protected var sdkConfig: TConfig? = null
+        protected val customLoggers = mutableListOf<ILogger>()
+
+        @Suppress("UNCHECKED_CAST")
+        override fun setupOptions(options: TConfig): T {
+            this.sdkConfig = options
+            return this as T
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        fun addLogger(logger: ILogger): T {
+            customLoggers.add(logger)
+            return this as T
+        }
     }
 
-    //#region SDK-level Actions
 
-    // Using a WeakHashMap allows garbage collection of the Activity/View keys when they are destroyed,
-    // preventing memory leaks.
-    private val behaviorManagers =
-        WeakHashMap<ManagerKey, IBaseManager<out ICallbackListener, out IErrorListener, out IManagerConfigInterface>>()
+    //#region SDK-level Status actions
+    private val globalStatusListeners = CopyOnWriteArrayList<TSdkStatus>()
+
+    override fun addGlobalStatusListener(listener: TSdkStatus) {
+        globalStatusListeners.addIfAbsent(listener)
+    }
+
+    override fun removeGlobalStatusListener(listener: TSdkStatus) {
+        globalStatusListeners.remove(listener)
+    }
+
+    override fun clearGlobalStatusListeners() {
+        globalStatusListeners.clear()
+    }
+
+    //#endregion
+
+    //#region SDK-level Error actions
+    private val globalErrorListeners = CopyOnWriteArrayList<IErrorListener>()
 
     /**
      * Adds a listener that will receive errors from all managers in the SDK.
@@ -60,9 +103,37 @@ abstract class BaseSDK<TConfig : BaseSDKOptions>(
     override fun clearGlobalErrorListeners() {
         globalErrorListeners.clear()
     }
+    //#endregion
+
+    //#region SDK-level Logging actions
+    private val logger by lazy {
+        Logger()
+    }
 
     /**
-     * Update s d k config
+     * Update loggers
+     *
+     * @param loggers
+     */
+    override fun updateLoggers(loggers: List<ILogger>) {
+        // Configure the global logger based on the builder settings.
+        if (loggers.isNotEmpty()) {
+            logger.clearLoggers()
+            loggers.forEach { logger.addLogger(it) }
+        }
+    }
+    //#endregion
+
+    //#region SDK-level Config Actions
+    protected val behaviorManagers =
+        WeakHashMap<ManagerKey, IBaseManager<out ICallbackListener, out IErrorListener, out IManagerConfigInterface>>()
+
+    //#endregion
+
+    //#region SDK-level managers Actions
+
+    /**
+     * Update sdk config
      *
      * @param changeOptions
      * @receiver
@@ -76,7 +147,7 @@ abstract class BaseSDK<TConfig : BaseSDKOptions>(
      * to all active managers. This allows for runtime changes to settings like
      * logging and debug modes.
      *
-     * @param newConfig The new [UserBehaviorSDKConfig] to apply.
+     * @param newConfig The new [TConfig] to apply.
      */
     override fun updateSDKConfig(newConfig: TConfig) {
         this.sdkConfig = newConfig
@@ -91,19 +162,6 @@ abstract class BaseSDK<TConfig : BaseSDKOptions>(
             }
         }
 
-    }
-
-    /**
-     * Update loggers
-     *
-     * @param loggers
-     */
-    override fun updateLoggers(loggers: List<ILogger>) {
-        // Configure the global logger based on the builder settings.
-        if (loggers.isNotEmpty()) {
-            logger.clearLoggers()
-            loggers.forEach { logger.addLogger(it) }
-        }
     }
     //#endregion
 
