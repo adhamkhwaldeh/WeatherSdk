@@ -85,6 +85,7 @@ dependencies {
     implementation libs.androidx.compose.ui.ui.graphics
     implementation libs.androidx.compose.ui.ui.tooling.preview
     implementation libs.androidx.compose.material3.material3
+    implementation libs.androidx.compose.material.icons.extended
 
     //    // Optional - Integration with LiveData
     implementation libs.androidx.compose.runtime.livedata
@@ -173,9 +174,9 @@ dependencies {
     //Truth: A fluent testing library, often used with Google libraries.
     testImplementation libs.truth
 
-    implementation(libs.androidx.benchmark.macro)
-    androidTestImplementation(libs.androidx.benchmark.macro)
-    androidTestImplementation(libs.androidx.benchmark.junit4)
+//    implementation(libs.androidx.benchmark.macro)
+//    androidTestImplementation(libs.androidx.benchmark.macro)
+//    androidTestImplementation(libs.androidx.benchmark.junit4)
     androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
     androidTestImplementation(libs.androidx.uiautomator)
     implementation project(':WeatherSDK')

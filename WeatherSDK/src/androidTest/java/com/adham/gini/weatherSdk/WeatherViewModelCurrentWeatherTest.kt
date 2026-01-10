@@ -108,13 +108,13 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
 
         coEvery {
             repository.current(
-                DummyDataHelper.cityName, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, localRepository.getApiKey()
             )
         }.returns(
             Result.success(DummyDataHelper.weatherSuccessData)
         )
 
-        viewModel.loadCurrentWeather(DummyDataHelper.cityName)
+        viewModel.loadCurrentWeather(DummyDataHelper.CITY_NAME)
 
         advanceUntilIdle()
         testDispatcher.scheduler.advanceUntilIdle()
@@ -126,7 +126,7 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
 
         coVerify {
             repository.current(
-                DummyDataHelper.cityName, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, localRepository.getApiKey()
             )
         }
         assertEquals(viewModel.currentWeather.value, DummyDataHelper.weatherSuccessState)
@@ -140,13 +140,13 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
     fun test_load_data_NoInternet() = runTest {
         coEvery {
             repository.current(
-                DummyDataHelper.cityName, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, localRepository.getApiKey()
             )
         }.returns(
             Result.failure(DummyDataHelper.noInternetException)
         )
 
-        viewModel.loadCurrentWeather(DummyDataHelper.cityName)
+        viewModel.loadCurrentWeather(DummyDataHelper.CITY_NAME)
 
         advanceUntilIdle()
         testDispatcher.scheduler.advanceUntilIdle()
@@ -158,7 +158,7 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
 
         coVerify {
             repository.current(
-                DummyDataHelper.cityName, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, localRepository.getApiKey()
             )
         }
         assert(
@@ -175,13 +175,13 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
     fun test_Not_Authorized() = runTest {
         coEvery {
             repository.current(
-                DummyDataHelper.cityName, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, localRepository.getApiKey()
             )
         }.returns(
             Result.failure(DummyDataHelper.notAuthorizeException)
         )
 
-        viewModel.loadCurrentWeather(DummyDataHelper.cityName)
+        viewModel.loadCurrentWeather(DummyDataHelper.CITY_NAME)
 
         advanceUntilIdle()
         testDispatcher.scheduler.advanceUntilIdle()
@@ -193,7 +193,7 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
 
         coVerify {
             repository.current(
-                DummyDataHelper.cityName, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, localRepository.getApiKey()
             )
         }
         assert(
@@ -210,13 +210,13 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
     fun test_Internal_Server_Error() = runTest {
         coEvery {
             repository.current(
-                DummyDataHelper.cityName, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, localRepository.getApiKey()
             )
         }.returns(
             Result.failure(DummyDataHelper.internalServerError)
         )
 
-        viewModel.loadCurrentWeather(DummyDataHelper.cityName)
+        viewModel.loadCurrentWeather(DummyDataHelper.CITY_NAME)
 
         advanceUntilIdle()
         testDispatcher.scheduler.advanceUntilIdle()
@@ -228,7 +228,7 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
 
         coVerify {
             repository.current(
-                DummyDataHelper.cityName, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, localRepository.getApiKey()
             )
         }
         assert(

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 
-class CurrentWeatherUseCase(
+internal class CurrentWeatherUseCase(
     private val weatherRepository: WeatherRepository,
     private val weatherLocalRepository: WeatherLocalRepository
 ) : BaseSealedUseCase<CurrentWeatherResponse, String>() {

@@ -11,7 +11,6 @@ var viewModelsModule = module {
         WeatherViewModel(
             androidApplication(),
             get(),
-            get(),
         )
     }
 }

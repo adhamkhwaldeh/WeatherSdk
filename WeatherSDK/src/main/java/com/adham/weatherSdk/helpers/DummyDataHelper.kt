@@ -2,7 +2,7 @@ package com.adham.weatherSdk.helpers
 
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
 import com.adham.weatherSdk.data.dtos.ForecastResponse
-import com.adham.weatherSdk.useCases.ForecastWeatherUseCase
+import com.adham.weatherSdk.data.params.ForecastWeatherUseCaseParams
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.ResponseBody
@@ -14,8 +14,8 @@ import java.net.UnknownHostException
 object DummyDataHelper {
 
     //#region general properties
-    const val cityName = "munich"
-    const val defaultHours = 24
+    const val CITY_NAME = "munich"
+    const val DEFAULT_HOURS = 24
 
     val noInternetException = UnknownHostException()
 
@@ -48,8 +48,8 @@ object DummyDataHelper {
 
 
     //#region forecast properties
-    val forecastWeatherUseCaseParams = ForecastWeatherUseCase.ForecastWeatherUseCaseParams(
-        city = cityName, defaultHours
+    val forecastWeatherUseCaseParams = ForecastWeatherUseCaseParams(
+        city = CITY_NAME, DEFAULT_HOURS
     )
     val forecastSuccessData = ForecastResponse(
         listOf()

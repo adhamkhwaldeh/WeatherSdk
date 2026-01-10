@@ -7,8 +7,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adham.weatherSdk.data.dtos.ForecastResponse
 import com.adham.weatherSdk.helpers.ConstantsHelpers
 import com.adham.weatherSdk.helpers.DummyDataHelper
-import com.adham.weatherSdk.repositories.WeatherLocalRepository
-import com.adham.weatherSdk.repositories.WeatherRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import kotlinx.coroutines.Dispatchers
@@ -107,7 +105,7 @@ class WeatherViewModelForecastTest : KoinTest {
 
         coEvery {
             repository.forecast(
-                DummyDataHelper.cityName, DummyDataHelper.defaultHours, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, DummyDataHelper.DEFAULT_HOURS, localRepository.getApiKey()
             )
         }.returns(
             Result.success(DummyDataHelper.forecastSuccessData)
@@ -126,7 +124,7 @@ class WeatherViewModelForecastTest : KoinTest {
 
         coVerify {
             repository.forecast(
-                DummyDataHelper.cityName, DummyDataHelper.defaultHours, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, DummyDataHelper.DEFAULT_HOURS, localRepository.getApiKey()
             )
         }
         assertEquals(viewModel.forecast.value, DummyDataHelper.forecastSuccessState)
@@ -140,7 +138,7 @@ class WeatherViewModelForecastTest : KoinTest {
     fun test_load_data_NoInternet() = runTest {
         coEvery {
             repository.forecast(
-                DummyDataHelper.cityName, DummyDataHelper.defaultHours, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, DummyDataHelper.DEFAULT_HOURS, localRepository.getApiKey()
             )
         }.returns(
             Result.failure(DummyDataHelper.noInternetException)
@@ -158,7 +156,7 @@ class WeatherViewModelForecastTest : KoinTest {
 
         coVerify {
             repository.forecast(
-                DummyDataHelper.cityName, DummyDataHelper.defaultHours, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, DummyDataHelper.DEFAULT_HOURS, localRepository.getApiKey()
             )
         }
         assert(
@@ -176,7 +174,7 @@ class WeatherViewModelForecastTest : KoinTest {
 
         coEvery {
             repository.forecast(
-                DummyDataHelper.cityName, DummyDataHelper.defaultHours, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, DummyDataHelper.DEFAULT_HOURS, localRepository.getApiKey()
             )
         }.returns(
             Result.failure(DummyDataHelper.notAuthorizeException)
@@ -194,7 +192,7 @@ class WeatherViewModelForecastTest : KoinTest {
 
         coVerify {
             repository.forecast(
-                DummyDataHelper.cityName, DummyDataHelper.defaultHours, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, DummyDataHelper.DEFAULT_HOURS, localRepository.getApiKey()
             )
         }
         assert(
@@ -211,7 +209,7 @@ class WeatherViewModelForecastTest : KoinTest {
     fun test_Internal_Server_Error() = runTest {
         coEvery {
             repository.forecast(
-                DummyDataHelper.cityName, DummyDataHelper.defaultHours, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, DummyDataHelper.DEFAULT_HOURS, localRepository.getApiKey()
             )
         }.returns(
             Result.failure(DummyDataHelper.internalServerError)
@@ -230,7 +228,7 @@ class WeatherViewModelForecastTest : KoinTest {
 
         coVerify {
             repository.forecast(
-                DummyDataHelper.cityName, DummyDataHelper.defaultHours, localRepository.getApiKey()
+                DummyDataHelper.CITY_NAME, DummyDataHelper.DEFAULT_HOURS, localRepository.getApiKey()
             )
         }
         assert(

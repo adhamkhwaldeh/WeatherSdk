@@ -1,31 +1,38 @@
 package com.adham.weatherSdk
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
+import com.adham.weatherSdk.data.dtos.ForecastResponse
+import com.adham.weatherSdk.data.params.ForecastWeatherUseCaseParams
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
-import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
 import com.adham.weatherSdk.providers.DataProvider
-import com.adham.weatherSdk.repositories.WeatherLocalRepositoryImpl
+import com.adham.weatherSdk.providers.DomainProvider
 import com.adham.weatherSdk.settings.WeatherSDKOptions
+import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import com.github.adhamkhwaldeh.commonsdk.BaseSDK
 import com.github.adhamkhwaldeh.commonsdk.logging.ILogger
+import kotlinx.coroutines.flow.Flow
 
 
 /**
  * Weather sdk builder
  *
  */
-class WeatherSDK  private constructor(
+class WeatherSDK private constructor(
     context: Context,
     sdkConfig: WeatherSDKOptions
-) : BaseSDK<WeatherSDKOptions>(context,sdkConfig){
+) : BaseSDK<WeatherSDKOptions>(context, sdkConfig) {
+
+    val sdkStatus: MutableLiveData<WeatherSdkStatus> = MutableLiveData()
+
+//    var sdkStatusListener: OnSdkStatusChangeListener? = null
 
     /**
      * Builder for creating and configuring a `UserBehaviorCoreSDK` instance.
      * @param context The application context.
      */
-    class Builder(private val context: Context,apiKey: String) {
+    class Builder(private val context: Context, apiKey: String) {
 
         private var sdkConfig = WeatherSDKOptions.Builder(apiKey).build()
 
@@ -72,25 +79,18 @@ class WeatherSDK  private constructor(
         }
     }
 
-    val sdkStatus: MutableLiveData<WeatherSdkStatus> = MutableLiveData()
+    suspend fun currentWeatherUseCase(
+        params: String
+    ): Flow<BaseState<CurrentWeatherResponse>> {
+        val useCase = DomainProvider.provideCurrentWeatherUseCase(context)
+        return useCase.invoke(params)
+    }
 
-//    var sdkStatusListener: OnSdkStatusChangeListener? = null
-
-//    Also we can use EventBus or broadcast receiver
-
-    /**
-     * Initialize
-     *
-     * @param application
-     * @param apiKey
-     * @return
-     */
-    fun initialize(
-        application: Application,
-        apiKey: String
-    ): WeatherSDK {
-
-        return this
+    suspend fun forecastWeatherUseCase(
+        params: ForecastWeatherUseCaseParams
+    ): Flow<BaseState<ForecastResponse>> {
+        val useCase = DomainProvider.provideForecastWeatherUseCase(context)
+        return useCase.invoke(params)
     }
 
 }

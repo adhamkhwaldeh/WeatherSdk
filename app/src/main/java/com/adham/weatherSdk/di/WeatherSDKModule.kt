@@ -11,6 +11,6 @@ var weatherSDKModule = module {
         WeatherSDK.Builder(
             androidApplication(),
             AppConstantsHelper.apiKey
-        )
+        ).build()
     }
 }

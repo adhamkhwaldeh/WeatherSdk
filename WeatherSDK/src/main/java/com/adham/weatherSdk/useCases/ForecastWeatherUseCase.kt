@@ -2,6 +2,7 @@ package com.adham.weatherSdk.useCases
 
 
 import com.adham.weatherSdk.data.dtos.ForecastResponse
+import com.adham.weatherSdk.data.params.ForecastWeatherUseCaseParams
 import com.adham.weatherSdk.repositories.WeatherLocalRepository
 import com.adham.weatherSdk.repositories.WeatherRepository
 import com.github.adhamkhwaldeh.commonlibrary.base.BaseSealedUseCase
@@ -10,10 +11,10 @@ import com.github.adhamkhwaldeh.commonlibrary.base.states.asBasState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class ForecastWeatherUseCase(
+internal class ForecastWeatherUseCase(
     private val weatherRepository: WeatherRepository,
     private val weatherLocalRepository: WeatherLocalRepository
-) : BaseSealedUseCase<ForecastResponse, ForecastWeatherUseCase.ForecastWeatherUseCaseParams>() {
+) : BaseSealedUseCase<ForecastResponse, ForecastWeatherUseCaseParams>() {
 
     override suspend fun invoke(params: ForecastWeatherUseCaseParams): Flow<BaseState<ForecastResponse>> {
         return flow {
@@ -26,9 +27,6 @@ class ForecastWeatherUseCase(
             )
         }
     }
-    data class ForecastWeatherUseCaseParams(
-        val city: String,
-        val hours: Int,
-    )
+
 
 }

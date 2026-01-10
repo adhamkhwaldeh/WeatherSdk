@@ -201,9 +201,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.squareup/kotlinpoet
     runtimeOnly(libs.kotlinpoet)
 
-    implementation(libs.androidx.benchmark.macro)
-    androidTestImplementation(libs.androidx.benchmark.macro)
-    androidTestImplementation(libs.androidx.benchmark.junit4)
+//    implementation(libs.androidx.benchmark.macro)
+//    androidTestImplementation(libs.androidx.benchmark.macro)
+//    androidTestImplementation(libs.androidx.benchmark.junit4)
     androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
 
 
