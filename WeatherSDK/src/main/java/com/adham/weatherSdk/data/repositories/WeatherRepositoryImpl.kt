@@ -1,8 +1,9 @@
-package com.adham.weatherSdk.repositories
+package com.adham.weatherSdk.data.repositories
 
 import com.adham.weatherSdk.networking.WeatherServiceApi
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
 import com.adham.weatherSdk.data.dtos.ForecastResponse
+import com.adham.weatherSdk.domain.repositories.WeatherRepository
 import com.adham.weatherSdk.networking.BaseWeatherServiceApi
 
 /**
@@ -20,7 +21,7 @@ internal class WeatherRepositoryImpl(
     // to make the test cases more realistic I've return Result
     override
     suspend fun current(city: String, apiKey: String): Result<CurrentWeatherResponse> {
-        return kotlin.runCatching {
+        return runCatching {
             if (apiKey.isBlank()) {
                 mockedApiService.current(city, apiKey)
             } else {
@@ -35,7 +36,7 @@ internal class WeatherRepositoryImpl(
         hours: Int,
         apiKey: String
     ): Result<ForecastResponse> {
-        return kotlin.runCatching {
+        return runCatching {
             if (apiKey.isBlank()) {
                 mockedApiService.forecast(
                     city,

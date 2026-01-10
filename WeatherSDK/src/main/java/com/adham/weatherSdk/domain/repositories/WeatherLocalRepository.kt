@@ -1,4 +1,4 @@
-package com.adham.weatherSdk.repositories
+package com.adham.weatherSdk.domain.repositories
 
 interface WeatherLocalRepository {
     fun saveApiKey(apiKey: String)

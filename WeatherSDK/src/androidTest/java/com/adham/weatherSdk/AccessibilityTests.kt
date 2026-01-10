@@ -1,21 +1,29 @@
 package com.adham.weatherSdk
 
-import androidx.compose.ui.test.assertContentDescriptionEquals
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import com.adham.weatherSample.ui.EnterCityScreen
+import com.adham.weatherSample.ui.theme.WeatherSDKTheme
 import org.junit.Rule
 import org.junit.Test
-
-// Ensures the app is usable by people with disabilities.
 
 class AccessibilityTests {
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
-    fun testButtonHasContentDescription() {
-        composeTestRule
-            .onNodeWithTag("searchButton")
-            .assertContentDescriptionEquals("Search Weather")
+    fun testEnterCityScreen_TextElementsAreAccessible() {
+        val mockSdk = WeatherSDKTestingBuilder.createMockedWeatherSDK()
+        
+        composeTestRule.setContent {
+            WeatherSDKTheme {
+                EnterCityScreen(weatherSDK = mockSdk)
+            }
+        }
+
+        // Verify that the helper text and labels are accessible to screen readers
+        composeTestRule.onNodeWithText("Enter your city name").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Weather Forecast").assertIsDisplayed()
     }
 }

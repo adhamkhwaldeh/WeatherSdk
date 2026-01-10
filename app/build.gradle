@@ -6,6 +6,8 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.compose'
     id "io.gitlab.arturbosch.detekt"
 
+    id("kotlin-kapt")
+//    id "com.google.devtools.ksp" version "2.1.0-1.0.29" // Add this line
 }
 android {
     namespace 'com.adham.weatherSample'
@@ -109,6 +111,14 @@ dependencies {
     debugImplementation libs.ui.tooling
     debugImplementation libs.ui.test.manifest
 
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+
+    kapt(libs.androidx.room.compiler)
+//    ksp(libs.androidx.room.compiler)
+    testImplementation(libs.androidx.room.testing)
 
 // Koin dependencies
     androidTestImplementation("io.insert-koin:koin-test:$koinVersion") // Koin testing tools

@@ -1,4 +1,4 @@
-package com.adham.weatherSdk.repositories
+package com.adham.weatherSdk.domain.repositories
 
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
 import com.adham.weatherSdk.data.dtos.ForecastResponse

@@ -1,40 +1,62 @@
-name: Build Android APK
+name: Android PR & Build CI
 
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build:
+  test-and-lint:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Install JDK
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # Grant execute permission to Gradle
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      # Build release APK
+      - name: Run Ktlint
+        run: ./gradlew ktlintCheck
+
+      - name: Run Detekt
+        run: ./gradlew detekt
+
+      - name: Run Unit Tests
+        run: ./gradlew test
+
+  build:
+    needs: test-and-lint
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
       - name: Build Release APK
         run: ./gradlew assembleRelease
 
-      # Extract Version Name from Gradle
       - name: Extract Version Name
         run: |
           VERSION_NAME=$(./gradlew -q app:properties | grep "versionName:" | awk '{print $2}' | tr -d '\r')
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
 
-      # Upload the APK artifact
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:

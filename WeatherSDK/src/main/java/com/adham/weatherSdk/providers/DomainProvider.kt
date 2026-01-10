@@ -1,8 +1,8 @@
 package com.adham.weatherSdk.providers
 
 import android.content.Context
-import com.adham.weatherSdk.useCases.CurrentWeatherUseCase
-import com.adham.weatherSdk.useCases.ForecastWeatherUseCase
+import com.adham.weatherSdk.domain.useCases.CurrentWeatherUseCase
+import com.adham.weatherSdk.domain.useCases.ForecastWeatherUseCase
 
 internal object DomainProvider {
 

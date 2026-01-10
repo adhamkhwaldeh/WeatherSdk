@@ -1,4 +1,4 @@
-package com.github.adhamkhwaldeh.commonlibrary.base
+package com.github.adhamkhwaldeh.commonlibrary.base.domain
 
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 /**

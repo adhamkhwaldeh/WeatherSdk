@@ -1,47 +1,35 @@
-package com.adham.weatherSample
+package com.adham.weatherSdk
 
-import com.tngtech.archunit.core.domain.JavaClasses
 import com.tngtech.archunit.junit.AnalyzeClasses
-import com.tngtech.archunit.lang.syntax.ArchRuleDefinition
-import org.junit.jupiter.api.Test
+import com.tngtech.archunit.junit.ArchTest
+import com.tngtech.archunit.lang.ArchRule
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes
+import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices
 
-@AnalyzeClasses(packages = ["com.adham.weathersdk"])
+@AnalyzeClasses(packages = ["com.adham.weatherSdk"])
 class ArchUnitTest {
-    @Test
-    fun `controllers should only depend on services`() {
-        val rule =
-            ArchRuleDefinition
-                .classes()
-                .that()
-                .resideInAPackage("..controller..")
-                .should()
-                .onlyAccessClassesThat()
-                .resideInAnyPackage("..service..", "..util..")
 
-        rule.check(JavaClasses.importFrom(ClassLoader.getSystemClassLoader()))
-    }
+    @ArchTest
+    val `controllers should only depend on services`: ArchRule =
+        classes()
+            .that()
+            .resideInAPackage("..controller..")
+            .should()
+            .onlyAccessClassesThat()
+            .resideInAnyPackage("..service..", "..util..", "java..", "kotlin..", "com.adham.weatherSdk..")
 
-    @Test
-    fun `no cyclic dependencies should exist`() {
-        val rule =
-            ArchRuleDefinition
-                .noClasses()
-                .should()
-                .dependOnEachOther()
+    @ArchTest
+    val `no cyclic dependencies should exist`: ArchRule =
+        slices()
+            .matching("com.adham.weatherSdk.(*)..")
+            .should()
+            .beFreeOfCycles()
 
-        rule.check(JavaClasses.importFrom(ClassLoader.getSystemClassLoader()))
-    }
-
-    @Test
-    fun `all ViewModels should end with ViewModel`() {
-        val rule =
-            ArchRuleDefinition
-                .classes()
-                .that()
-                .resideInAPackage("..viewmodel..")
-                .should()
-                .haveSimpleNameEndingWith("ViewModel")
-
-        rule.check(JavaClasses.importFrom(ClassLoader.getSystemClassLoader()))
-    }
+    @ArchTest
+    val `all ViewModels should end with ViewModel`: ArchRule =
+        classes()
+            .that()
+            .resideInAPackage("..viewmodel..")
+            .should()
+            .haveSimpleNameEndingWith("ViewModel")
 }

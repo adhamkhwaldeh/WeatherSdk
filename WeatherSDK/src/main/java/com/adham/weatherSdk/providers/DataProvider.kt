@@ -7,10 +7,10 @@ import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
 import com.adham.weatherSdk.networking.BaseWeatherServiceApi
 import com.adham.weatherSdk.networking.WeatherMockedServiceApi
 import com.adham.weatherSdk.networking.WeatherServiceApi
-import com.adham.weatherSdk.repositories.WeatherLocalRepository
-import com.adham.weatherSdk.repositories.WeatherLocalRepositoryImpl
-import com.adham.weatherSdk.repositories.WeatherRepository
-import com.adham.weatherSdk.repositories.WeatherRepositoryImpl
+import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
+import com.adham.weatherSdk.data.repositories.WeatherLocalRepositoryImpl
+import com.adham.weatherSdk.domain.repositories.WeatherRepository
+import com.adham.weatherSdk.data.repositories.WeatherRepositoryImpl
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient

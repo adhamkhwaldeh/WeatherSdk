@@ -1,6 +1,7 @@
 package com.adham.weatherSample
 
 import android.app.Application
+import com.adham.weatherSample.di.dataBaseModule
 import com.adham.weatherSample.di.viewModelsModule
 //import com.adham.weatherSdk.di.viewModelsModule
 import com.adham.weatherSample.di.weatherSDKModule
@@ -25,6 +26,7 @@ class App : Application() {
 //                    networkModule,
 //                    repositoriesModule,
 //                    useCasesModule,
+                    dataBaseModule,
                     weatherSDKModule,
                     viewModelsModule,
                 )

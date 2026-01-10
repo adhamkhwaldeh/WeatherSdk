@@ -1,13 +1,13 @@
-package com.adham.weatherSdk
+package com.adham.weatherSample
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.adham.weatherSample.WeatherSDKTestingBuilder
-import com.adham.weatherSample.data.dtos.ForecastResponse
+import com.adham.weatherSdk.data.dtos.ForecastResponse
 import com.adham.weatherSample.helpers.ConstantsHelpers
 import com.adham.weatherSample.helpers.DummyDataHelper
+import com.adham.weatherSdk.WeatherSDKTestingBuilder
 import io.mockk.coEvery
 import io.mockk.coVerify
 import kotlinx.coroutines.Dispatchers

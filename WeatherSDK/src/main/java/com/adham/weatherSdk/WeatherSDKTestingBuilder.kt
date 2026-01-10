@@ -3,7 +3,7 @@ package com.adham.weatherSdk
 import android.app.Application
 import android.content.Context
 import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
-import com.adham.weatherSdk.repositories.WeatherLocalRepositoryImpl
+import com.adham.weatherSdk.data.repositories.WeatherLocalRepositoryImpl
 
 /**
  * Weather  s d k builder

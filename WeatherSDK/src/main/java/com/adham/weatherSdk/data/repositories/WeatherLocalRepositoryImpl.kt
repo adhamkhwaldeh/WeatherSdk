@@ -1,5 +1,6 @@
-package com.adham.weatherSdk.repositories
+package com.adham.weatherSdk.data.repositories
 
+import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
 import com.adham.weatherSdk.localStorages.SharedPrefsManager
 import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
 

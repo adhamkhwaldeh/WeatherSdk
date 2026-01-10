@@ -1,16 +1,15 @@
 package com.adham.weatherSample.di
 
+
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSample.helpers.AppConstantsHelper
+import com.adham.weatherSample.orm.WeatherDatabase
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 
-var weatherSDKModule = module {
+var dataBaseModule = module {
     single {
-        WeatherSDK.Builder(
-            androidApplication(),
-            AppConstantsHelper.API_KEY
-        ).build()
+        WeatherDatabase.getDatabase(androidApplication())
     }
 }

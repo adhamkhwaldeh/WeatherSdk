@@ -2,6 +2,6 @@ package com.adham.weatherSample.helpers
 
 object AppConstantsHelper {
 
-    const val apiKey = "6ac62e830e334742924401be0e80573d"
+    const val API_KEY = "0e3cc1c8040a4d4882b318e57c60581e"
 
 }
