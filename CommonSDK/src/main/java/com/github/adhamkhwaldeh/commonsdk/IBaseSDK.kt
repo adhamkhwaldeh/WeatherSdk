@@ -16,6 +16,7 @@ interface IBaseSDK<TSdkStatus : ICallbackListener, TConfig : BaseSDKOptions> {
 
     fun clearGlobalStatusListeners()
 
+    fun notifyListeners(block: (TSdkStatus) -> Unit)
     //#endregion
 
     //#region SDK-level Error actions

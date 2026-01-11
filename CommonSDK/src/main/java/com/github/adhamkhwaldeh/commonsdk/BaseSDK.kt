@@ -75,6 +75,9 @@ abstract class BaseSDK<TSdkStatus : ICallbackListener,
         globalStatusListeners.clear()
     }
 
+    override fun notifyListeners(block: (TSdkStatus) -> Unit) {
+        globalStatusListeners.forEach { block(it) }
+    }
     //#endregion
 
     //#region SDK-level Error actions

@@ -2,6 +2,7 @@ package com.adham.weatherSample.di
 
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSample.helpers.AppConstantsHelper
+import com.adham.weatherSample.logging.ConsoleLogger
 import com.adham.weatherSdk.settings.WeatherSDKOptions
 import com.github.adhamkhwaldeh.commonsdk.logging.LogLevel
 import org.koin.android.ext.koin.androidApplication
@@ -18,6 +19,6 @@ var weatherSDKModule = module {
                 .setLogLevel(LogLevel.DEBUG)
                 .setOverridable(false)
                 .setDebugMode(true).build()
-        ).build()
+        ).addLogger(ConsoleLogger()).build()
     }
 }
