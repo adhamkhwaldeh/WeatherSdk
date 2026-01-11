@@ -116,7 +116,7 @@ abstract class BaseSDK<TSdkStatus : ICallbackListener,
     //#endregion
 
     //#region SDK-level Logging actions
-    private val logger by lazy {
+    protected val logger by lazy {
         Logger()
     }
 
