@@ -27,7 +27,10 @@ class KonsistTest {
             .classes()
             .withNameEndingWith("ViewModel")
             .properties()
-            .filter { it.hasPublicModifier || (!it.hasInternalModifier && !it.hasPrivateModifier && !it.hasProtectedModifier) }
+            .filter {
+                it.hasPublicModifier || (!it.hasInternalModifier &&
+                        !it.hasPrivateModifier && !it.hasProtectedModifier)
+            }
             .assertTrue {
                 val type = it.type?.name ?: ""
                 !type.contains("Mutable")
@@ -123,8 +126,9 @@ class KonsistTest {
             .assertTrue { koClass ->
                 koClass.hasFunction { func ->
                     func.name == "invoke" &&
-                            (func.hasPublicModifier || !func.hasInternalModifier && !func.hasPrivateModifier && !func.hasProtectedModifier) &&
-                            func.hasSuspendModifier
+                            (func.hasPublicModifier || !func.hasInternalModifier
+                                    && !func.hasPrivateModifier && !func.hasProtectedModifier)
+                            && func.hasSuspendModifier
                 }
             }
     }
@@ -271,7 +275,7 @@ class KonsistTest {
             .scopeFromProject()
             .packages
             .assertTrue {
-             //   it.name == it.name.lowercase()
+                //   it.name == it.name.lowercase()
                 it.name[0].isLowerCase()
                         && !it.name.contains("_")
             }
@@ -421,8 +425,9 @@ class KonsistTest {
     fun `no unsafe calls allowed`() {
         Konsist.scopeFromProduction()
             .files
-            .filter { !it.name.contains("DataProvider")
-            //        && !it.name.contains("KonsistTest")
+            .filter {
+                !it.name.contains("DataProvider")
+                //        && !it.name.contains("KonsistTest")
             }
             .assertTrue { !it.text.contains("!!") }
     }

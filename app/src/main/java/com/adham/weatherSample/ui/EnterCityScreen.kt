@@ -62,10 +62,12 @@ import org.koin.compose.koinInject
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EnterCityScreen(weatherSDK: WeatherSDK = koinInject()) {
-
+fun EnterCityScreen(
+    modifier: Modifier = Modifier,
+    weatherSDK: WeatherSDK = koinInject()
+) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope ()
+    val scope = rememberCoroutineScope()
     val addressDao = remember { WeatherDatabase.getDatabase(context).addressDao() }
     val savedAddresses by addressDao.loadAllDataFlow().collectAsState(initial = emptyList())
 
@@ -73,15 +75,11 @@ fun EnterCityScreen(weatherSDK: WeatherSDK = koinInject()) {
     var isError by remember { mutableStateOf(false) }
 
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.ExampleApp)) },
-                modifier = Modifier.shadow(elevation = 2.dp)
-            )
-        },
+        modifier = modifier,
+        topBar = { EnterCityTopAppBar() },
         contentWindowInsets = WindowInsets(4.dp, 4.dp, 4.dp, 4.dp)
     ) { padding ->
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
@@ -89,153 +87,183 @@ fun EnterCityScreen(weatherSDK: WeatherSDK = koinInject()) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
         ) {
-
-            OutlinedTextField(
-                value = cityName,
-                onValueChange = {
-                    cityName = it
-                    isError = false
-                },
-                label = { Text(text = stringResource(R.string.EnterYourCityName)) },
-                placeholder = { Text(text = stringResource(R.string.CityName)) },
-                singleLine = true,
+            CityInputSection(
+                cityName = cityName,
+                onCityNameChange = { cityName = it; isError = false },
                 isError = isError,
-                leadingIcon = {
-                    IconButton(
-                        onClick = {
-                            if (cityName.isNotBlank()) {
-                                scope.launch(Dispatchers.IO) {
-                                    val trimmedName = cityName.trim()
-                                    val existing = addressDao.findByName(trimmedName)
-                                    if (existing == null) {
-                                        addressDao.insert(Address(name = trimmedName))
-                                    }
-                                }
-                            } else {
-                                isError = true
+                onSaveAddress = {
+                    if (cityName.isNotBlank()) {
+                        scope.launch(Dispatchers.IO) {
+                            val trimmed = cityName.trim()
+                            if (addressDao.findByName(trimmed) == null) {
+                                addressDao.insert(Address(name = trimmed))
                             }
-                        },
-                        modifier = Modifier.testTag("saveAddressButton")
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AddLocation,
-                            contentDescription = "Save Address",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                },
-                trailingIcon = {
-                    if (cityName.isNotEmpty()) {
-                        IconButton(onClick = { cityName = "" }) {
-                            Icon(
-                                painter = painterResource(android.R.drawable.ic_menu_close_clear_cancel),
-                                contentDescription = "Clear text",
-                                tint = Color.Gray
-                            )
                         }
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag("cityInput")
+                    } else { isError = true }
+                }
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = stringResource(R.string.EnterTheCityNameForTheWeatherForecast),
-                style = MaterialTheme.typography.labelLarge
+            WeatherForecastSection(
+                cityName = cityName,
+                onShowError = { isError = true },
+                onLaunchForecast = { weatherSDK.sdkStatus.value = WeatherSdkStatus.OnLaunchForecast(it) }
             )
-
-            OutlinedButton(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .testTag("weatherForecastButton"),
-                onClick = {
-                    if (cityName.isBlank()) {
-                        isError = true
-                    } else {
-                        weatherSDK.sdkStatus.value =
-                            WeatherSdkStatus.OnLaunchForecast(cityName)
-                    }
-                },
-            ) {
-                Text(text = stringResource(R.string.WeatherForecast))
-            }
 
             if (savedAddresses.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(24.dp))
-                Text(
-                    text = "Saved Addresses",
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.align(Alignment.Start)
+                SavedAddressesSection(
+                    savedAddresses = savedAddresses,
+                    onAddressClick = {
+                        cityName = it
+                        weatherSDK.sdkStatus.value = WeatherSdkStatus.OnLaunchForecast(it)
+                    },
+                    onDeleteAddress = { scope.launch(Dispatchers.IO) { addressDao.delete(it) } }
                 )
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .testTag("savedAddressesList"),
-                    contentPadding = PaddingValues(vertical = 8.dp)
-                ) {
-                    items(
-                        items = savedAddresses,
-                        key = { it.id }
-                    ) { address ->
-                        val dismissState = rememberSwipeToDismissBoxState(
-                            confirmValueChange = {
-                                if (it == SwipeToDismissBoxValue.EndToStart) {
-                                    scope.launch(Dispatchers.IO) {
-                                        addressDao.delete(address)
-                                    }
-                                    true
-                                } else {
-                                    false
-                                }
-                            }
-                        )
-
-                        SwipeToDismissBox(
-                            state = dismissState,
-                            backgroundContent = {
-                                val color = when (dismissState.dismissDirection) {
-                                    SwipeToDismissBoxValue.EndToStart -> Color.Red
-                                    else -> Color.Transparent
-                                }
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .background(color)
-                                        .padding(horizontal = 16.dp),
-                                    contentAlignment = Alignment.CenterEnd
-                                ) {
-                                    Icon(
-                                        Icons.Default.Delete,
-                                        contentDescription = "Delete",
-                                        tint = Color.White
-                                    )
-                                }
-                            },
-                            enableDismissFromStartToEnd = false
-                        ) {
-                            ListItem(
-                                headlineContent = { Text(address.name) },
-                                leadingContent = {
-                                    Icon(Icons.Default.LocationCity, contentDescription = null)
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        cityName = address.name
-                                        weatherSDK.sdkStatus.value =
-                                            WeatherSdkStatus.OnLaunchForecast(address.name)
-                                    }
-                                    .testTag("addressItem_${address.name}")
-                            )
-                        }
-                    }
-                }
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun EnterCityTopAppBar() {
+    CenterAlignedTopAppBar(
+        title = { Text(stringResource(R.string.ExampleApp)) },
+        modifier = Modifier.shadow(elevation = 2.dp)
+    )
+}
+
+@Composable
+private fun WeatherForecastSection(
+    cityName: String,
+    onShowError: () -> Unit,
+    onLaunchForecast: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier){
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = stringResource(R.string.EnterTheCityNameForTheWeatherForecast),
+            style = MaterialTheme.typography.labelLarge
+        )
+        OutlinedButton(
+            modifier = Modifier.padding(8.dp).testTag("weatherForecastButton"),
+            onClick = {
+                if (cityName.isBlank()) onShowError()
+                else onLaunchForecast(cityName)
+            },
+        ) {
+            Text(text = stringResource(R.string.WeatherForecast))
+        }
+    }
+
+}
+
+@Composable
+private fun CityInputSection(
+    cityName: String,
+    onCityNameChange: (String) -> Unit,
+    isError: Boolean,
+    onSaveAddress: () -> Unit
+) {
+    OutlinedTextField(
+        value = cityName,
+        onValueChange = onCityNameChange,
+        label = { Text(text = stringResource(R.string.EnterYourCityName)) },
+        placeholder = { Text(text = stringResource(R.string.CityName)) },
+        singleLine = true,
+        isError = isError,
+        leadingIcon = {
+            IconButton(onClick = onSaveAddress, modifier = Modifier.testTag("saveAddressButton")) {
+                Icon(
+                    imageVector = Icons.Default.AddLocation,
+                    contentDescription = "Save Address",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+        },
+        trailingIcon = {
+            if (cityName.isNotEmpty()) {
+                IconButton(onClick = { onCityNameChange("") }) {
+                    Icon(
+                        painter = painterResource(android.R.drawable.ic_menu_close_clear_cancel),
+                        contentDescription = "Clear text",
+                        tint = Color.Gray
+                    )
+                }
+            }
+        },
+        modifier = Modifier.fillMaxWidth().testTag("cityInput")
+    )
+}
+
+@Composable
+private fun SavedAddressesSection(
+    savedAddresses: List<Address>,
+    onAddressClick: (String) -> Unit,
+    onDeleteAddress: (Address) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            text = "Saved Addresses",
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.fillMaxWidth()
+        )
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth().testTag("savedAddressesList"),
+            contentPadding = PaddingValues(vertical = 8.dp)
+        ) {
+            items(items = savedAddresses, key = { it.id }) { address ->
+                AddressListItem(
+                    address = address,
+                    onClick = { onAddressClick(address.name) },
+                    onDelete = { onDeleteAddress(address) }
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AddressListItem(
+    address: Address,
+    onClick: () -> Unit,
+    onDelete: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val dismissState = rememberSwipeToDismissBoxState(
+        confirmValueChange = {
+            if (it == SwipeToDismissBoxValue.EndToStart) {
+                onDelete()
+                true
+            } else false
+        }
+    )
+
+    SwipeToDismissBox(
+        modifier = modifier,
+        state = dismissState,
+        backgroundContent = {
+            val color = if (dismissState.dismissDirection == SwipeToDismissBoxValue.EndToStart)
+                Color.Red else Color.Transparent
+            Box(
+                modifier = Modifier.fillMaxSize().background(color).padding(horizontal = 16.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color.White)
+            }
+        },
+        enableDismissFromStartToEnd = false
+    ) {
+        ListItem(
+            headlineContent = { Text(address.name) },
+            leadingContent = { Icon(Icons.Default.LocationCity, contentDescription = null) },
+            modifier = Modifier.fillMaxWidth().clickable(onClick = onClick)
+                .testTag("addressItem_${address.name}")
+        )
     }
 }

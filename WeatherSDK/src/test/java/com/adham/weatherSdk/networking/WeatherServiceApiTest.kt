@@ -43,10 +43,12 @@ class WeatherServiceApiTest {
     fun `current method successful response`() = runTest {
         val json = """
             {
+                "count":1,
                 "data": [
                     {
                         "city_name": "London",
                         "temp": 15.5,
+                        "ts": 0,
                         "weather": { "description": "Cloudy", "icon": "c01d" }
                     }
                 ]
@@ -58,7 +60,7 @@ class WeatherServiceApiTest {
         val response = api.current("London", "key")
 
         assertNotNull(response)
-        assertEquals("London", response.data[0].city_name)
+        assertEquals("London", response.data[0].cityName)
         assertEquals(15.5, response.data[0].temp, 0.1)
     }
 
@@ -84,7 +86,9 @@ class WeatherServiceApiTest {
     fun `current method empty city parameter`() = runTest {
         // Enqueue success because the interface doesn't validate, only the API would.
         // We verify the URL formed.
-        mockWebServer.enqueue(MockResponse().setBody("{\"data\":[]}").setResponseCode(200))
+        mockWebServer.enqueue(
+            MockResponse().setBody("{\"data\":[],\"count\":0}").setResponseCode(200)
+        )
 
         api.current("", "key")
 
@@ -104,8 +108,8 @@ class WeatherServiceApiTest {
             {
                 "city_name": "London",
                 "data": [
-                    { "temp": 10.0, "timestamp_local": "2023-01-01T00:00:00" },
-                    { "temp": 11.0, "timestamp_local": "2023-01-01T01:00:00" }
+                    { "temp": 10.0, "timestamp_local": "2023-01-01T00:00:00","weather":{"description":""} },
+                    { "temp": 11.0, "timestamp_local": "2023-01-01T01:00:00","weather":{"description":""} }
                 ]
             }
         """.trimIndent()

@@ -113,9 +113,7 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndr
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinAnnotations" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinAndroidxCompose" }
-koin-koin-android = { module = "org.koin:koin-android", version.ref = "koinAndroid" }
 koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinAnnotations" }
-koin-test = { module = "org.koin:koin-test", version.ref = "koinTest" }
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 kotlin-as1-java-plugin = { module = "org.jetbrains.dokka:kotlin-as-java-plugin", version.ref = "androidDocumentationPlugin" }
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlinBom" }

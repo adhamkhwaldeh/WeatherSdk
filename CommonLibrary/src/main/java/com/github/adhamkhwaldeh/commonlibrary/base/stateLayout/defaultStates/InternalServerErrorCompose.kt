@@ -17,10 +17,13 @@ import com.github.adhamkhwaldeh.commonlibrary.R
  *
  */
 @Composable
-fun InternalServerErrorCompose(message: String?) {
+fun InternalServerErrorCompose(
+    message: String?,
+    modifier: Modifier = Modifier
+) {
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,

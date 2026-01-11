@@ -159,7 +159,8 @@ class ForecastWeatherUseCaseTest {
     fun `Repository timeout handling`() = runTest {
         //TODO need to be checked
 //        every { weatherLocalRepository.getApiKey() } returns "key"
-//        coEvery { weatherRepository.forecast(any(), any(), any()) } throws kotlinx.coroutines.TimeoutCancellationException("Timeout")
+//        coEvery { weatherRepository.forecast(any(), any(), any()) }
+//        throws kotlinx.coroutines.TimeoutCancellationException("Timeout")
 //
 //        val result = forecastWeatherUseCase(ForecastWeatherUseCaseParams("London", 24)).first()
 //

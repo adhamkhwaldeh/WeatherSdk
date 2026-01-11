@@ -15,12 +15,19 @@ internal class CurrentWeatherUseCase(
     private val weatherLocalRepository: WeatherLocalRepository
 ) : BaseSealedUseCase<CurrentWeatherResponse, String>() {
 
-   override suspend fun invoke(params: String): Flow<BaseState<CurrentWeatherResponse>> {
+    @Suppress("TooGenericExceptionCaught")
+    override suspend fun invoke(params: String): Flow<BaseState<CurrentWeatherResponse>> {
         return flow {
-            emit(weatherRepository.current(
-                city = params,
-                apiKey = weatherLocalRepository.getApiKey()
-            ).asBasState())
+            emit(
+                try {
+                    weatherRepository.current(
+                        city = params,
+                        apiKey = weatherLocalRepository.getApiKey()
+                    ).asBasState()
+                } catch (ex: Throwable) {
+                    BaseState.getStateByThrowable(ex)
+                }
+            )
         }
     }
 

@@ -18,10 +18,10 @@ import com.github.adhamkhwaldeh.commonlibrary.R
  *
  */
 @Composable
-fun NotAuthorizedCompose() {
+fun NotAuthorizedCompose(modifier: Modifier = Modifier) {
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,

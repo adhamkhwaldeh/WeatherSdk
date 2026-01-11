@@ -22,7 +22,7 @@ class AddressHourlyForecast() {
     var temp: Double = 0.0
 
     @ColumnInfo(name = "timestamp_local")
-    var timestamp_local: String =""
+    var timeStampLocal: String =""
 
     @ColumnInfo(name = "description")
     var description: String = ""
@@ -34,7 +34,7 @@ class AddressHourlyForecast() {
         addressName: String = "",
         forecastDate:String = "",
         temp: Double = 0.0,
-        timestamp_local: String ="",
+        timeStampLocal: String ="",
         description: String = ""
     ) : this() {
         this.id = id
@@ -42,7 +42,7 @@ class AddressHourlyForecast() {
 
         this.forecastDate = forecastDate
         this.temp = temp
-        this.timestamp_local = timestamp_local
+        this.timeStampLocal = timeStampLocal
         this.description = description
     }
 

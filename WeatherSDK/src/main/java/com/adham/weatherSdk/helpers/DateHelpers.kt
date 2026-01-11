@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 /**
  * Date helpers
@@ -43,6 +44,7 @@ object DateHelpers {
     fun getHoursOnlyFromStanderFormat(dateStr: String): String {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
         val date = LocalDateTime.parse(dateStr, formatter)
-        return String.format("%02d", date.hour) + ":" + String.format("%02d", date.minute)
+        return String.format(Locale.ENGLISH, "%02d", date.hour) + ":" +
+                String.format(Locale.ENGLISH, "%02d", date.minute)
     }
 }

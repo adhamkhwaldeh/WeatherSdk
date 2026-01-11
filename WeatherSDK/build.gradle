@@ -38,9 +38,9 @@ android {
 //
     testOptions {
         unitTests.includeAndroidResources = true
-        unitTests.all {
-            useJUnitPlatform()
-        }
+//        unitTests.all {
+//            useJUnitPlatform()
+//        }
     }
     testOptions {
         execution 'ANDROIDX_TEST_ORCHESTRATOR'
@@ -127,6 +127,14 @@ dependencies {
 
 
     //region Testing package
+    // Use the BOM to align versions (fixes the OutputDirectoryProvider error)
+    testImplementation platform('org.junit:junit-bom:5.11.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    // Maintain JUnit 4 support if you have older tests
+    testImplementation 'junit:junit:4.13.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
+
     testImplementation libs.junit
     testImplementation libs.okhttp3.mockwebserver
     androidTestImplementation libs.androidx.junit
@@ -145,9 +153,6 @@ dependencies {
     def koinVersion = '3.4.3'
     testImplementation "io.insert-koin:koin-test:$koinVersion" // Koin testing tools
     debugImplementation "io.insert-koin:koin-test:$koinVersion" // Koin testing tools
-    androidTestImplementation "org.koin:koin-test:$koinVersion"
-    implementation libs.koin.koin.android
-    testImplementation libs.koin.test
 
     androidTestImplementation libs.core.testing
     androidTestImplementation libs.core

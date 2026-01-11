@@ -7,8 +7,6 @@
 //
 
 class GeneratePaparazziTests {
-
-}
 ///**
 // * Finds all files in the components module which have Compose previews
 // * and generates Paparazzi screenshot tests for them.
@@ -74,7 +72,8 @@ class GeneratePaparazziTests {
 //        .superclass(PaparazziTest::class)
 //        .addAnnotation(
 //            AnnotationSpec.builder(Suppress::class)
-//                // KotlinPoet does not let us remove redundant public modifiers or Unit return types for the functions,
+//                // KotlinPoet does not let us remove redundant public modifiers
+//                // or Unit return types for the functions,
 //                // but we don't mind for generated code as long as the tests work
 //                .addMember("\"RedundantVisibilityModifier\", \"RedundantUnitReturnType\"")
 //                .build()
@@ -119,3 +118,4 @@ class GeneratePaparazziTests {
 //        paparazziRule.snapshot { AlertPreview() }
 //    }
 //}
+}

@@ -332,7 +332,9 @@ naming:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**']
     functionPattern: '[a-z][a-zA-Z0-9]*'
-    excludeClassPattern: '$^'
+    # This regex allows PascalCase for functions annotated with @Composable    functionPattern: '[a-z][a-zA-Z0-9]*'
+    excludeClassPattern: '$^,.*'
+    ignoreAnnotated: [ 'Composable' ]
   FunctionParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
@@ -615,15 +617,20 @@ style:
       - '1'
       - '2'
     ignoreHashCodeFunction: true
-    ignorePropertyDeclaration: false
+    # Ignore named arguments (e.g. Color(color = 0xFF...))
+    ignoreNamedArgument: true
+    # Ignore colors specifically if they are in certain patterns
+    ignorePropertyDeclaration: true
+#    ignorePropertyDeclaration: false
     ignoreLocalVariableDeclaration: false
     ignoreConstantDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
     ignoreAnnotation: false
-    ignoreNamedArgument: true
+#    ignoreNamedArgument: true
     ignoreEnums: false
     ignoreRanges: false
     ignoreExtensionFunctions: true
+
   MandatoryBracesLoops:
     active: false
   MaxChainedCallsOnSameLine:
@@ -737,6 +744,7 @@ style:
     active: true
   UnusedPrivateMember:
     active: true
+    ignoreAnnotated: [ 'Preview' ] # Tells Detekt: "If it's a Preview, don't complain it's unused"
     allowedNames: ''
   UnusedPrivateProperty:
     active: true

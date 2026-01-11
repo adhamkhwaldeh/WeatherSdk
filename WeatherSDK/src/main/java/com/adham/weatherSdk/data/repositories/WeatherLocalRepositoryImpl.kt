@@ -19,13 +19,9 @@ internal class WeatherLocalRepositoryImpl(private val sharedPrefsManager: Shared
      * @param apiKey
      */
    override fun saveApiKey(apiKey: String) {
-        try {
-            sharedPrefsManager.save(
-                SharedPrefsManagerImpl.API_KEY, apiKey
-            )
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
+        sharedPrefsManager.save(
+            SharedPrefsManagerImpl.API_KEY, apiKey
+        )
     }
 
 

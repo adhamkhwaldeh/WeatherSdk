@@ -9,7 +9,7 @@ class ConsoleLogger : Logger {
         message: String,
         config: BaseSDKOptions
     ) {
-
+        //Implement timber or similar library
     }
 
     override fun e(
@@ -18,7 +18,7 @@ class ConsoleLogger : Logger {
         config: BaseSDKOptions,
         throwable: Throwable?
     ) {
-
+        //Implement timber or similar library
     }
 
     override fun w(
@@ -26,7 +26,7 @@ class ConsoleLogger : Logger {
         message: String,
         config: BaseSDKOptions
     ) {
-
+        //Implement timber or similar library
     }
 
     override fun i(
@@ -34,7 +34,7 @@ class ConsoleLogger : Logger {
         message: String,
         config: BaseSDKOptions
     ) {
-
+        //Implement timber or similar library
     }
 
 }

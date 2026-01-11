@@ -22,10 +22,13 @@ import com.github.adhamkhwaldeh.commonlibrary.R
  * @receiver
  */
 @Composable
-fun NoInternetConnectionCompose(retry: () -> Unit) {
+fun NoInternetConnectionCompose(
+    retry: () -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
 //            .fillMaxHeight()
         ,

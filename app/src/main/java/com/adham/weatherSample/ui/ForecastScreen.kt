@@ -3,6 +3,7 @@ package com.adham.weatherSample.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +29,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adham.weatherSample.R
+import com.adham.weatherSample.helpers.AppConstantsHelper
 import com.adham.weatherSdk.WeatherSDK
+import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
+import com.adham.weatherSdk.data.dtos.ForecastResponse
 import com.adham.weatherSdk.data.params.ForecastWeatherUseCaseParams
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
 import com.adham.weatherSdk.helpers.DateHelpers
@@ -38,6 +42,7 @@ import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCusto
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
+
 
 /**
  * Forecast screen
@@ -49,42 +54,29 @@ import org.koin.compose.koinInject
 @Composable
 fun ForecastScreen(
     cityName: String,
+    modifier: Modifier = Modifier,
     viewModel: WeatherViewModel = koinViewModel(),
     weatherSDK: WeatherSDK = koinInject(),
 ) {
 
     val currentWeatherState = viewModel.currentWeather.observeAsState()
-
     val forecastState = viewModel.forecast.observeAsState()
 
-    LaunchedEffect({}) {
+    LaunchedEffect(cityName) {
         viewModel.loadCurrentWeather(cityName)
         viewModel.loadForecast(
             ForecastWeatherUseCaseParams(
-                cityName, 24
+                cityName, AppConstantsHelper.FORECAST_HOURS
             )
         )
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
-            CenterAlignedTopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = {
-                        weatherSDK.sdkStatus.value = WeatherSdkStatus.OnFinish
-                    }) {
-                        //TODO the icon need to be set
-
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack, // Replace with your desired icon
-                            contentDescription = "Back",
-//                            tint = Color.White
-                        )
-                    }
-                },
-                title = { Text(stringResource(R.string.TwentyFourHoursForecast)) },
-                modifier = Modifier.shadow(elevation = 2.dp)
-            )
+            ForecastTopAppBar(onBack = {
+                weatherSDK.sdkStatus.value = WeatherSdkStatus.OnFinish
+            })
         },
         contentWindowInsets = WindowInsets(4.dp, 4.dp, 4.dp, 4.dp)
     ) { padding ->
@@ -92,87 +84,122 @@ fun ForecastScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
+                .padding(padding)
         ) {
+            CurrentWeatherSection(
+                cityName = cityName,
+                state = currentWeatherState.value ?: BaseState.Initial(),
+                onRetry = { viewModel.loadCurrentWeather(cityName) }
+            )
 
-            StatesLayoutCompose(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(padding)
-                    .wrapContentHeight(),
-                customAction = object : StatesLayoutCustomActionInterface {
-                    override fun retry() {
-                        viewModel.loadCurrentWeather(cityName)
-                    }
-                },
-                baseState = currentWeatherState.value ?: BaseState.Initial()
-            ) {
-                val model = it.data.firstOrNull()
-                if (model != null) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(
-                            text = "${stringResource(R.string.TheWeatherIn)} $cityName ${
-                                stringResource(
-                                    R.string.IS
-                                )
-                            }",
-                            modifier = Modifier.padding(4.dp),
-                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+            ForecastListSection(
+                state = forecastState.value ?: BaseState.Initial(),
+                onRetry = {
+                    viewModel.loadForecast(
+                        ForecastWeatherUseCaseParams(
+                            cityName, AppConstantsHelper.FORECAST_HOURS
                         )
-                        Text(
-                            "${model.temp}${stringResource(R.string.celsius)}",
-                            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
-                        )
-                        Text(
-                            text = model.weather.description,
-                            modifier = Modifier.padding(4.dp),
-                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
-                        )
-                        Text(
-                            text = "${stringResource(R.string.At)} ${
-                                DateHelpers.convertTimestampToLocalTime(
-                                    model.ts
-                                )
-                            }",
-//                            modifier = Modifier.padding(2.dp),
-                            style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
-                        )
-
-                    }
+                    )
                 }
-            }
+            )
+        }
+    }
+}
 
-            StatesLayoutCompose(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .padding(top = 8.dp),
-                customAction = object : StatesLayoutCustomActionInterface {
-                    override fun retry() {
-                        viewModel.loadForecast(
-                            ForecastWeatherUseCaseParams(
-                                cityName, 24
-                            )
-                        )
-                    }
-                },
-                baseState = forecastState.value  ?: BaseState.Initial()
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ForecastTopAppBar(
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    CenterAlignedTopAppBar(
+        modifier = modifier.shadow(elevation = 2.dp),
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back"
+                )
+            }
+        },
+        title = { Text(stringResource(R.string.TwentyFourHoursForecast)) },
+    )
+}
+
+@Composable
+fun CurrentWeatherSection(
+    cityName: String,
+    state: BaseState<CurrentWeatherResponse>,
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    StatesLayoutCompose(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        customAction = object : StatesLayoutCustomActionInterface {
+            override fun retry() = onRetry()
+        },
+        baseState = state
+    ) { response ->
+        val model = response.data.firstOrNull()
+        if (model != null) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxHeight(),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    items(it.data.size) { item ->
-                        HourlyForecastItem(it.data[item])
-                    }
-                }
+                Text(
+                    text = "${stringResource(R.string.TheWeatherIn)} $cityName ${stringResource(R.string.IS)}",
+                    modifier = Modifier.padding(4.dp),
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+                )
+                Text(
+                    "${model.temp}${stringResource(R.string.celsius)}",
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+                )
+                Text(
+                    text = model.weather.description,
+                    modifier = Modifier.padding(4.dp),
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+                )
+                Text(
+                    text = "${stringResource(R.string.At)} ${
+                        DateHelpers.convertTimestampToLocalTime(
+                            model.ts
+                        )
+                    }",
+                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
+                )
             }
+        }
+    }
+}
 
+@Composable
+fun ForecastListSection(
+    state: BaseState<ForecastResponse>,
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    StatesLayoutCompose(
+        modifier = modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .padding(top = 8.dp),
+        customAction = object : StatesLayoutCustomActionInterface {
+            override fun retry() = onRetry()
+        },
+        baseState = state
+    ) { response ->
+        LazyColumn(
+            modifier = Modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(bottom = 16.dp)
+        ) {
+            items(response.data.size) { index ->
+                HourlyForecastItem(response.data[index])
+            }
         }
     }
 }

@@ -16,6 +16,6 @@ fun <T> Result<T>.asBasState(): BaseState<T> {
             BaseState.NotDataFound()
         }
     } else {
-        BaseState.getStateByThrowable(exceptionOrNull() ?: Throwable())
+        BaseState.getStateByThrowable(exceptionOrNull() ?: Throwable(message = "Unexpected error"))
     }
 }

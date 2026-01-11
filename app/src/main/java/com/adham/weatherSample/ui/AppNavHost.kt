@@ -46,11 +46,10 @@ fun AppNavHost(
 
     // A surface container using the 'background' color from the theme
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         NavHost(
-            modifier = modifier,
             navController = navController,
             startDestination = startDestination
         ) {
@@ -65,7 +64,7 @@ fun AppNavHost(
             ) { backStackEntry ->
                 val cityName = backStackEntry.arguments?.getString(NavigationItem.CITY_TAG) ?: ""
 //                ForecastScreen(navController, cityName)
-                ForecastScreen(cityName)
+                ForecastScreen(cityName =  cityName)
             }
         }
     }

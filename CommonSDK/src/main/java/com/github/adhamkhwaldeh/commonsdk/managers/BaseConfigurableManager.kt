@@ -41,10 +41,13 @@ interface BaseConfigurableManager<T : ManagerConfigInterface> {
     fun updateConfig(changeOptions: (options: T) -> T): BaseConfigurableManager<T>
     fun updateConfig(config: T): BaseConfigurableManager<T>
 
-    fun updateDefaultConfig(changeOptions: (options: ManagerConfigInterface) -> ManagerConfigInterface): BaseConfigurableManager<T>
+    fun updateDefaultConfig(
+        changeOptions:
+            (options: ManagerConfigInterface) -> ManagerConfigInterface
+    ): BaseConfigurableManager<T>
+
     fun updateDefaultConfig(config: ManagerConfigInterface): BaseConfigurableManager<T>
 
     fun canOverride(): Boolean
 
 }
-

@@ -27,19 +27,19 @@ internal object DataProvider {
     private var sharedPrefsManager: SharedPrefsManager? = null
 
     @Volatile
-    private var retrofit: Retrofit?= null
+    private var retrofit: Retrofit? = null
 
     @Volatile
-    private var weatherServiceApi: WeatherServiceApi?= null
+    private var weatherServiceApi: WeatherServiceApi? = null
 
     @Volatile
-    private var weatherMockedServiceApi: BaseWeatherServiceApi?= null
+    private var weatherMockedServiceApi: BaseWeatherServiceApi? = null
 
     @Volatile
-    private var weatherLocalRepository: WeatherLocalRepository?= null
+    private var weatherLocalRepository: WeatherLocalRepository? = null
 
     @Volatile
-    private var weatherRepository: WeatherRepository?= null
+    private var weatherRepository: WeatherRepository? = null
 
 
     fun provideSharedPrefsManager(
@@ -58,16 +58,16 @@ internal object DataProvider {
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
                 )
-                
+
                 sharedPrefsManager = SharedPrefsManagerImpl(sharedPreferences)
             }
         }
         return sharedPrefsManager!!
     }
 
-    fun provideRetrofit(context: Context): Retrofit{
+    fun provideRetrofit(): Retrofit {
         synchronized(this) {
-            if (retrofit == null){
+            if (retrofit == null) {
                 val logger = HttpLoggingInterceptor().apply {
 
                     level = HttpLoggingInterceptor.Level.BODY
@@ -90,9 +90,18 @@ internal object DataProvider {
                 }.also {
                     val okHttpClientBuilder = OkHttpClient.Builder()
 
-                    okHttpClientBuilder.writeTimeout(10, TimeUnit.SECONDS)
-                    okHttpClientBuilder.readTimeout(10, TimeUnit.SECONDS)
-                    okHttpClientBuilder.connectTimeout(10, TimeUnit.SECONDS)
+                    okHttpClientBuilder.writeTimeout(
+                        ConstantsHelpers.NETWORK_REQUEST_TIMEOUT,
+                        TimeUnit.SECONDS
+                    )
+                    okHttpClientBuilder.readTimeout(
+                        ConstantsHelpers.NETWORK_REQUEST_TIMEOUT,
+                        TimeUnit.SECONDS
+                    )
+                    okHttpClientBuilder.connectTimeout(
+                        ConstantsHelpers.NETWORK_REQUEST_TIMEOUT,
+                        TimeUnit.SECONDS
+                    )
 
                     okHttpClientBuilder.addInterceptor(logger)
                     it.client(okHttpClientBuilder.build())
@@ -104,37 +113,41 @@ internal object DataProvider {
         return retrofit!!
     }
 
-    fun provideWeatherServiceApi(context: Context): WeatherServiceApi{
+    fun provideWeatherServiceApi(): WeatherServiceApi {
         synchronized(this) {
-            if (weatherServiceApi == null){
-                weatherServiceApi = provideRetrofit(context).create(WeatherServiceApi::class.java)
+            if (weatherServiceApi == null) {
+                weatherServiceApi = provideRetrofit().create(WeatherServiceApi::class.java)
             }
         }
         return weatherServiceApi!!
     }
 
-    fun provideWeatherMockedServiceApi(context: Context): BaseWeatherServiceApi{
+    fun provideWeatherMockedServiceApi(context: Context): BaseWeatherServiceApi {
         synchronized(this) {
-            if (weatherMockedServiceApi == null){
+            if (weatherMockedServiceApi == null) {
                 weatherMockedServiceApi = WeatherMockedServiceApi(context)
             }
         }
         return weatherMockedServiceApi!!
     }
 
-    fun provideWeatherLocalRepository(context: Context): WeatherLocalRepository{
+    fun provideWeatherLocalRepository(context: Context): WeatherLocalRepository {
         synchronized(this) {
-            if (weatherLocalRepository == null){
-                weatherLocalRepository = WeatherLocalRepositoryImpl(provideSharedPrefsManager(context))
+            if (weatherLocalRepository == null) {
+                weatherLocalRepository =
+                    WeatherLocalRepositoryImpl(provideSharedPrefsManager(context))
             }
         }
         return weatherLocalRepository!!
     }
 
-    fun provideWeatherRepository(context: Context): WeatherRepository{
+    fun provideWeatherRepository(context: Context): WeatherRepository {
         synchronized(this) {
-            if (weatherRepository == null){
-                weatherRepository = WeatherRepositoryImpl(provideWeatherServiceApi(context),provideWeatherMockedServiceApi(context))
+            if (weatherRepository == null) {
+                weatherRepository = WeatherRepositoryImpl(
+                    provideWeatherServiceApi(),
+                    provideWeatherMockedServiceApi(context)
+                )
             }
         }
         return weatherRepository!!

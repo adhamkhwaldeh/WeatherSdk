@@ -20,6 +20,25 @@ plugins {
 
 subprojects {
     apply plugin: 'org.jetbrains.dokka'
+    apply plugin: "io.gitlab.arturbosch.detekt"
+
+    detekt {
+        // Points to a config file we will create in step 3
+        config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+
+        baseline = file("$rootDir/config/detekt/baseline.xml")
+
+        // Builds a report for easier reading
+        buildUponDefaultConfig = true
+        allRules = false
+        autoCorrect = true
+
+        reports {
+            html.required.set(true) // Readable in browser
+            xml.required.set(true)  // For CI/CD tools
+            txt.required.set(false)
+        }
+    }
 }
 
 

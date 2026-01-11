@@ -127,9 +127,6 @@ dependencies {
 //            }
     testImplementation "io.insert-koin:koin-test:$koinVersion" // Koin testing tools
     debugImplementation "io.insert-koin:koin-test:$koinVersion" // Koin testing tools
-//    androidTestImplementation "org.koin:koin-test:$koinVersion"
-//    implementation 'org.koin:koin-android:2.0.1'
-//    testImplementation 'org.koin:koin-test:2.0.1'
 
     androidTestImplementation libs.core.testing
     androidTestImplementation libs.core
@@ -189,6 +186,9 @@ dependencies {
 //    androidTestImplementation(libs.androidx.benchmark.junit4)
     androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
     androidTestImplementation(libs.androidx.uiautomator)
+
+    detektPlugins("io.nlopez.compose.rules:detekt:0.4.22")
+
     implementation project(':WeatherSDK')
 
     //endregion

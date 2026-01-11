@@ -27,10 +27,13 @@ import com.adham.weatherSdk.helpers.DateHelpers
  * @param item
  */
 @Composable
-fun HourlyForecastItem(item: HourlyForecastModel) {
+fun HourlyForecastItem(
+    item: HourlyForecastModel,
+    modifier: Modifier = Modifier
+) {
     val textPadding = PaddingValues(4.dp)
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
 //            .padding(4.dp)
             .background(MaterialTheme.colorScheme.surface),
@@ -47,7 +50,7 @@ fun HourlyForecastItem(item: HourlyForecastModel) {
 //                .background(MaterialTheme.colorScheme.surface),
         ) {
             Text(
-                text = DateHelpers.getHoursOnlyFromStanderFormat(item.timestamp_local) ,
+                text = DateHelpers.getHoursOnlyFromStanderFormat(item.timeStampLocal),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(textPadding)
             )

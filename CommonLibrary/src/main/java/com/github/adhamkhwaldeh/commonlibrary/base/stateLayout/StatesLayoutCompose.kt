@@ -27,73 +27,99 @@ import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.defaultStates.Pro
  */
 @Composable
 fun <T> StatesLayoutCompose(
-    modifier: Modifier = Modifier,
     baseState: BaseState<T>,
+    modifier: Modifier = Modifier,
     customContent: StatesLayoutCustomInterface? = null,
     customAction: StatesLayoutCustomActionInterface? = null,
-//    content: (@Composable @UiComposable (featureState: BaseState.FeaturedState<T>) -> Unit)? = null,
     content: (@Composable @UiComposable (data: T) -> Unit)? = null,
 ) {
     Column(modifier = modifier) {
         when (baseState) {
-            is BaseState.Initial -> {
-                Box {
-
-                }
-            }
-
-            is BaseState.Loading -> {
-                Progress(value = true)
-            }
-
-            is BaseState.LoadingDismiss -> {
-                Progress(value = false)
-            }
-
+            is BaseState.Initial -> Box {}
+            is BaseState.Loading -> Progress(value = true)
+            is BaseState.LoadingDismiss -> Progress(value = false)
             is BaseState.InternalServerError -> {
-                customContent?.internalServerError()
-                    ?: InternalServerErrorCompose(baseState.errorMessage)
+                InternalServerErrorState(baseState, customContent)
             }
-
             is BaseState.InvalidData -> {
-                customContent?.invalidData() ?: Box {}
+                InvalidDataState(customContent)
             }
-
             is BaseState.NoAuthorized -> {
-                customContent?.notAuthorized() ?: NotAuthorizedCompose()
+                NoAuthorizedState(customContent)
             }
-
             is BaseState.NoInternetError -> {
-                customContent?.noInternetError() ?: NoInternetConnectionCompose {
-                    customAction?.retry()
-                }
+                NoInternetErrorState(customContent, customAction)
             }
-
             is BaseState.NotDataFound -> {
-                customContent?.noContent() ?: Box {}
+                NotDataFoundState(customContent)
             }
-
             is BaseState.ValidationError -> {
-                customContent?.validationError() ?: Box {
-                    val context = LocalContext.current
-                    LaunchedEffect(key1 = true) {
-                        Toast.makeText(
-                            context,
-                            if (baseState.errorId != 0) context.getString(baseState.errorId)
-                            else baseState.responseMessage,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-                }
+                ValidationErrorState(baseState, customContent)
             }
-
             is BaseState.BaseStateLoadedSuccessfully -> {
-                Box {
-                    content?.let { it(baseState.data) }
-                }
+                SuccessState(baseState, content)
             }
-
         }
+    }
+}
+
+@Composable
+private fun InternalServerErrorState(
+    baseState: BaseState.InternalServerError<*>,
+    customContent: StatesLayoutCustomInterface?
+) {
+    customContent?.internalServerError() ?: InternalServerErrorCompose(baseState.errorMessage)
+}
+
+@Composable
+private fun InvalidDataState(customContent: StatesLayoutCustomInterface?) {
+    customContent?.invalidData() ?: Box {}
+}
+
+@Composable
+private fun NoAuthorizedState(customContent: StatesLayoutCustomInterface?) {
+    customContent?.notAuthorized() ?: NotAuthorizedCompose()
+}
+
+@Composable
+private fun NoInternetErrorState(
+    customContent: StatesLayoutCustomInterface?,
+    customAction: StatesLayoutCustomActionInterface?
+) {
+    customContent?.noInternetError() ?: NoInternetConnectionCompose(retry = {
+        customAction?.retry()
+    })
+}
+
+@Composable
+private fun NotDataFoundState(customContent: StatesLayoutCustomInterface?) {
+    customContent?.noContent() ?: Box {}
+}
+
+@Composable
+private fun ValidationErrorState(
+    baseState: BaseState.ValidationError<*>,
+    customContent: StatesLayoutCustomInterface?
+) {
+    customContent?.validationError() ?: Box {
+        val context = LocalContext.current
+        LaunchedEffect(key1 = true) {
+            val message = if (baseState.errorId != 0) {
+                context.getString(baseState.errorId)
+            } else {
+                baseState.responseMessage
+            }
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+@Composable
+private fun <T> SuccessState(
+    baseState: BaseState.BaseStateLoadedSuccessfully<T>,
+    content: (@Composable @UiComposable (data: T) -> Unit)?
+) {
+    Box {
+        content?.let { it(baseState.data) }
     }
 }

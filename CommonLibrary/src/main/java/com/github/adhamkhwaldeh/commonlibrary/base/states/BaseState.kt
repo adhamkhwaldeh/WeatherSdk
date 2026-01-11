@@ -1,6 +1,8 @@
 package com.github.adhamkhwaldeh.commonlibrary.base.states
 
+import android.net.http.HttpException
 import androidx.annotation.StringRes
+import java.io.IOException
 import java.net.UnknownHostException
 
 /**
@@ -130,6 +132,17 @@ sealed class BaseState<out T> {
                 is UnknownHostException -> {
                     NoInternetError()
                 }
+
+                is IOException -> {
+                    NoInternetError()
+                }
+
+                is IllegalArgumentException -> {
+                    ValidationError()
+                }
+//                is HttpException ->{
+//                    if(it.)
+//                }
 
                 else -> {
                     InternalServerError(errorMessage ?: (it.message ?: ""))
