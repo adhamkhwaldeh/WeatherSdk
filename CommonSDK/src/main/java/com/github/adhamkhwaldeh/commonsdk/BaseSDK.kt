@@ -1,6 +1,7 @@
 package com.github.adhamkhwaldeh.commonsdk
 
 import android.content.Context
+import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseSDKException
 import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.ICallbackListener
 import com.github.adhamkhwaldeh.commonsdk.listeners.configs.IManagerConfigInterface
 import com.github.adhamkhwaldeh.commonsdk.listeners.errors.IErrorListener
@@ -59,7 +60,6 @@ abstract class BaseSDK<TSdkStatus : ICallbackListener,
         }
     }
 
-
     //#region SDK-level Status actions
     private val globalStatusListeners = CopyOnWriteArrayList<TSdkStatus>()
 
@@ -103,6 +103,13 @@ abstract class BaseSDK<TSdkStatus : ICallbackListener,
     override fun clearGlobalErrorListeners() {
         globalErrorListeners.clear()
     }
+
+    override fun notifyGlobalErrorListeners(error: BaseSDKException) {
+        for (listener in globalErrorListeners) {
+            listener.onError(error)
+        }
+    }
+
     //#endregion
 
     //#region SDK-level Logging actions

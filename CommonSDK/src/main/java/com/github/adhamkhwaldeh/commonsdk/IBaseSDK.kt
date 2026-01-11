@@ -1,5 +1,6 @@
 package com.github.adhamkhwaldeh.commonsdk
 
+import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseSDKException
 import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.ICallbackListener
 import com.github.adhamkhwaldeh.commonsdk.listeners.errors.IErrorListener
 import com.github.adhamkhwaldeh.commonsdk.logging.ILogger
@@ -24,6 +25,8 @@ interface IBaseSDK<TSdkStatus : ICallbackListener, TConfig : BaseSDKOptions> {
     fun removeGlobalErrorListener(listener: IErrorListener)
 
     fun clearGlobalErrorListeners()
+
+    fun notifyGlobalErrorListeners(error: BaseSDKException)
 
     //#endregion
 

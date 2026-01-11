@@ -8,6 +8,5 @@ interface IBaseSDKOptionBuilder<T, TSdkStatus : ICallbackListener,
 
     fun setupOptions(options: TConfig): T
 
-
     fun build(): C
 }

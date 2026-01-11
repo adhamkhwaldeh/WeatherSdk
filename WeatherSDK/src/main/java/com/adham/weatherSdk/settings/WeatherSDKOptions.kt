@@ -16,7 +16,7 @@ class WeatherSDKOptions private constructor(
     /**
      * The Builder for creating UserBehaviorSDKConfig instances.
      */
-    class Builder(val apiKey: String) : BaseBuilder<Builder, WeatherSDKOptions>() {
+    class Builder(private val apiKey: String) : BaseBuilder<Builder, WeatherSDKOptions>() {
         /**
          * Creates the final UserBehaviorSDKConfig object.
          */
