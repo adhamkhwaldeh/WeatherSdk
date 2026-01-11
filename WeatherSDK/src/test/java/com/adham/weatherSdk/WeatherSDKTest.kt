@@ -120,13 +120,13 @@ class WeatherSDKTest {
         val useCase = mockk<com.adham.weatherSdk.domain.useCases.CurrentWeatherUseCase>()
         
         every { DomainProvider.provideCurrentWeatherUseCase(any()) } returns useCase
-        coEvery { useCase.invoke(city) } returns flowOf(BaseState.Success(expectedResponse))
+        coEvery { useCase.invoke(city) } returns flowOf(BaseState.BaseStateLoadedSuccessfully(expectedResponse))
 
         val resultFlow = weatherSDK.currentWeatherUseCase(city)
         
         resultFlow.collect { state ->
-            assertTrue(state is BaseState.Success)
-            assertEquals(expectedResponse, (state as BaseState.Success).data)
+            assertTrue(state is BaseState.BaseStateLoadedSuccessfully)
+            assertEquals(expectedResponse, (state as BaseState.BaseStateLoadedSuccessfully).data)
         }
     }
 
@@ -137,13 +137,13 @@ class WeatherSDKTest {
         val useCase = mockk<com.adham.weatherSdk.domain.useCases.ForecastWeatherUseCase>()
         
         every { DomainProvider.provideForecastWeatherUseCase(any()) } returns useCase
-        coEvery { useCase.invoke(params) } returns flowOf(BaseState.Success(expectedResponse))
+        coEvery { useCase.invoke(params) } returns flowOf(BaseState.BaseStateLoadedSuccessfully(expectedResponse))
 
         val resultFlow = weatherSDK.forecastWeatherUseCase(params)
         
         resultFlow.collect { state ->
-            assertTrue(state is BaseState.Success)
-            assertEquals(expectedResponse, (state as BaseState.Success).data)
+            assertTrue(state is BaseState.BaseStateLoadedSuccessfully)
+            assertEquals(expectedResponse, (state as BaseState.BaseStateLoadedSuccessfully).data)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.adham.weatherSdk
+package com.adham.weatherSample
 
 import android.content.Context
 import androidx.compose.ui.test.assertIsDisplayed
@@ -11,6 +11,8 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import com.adham.weatherSample.ui.EnterCityScreen
 import com.adham.weatherSample.ui.theme.WeatherSDKTheme
+import com.adham.weatherSdk.WeatherSDK
+import com.adham.weatherSdk.WeatherSDKTestingBuilder
 import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
 import org.junit.Assert.assertEquals
 import org.junit.Rule

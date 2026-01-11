@@ -52,6 +52,7 @@ retrofitVersion = "3.0.0"
 roomRuntime = "2.8.4"
 runner = "1.7.0"
 runtimeLivedata = "1.10.0"
+securityCrypto = "1.1.0"
 timber = "5.0.1"
 accompanist-permissions = "0.37.3"
 truth = "1.4.5"
@@ -90,6 +91,7 @@ androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "ro
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "roomRuntime" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "uiautomator" }
 archunit = { module = "com.tngtech.archunit:archunit", version.ref = "archunit" }
 archunit-junit5 = { module = "com.tngtech.archunit:archunit-junit5", version.ref = "archunitJunit5" }
@@ -123,6 +125,7 @@ mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkAndroidVersion" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
+okhttp3-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "loggingInterceptor" }
 opencsv = { module = "com.opencsv:opencsv", version.ref = "opencsv" }
 paparazzi = { module = "app.cash.paparazzi:paparazzi", version.ref = "paparazzi" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
@@ -154,5 +157,3 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
-

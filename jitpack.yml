@@ -1,4 +1,4 @@
 jdk:
   - openjdk17
 install:
-  - ./gradlew :CommonLibrary:assembleRelease :CommonLibrary:publishToMavenLocal :CommonSDK:assembleRelease :CommonSDK:publishToMavenLocal
+  - ./gradlew :CommonLibrary:assembleRelease :CommonLibrary:publishToMavenLocal :CommonSDK:assembleRelease :CommonSDK:publishToMavenLocal :WeatherSDK:assembleRelease :WeatherSDK:publishToMavenLocal

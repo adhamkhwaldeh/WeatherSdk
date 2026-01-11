@@ -14,7 +14,7 @@ import com.squareup.moshi.JsonClass
 data class CurrentWeatherModel(
 //    val app_temp: Double,
 //    val aqi: Int,
-//    val city_name: String,
+    val city_name: String,
 //    val clouds: Int,
 //    val country_code: String,
 //    val datetime: String,

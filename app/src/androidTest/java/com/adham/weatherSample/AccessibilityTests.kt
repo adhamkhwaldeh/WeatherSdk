@@ -1,10 +1,11 @@
-package com.adham.weatherSdk
+package com.adham.weatherSample
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.adham.weatherSample.ui.EnterCityScreen
 import com.adham.weatherSample.ui.theme.WeatherSDKTheme
+import com.adham.weatherSdk.WeatherSDKTestingBuilder
 import org.junit.Rule
 import org.junit.Test
 

@@ -32,6 +32,15 @@ jobs:
       - name: Run Unit Tests
         run: ./gradlew test
 
+      - name: Generate Dokka Documentation
+        run:  ./gradlew :WeatherSDK:dokkaGeneratePublicationHtml
+
+      - name: Upload Dokka Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dokka-documentation
+          path: WeatherSDK/build/dokkaDir
+
   build:
     needs: test-and-lint
     runs-on: ubuntu-latest

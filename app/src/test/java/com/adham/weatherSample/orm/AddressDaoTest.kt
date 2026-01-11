@@ -1,101 +1,104 @@
 package com.adham.weatherSample.orm
 
+import android.content.Context
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
+import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import java.io.IOException
 
+@RunWith(RobolectricTestRunner::class)
 class AddressDaoTest {
+
+    private lateinit var addressDao: AddressDao
+    private lateinit var db: WeatherDatabase
+
+    @Before
+    fun createDb() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        db = Room.inMemoryDatabaseBuilder(context, WeatherDatabase::class.java)
+            .allowMainThreadQueries()
+            .build()
+        addressDao = db.addressDao()
+    }
+
+    @After
+    @Throws(IOException::class)
+    fun closeDb() {
+        db.close()
+    }
 
     @Test
     fun `loadAllData empty table`() {
-        // Verify that loadAllData returns an empty list when the address table is empty.
-        // TODO implement test
+        val allAddresses = addressDao.loadAllData()
+        assertThat(allAddresses).isEmpty()
     }
 
     @Test
     fun `loadAllData multiple records`() {
-        // Verify that loadAllData returns all records currently stored in the address table.
-        // TODO implement test
-    }
+        val address1 = Address(id = 1, name = "London")
+        val address2 = Address(id = 2, name = "New York")
+        addressDao.insert(listOf(address1, address2))
 
-    @Test
-    fun `getAddressesPaging order verification`() {
-        // Check if the PagingSource returns data sorted by 'id' in descending order as specified in the query.
-        // TODO implement test
-    }
-
-    @Test
-    fun `getAddressesPaging data mapping`() {
-        // Verify that the PagingSource correctly maps the database rows to the Address entity objects.
-        // TODO implement test
+        val allAddresses = addressDao.loadAllData()
+        assertThat(allAddresses).hasSize(2)
+        assertThat(allAddresses).containsExactly(address1, address2)
     }
 
     @Test
     fun `getAddressById existing id`() {
-        // Ensure the method returns the correct Address object when a valid and existing addressId is provided.
-        // TODO implement test
+        val address = Address(id = 1, name = "London")
+        addressDao.insert(address)
+
+        val found = addressDao.getAddressById(1)
+        assertThat(found?.name).isEqualTo("London")
     }
 
     @Test
     fun `getAddressById non existent id`() {
-        // Verify that the method returns null when searched with an addressId that does not exist in the database.
-        // TODO implement test
+        val found = addressDao.getAddressById(99)
+        assertThat(found).isNull()
     }
 
     @Test
-    fun `getAddressById boundary id`() {
-        // Test the behavior when passing extreme integer values like 0 or negative numbers for the addressId.
-        // TODO implement test
+    fun `loadAllDataFlow initial emission`() = runBlocking {
+        val address = Address(id = 1, name = "London")
+        addressDao.insert(address)
+
+        val allAddresses = addressDao.loadAllDataFlow().first()
+        assertThat(allAddresses).hasSize(1)
+        assertThat(allAddresses[0].name).isEqualTo("London")
     }
 
     @Test
-    fun `loadAllDataFlow initial emission`() {
-        // Verify that the Flow emits the current list of addresses immediately upon collection.
-        // TODO implement test
+    fun `findByName exact match`() = runBlocking {
+        val address = Address(id = 1, name = "London")
+        addressDao.insert(address)
+
+        val found = addressDao.findByName("London")
+        assertThat(found?.id).isEqualTo(1)
     }
 
     @Test
-    fun `loadAllDataFlow reactive update`() {
-        // Verify that the Flow emits a new list automatically whenever an insert, update, or 
-        // delete operation occurs on the address table.
-        // TODO implement test
+    fun `findByName no match`() = runBlocking {
+        val found = addressDao.findByName("Unknown")
+        assertThat(found).isNull()
     }
 
     @Test
-    fun `findByName exact match`() {
-        // Ensure the method returns the correct Address record when an exact string match for 'name' is found.
-        // TODO implement test
-    }
+    fun `findByName limit constraint`() = runBlocking {
+        val address1 = Address(id = 1, name = "London")
+        val address2 = Address(id = 2, name = "London")
+        addressDao.insert(listOf(address1, address2))
 
-    @Test
-    fun `findByName no match`() {
-        // Verify that the method returns null when no record in the database matches the provided name string.
-        // TODO implement test
+        val found = addressDao.findByName("London")
+        // Should return one of them due to LIMIT 1
+        assertThat(found).isNotNull()
     }
-
-    @Test
-    fun `findByName case sensitivity`() {
-        // Test if the query is case-sensitive or case-insensitive depending on the underlying 
-        // database configuration for the 'name' column.
-        // TODO implement test
-    }
-
-    @Test
-    fun `findByName limit constraint`() {
-        // Verify that only a single Address object is returned even if multiple records share the same name.
-        // TODO implement test
-    }
-
-    @Test
-    fun `findByName empty or null string`() {
-        // Test the behavior and return value when searching with an empty string or a name consisting 
-        // only of whitespace.
-        // TODO implement test
-    }
-
-    @Test
-    fun `findByName special characters`() {
-        // Verify that the query handles names containing SQL special characters like quotes or 
-        // percent signs without crashing or SQL injection.
-        // TODO implement test
-    }
-
 }

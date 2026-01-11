@@ -1,6 +1,8 @@
 package com.adham.weatherSdk.providers
 
 import android.content.Context
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import com.adham.weatherSdk.helpers.ConstantsHelpers
 import com.adham.weatherSdk.localStorages.SharedPrefsManager
 import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
@@ -44,13 +46,21 @@ internal object DataProvider {
         context: Context
     ): SharedPrefsManager {
         synchronized(this) {
-            if (sharedPrefsManager == null)
-                sharedPrefsManager =   SharedPrefsManagerImpl(
-                    context.getSharedPreferences(
-                        SharedPrefsManagerImpl.sharedPrefsUtilPrefix, //+ BuildConfig.APPLICATION_ID,
-                        Context.MODE_PRIVATE
-                    )
+            if (sharedPrefsManager == null) {
+                val masterKey = MasterKey.Builder(context)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build()
+
+                val sharedPreferences = EncryptedSharedPreferences.create(
+                    context,
+                    SharedPrefsManagerImpl.sharedPrefsUtilPrefix + "secure_prefs",
+                    masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
                 )
+                
+                sharedPrefsManager = SharedPrefsManagerImpl(sharedPreferences)
+            }
         }
         return sharedPrefsManager!!
     }
