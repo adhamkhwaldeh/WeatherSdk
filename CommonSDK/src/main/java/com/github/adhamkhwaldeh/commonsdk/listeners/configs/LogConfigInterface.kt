@@ -2,7 +2,7 @@ package com.github.adhamkhwaldeh.commonsdk.listeners.configs
 
 import com.github.adhamkhwaldeh.commonsdk.logging.LogLevel
 
-interface ILogConfigInterface {
+interface LogConfigInterface {
     var isLoggingEnabled: Boolean
 
     var overridable: Boolean

@@ -53,11 +53,11 @@ class ComprehensiveInstrumentationTests {
         
         // Access the actual SharedPreferences to verify persistence
         val prefs = context.getSharedPreferences(
-            SharedPrefsManagerImpl.sharedPrefsUtilPrefix, 
+            SharedPrefsManagerImpl.SHARED_PREFS_UTIL_PREFIX,
             Context.MODE_PRIVATE
         )
         
-        val savedKey = prefs.getString(SharedPrefsManagerImpl.apiKey, null)
+        val savedKey = prefs.getString(SharedPrefsManagerImpl.API_KEY, null)
         assertEquals(testApiKey, savedKey)
     }
 

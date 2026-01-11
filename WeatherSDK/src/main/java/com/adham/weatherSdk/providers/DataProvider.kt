@@ -53,7 +53,7 @@ internal object DataProvider {
 
                 val sharedPreferences = EncryptedSharedPreferences.create(
                     context,
-                    SharedPrefsManagerImpl.sharedPrefsUtilPrefix + "secure_prefs",
+                    SharedPrefsManagerImpl.SHARED_PREFS_UTIL_PREFIX + "secure_prefs",
                     masterKey,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM

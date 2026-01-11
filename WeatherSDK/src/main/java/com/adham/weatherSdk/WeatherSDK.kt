@@ -12,8 +12,7 @@ import com.adham.weatherSdk.providers.DataProvider
 import com.adham.weatherSdk.providers.DomainProvider
 import com.adham.weatherSdk.settings.WeatherSDKOptions
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
-import com.github.adhamkhwaldeh.commonsdk.BaseSDK
-import com.github.adhamkhwaldeh.commonsdk.logging.ILogger
+import com.github.adhamkhwaldeh.commonsdk.BaseSDKImpl
 import kotlinx.coroutines.flow.Flow
 
 
@@ -24,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 class WeatherSDK private constructor(
     context: Context,
     sdkConfig: WeatherSDKOptions
-) : BaseSDK<OnSdkStatusChangeListener, WeatherSDKOptions>(context, sdkConfig) {
+) : BaseSDKImpl<OnSdkStatusChangeListener, WeatherSDKOptions>(context, sdkConfig) {
 
     init {
         if (sdkConfig.apiKey.isEmpty()) {
@@ -42,7 +41,7 @@ class WeatherSDK private constructor(
      * @param context The application context.
      */
     class Builder(context: Context, private val apiKey: String) :
-        BaseSDK.Builder<Builder, OnSdkStatusChangeListener, WeatherSDKOptions, WeatherSDK>(context) {
+        BaseSDKImpl.Builder<Builder, OnSdkStatusChangeListener, WeatherSDKOptions, WeatherSDK>(context) {
 
         /**
          * Builds and returns a configured instance of the UserBehaviorCoreSDK.

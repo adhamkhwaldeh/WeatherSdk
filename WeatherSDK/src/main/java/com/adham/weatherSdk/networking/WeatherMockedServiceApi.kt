@@ -13,7 +13,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
-class WeatherMockedServiceApi(private val context: Context): BaseWeatherServiceApi {
+internal class WeatherMockedServiceApi(private val context: Context) : BaseWeatherServiceApi {
 
     /**
      * Current
@@ -22,7 +22,7 @@ class WeatherMockedServiceApi(private val context: Context): BaseWeatherServiceA
      * @param key
      * @return
      */
-   override suspend fun current(
+    override suspend fun current(
         city: String,
         key: String
     ): CurrentWeatherResponse {
@@ -35,7 +35,7 @@ class WeatherMockedServiceApi(private val context: Context): BaseWeatherServiceA
         )
         val adapter: JsonAdapter<CurrentWeatherResponse> =
             moshi.adapter(type)
-        return adapter.fromJson(json)!!
+        return adapter.fromJson(json) ?: CurrentWeatherResponse(count = 0, data = mutableListOf())
     }
 
     /**
@@ -59,6 +59,6 @@ class WeatherMockedServiceApi(private val context: Context): BaseWeatherServiceA
             WeatherModel::class.java
         )
         val jsonAdapter: JsonAdapter<ForecastResponse> = moshi.adapter(type)
-        return jsonAdapter.fromJson(json)!!
+        return jsonAdapter.fromJson(json) ?: ForecastResponse(data = mutableListOf())
     }
 }

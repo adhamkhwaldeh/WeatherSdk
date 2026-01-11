@@ -59,11 +59,11 @@ fun AppNavHost(
             }
             composable(
                 NavigationItem.Forecast.route,
-                arguments = listOf(navArgument(NavigationItem.CityTag) {
+                arguments = listOf(navArgument(NavigationItem.CITY_TAG) {
                     type = NavType.StringType
                 }),
             ) { backStackEntry ->
-                val cityName = backStackEntry.arguments?.getString(NavigationItem.CityTag)!!
+                val cityName = backStackEntry.arguments?.getString(NavigationItem.CITY_TAG) ?: ""
 //                ForecastScreen(navController, cityName)
                 ForecastScreen(cityName)
             }

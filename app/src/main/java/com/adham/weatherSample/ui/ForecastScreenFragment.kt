@@ -18,21 +18,11 @@ import androidx.fragment.app.Fragment
  */
 class ForecastScreenFragment : Fragment() {
 
-    companion object {
-        private const val CityNameTag = "City"
-        fun newInstance(cityName: String): ForecastScreenFragment {
-            val f = ForecastScreenFragment()
-            val bundle = Bundle()
-            bundle.putString(CityNameTag, cityName)
-            f.arguments = bundle
-            return f
-        }
-    }
-
     private val cityName: String
         get() {
-            return arguments?.getString(CityNameTag, "") ?: ""
+            return arguments?.getString(CITY_NAME_TAG, "") ?: ""
         }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,4 +42,14 @@ class ForecastScreenFragment : Fragment() {
         return composeView
     }
 
+    companion object {
+        private const val CITY_NAME_TAG = "City"
+        fun newInstance(cityName: String): ForecastScreenFragment {
+            val f = ForecastScreenFragment()
+            val bundle = Bundle()
+            bundle.putString(CITY_NAME_TAG, cityName)
+            f.arguments = bundle
+            return f
+        }
+    }
 }

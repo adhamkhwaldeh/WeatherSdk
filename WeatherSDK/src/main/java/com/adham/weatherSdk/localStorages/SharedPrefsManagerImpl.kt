@@ -10,12 +10,9 @@ import android.content.SharedPreferences
  * @property sharedPreferences
  * @constructor Create empty Shared prefs manager
  */
-class SharedPrefsManagerImpl(private var sharedPreferences: SharedPreferences): SharedPrefsManager {
+internal class SharedPrefsManagerImpl(private var sharedPreferences: SharedPreferences) :
+    SharedPrefsManager {
 
-    companion object {
-        const val sharedPrefsUtilPrefix = "mySharedD_"
-        const val apiKey = "apiKey"
-    }
 
     /**
      * Save
@@ -23,7 +20,7 @@ class SharedPrefsManagerImpl(private var sharedPreferences: SharedPreferences): 
      * @param key
      * @param value
      */
-   override fun save(key: String, value: String) {
+    override fun save(key: String, value: String) {
         val editor = sharedPreferences.edit()
         editor.putString(key, value)
         editor.apply()
@@ -42,5 +39,11 @@ class SharedPrefsManagerImpl(private var sharedPreferences: SharedPreferences): 
         } else data
 
     }
+
+    companion object {
+        const val SHARED_PREFS_UTIL_PREFIX = "mySharedD_"
+        const val API_KEY = "apiKey"
+    }
+
 
 }

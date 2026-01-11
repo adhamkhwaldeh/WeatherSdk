@@ -10,14 +10,13 @@ import com.adham.weatherSdk.providers.DataProvider
 import com.adham.weatherSdk.providers.DomainProvider
 import com.adham.weatherSdk.settings.WeatherSDKOptions
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
-import com.github.adhamkhwaldeh.commonsdk.listeners.errors.IErrorListener
-import com.github.adhamkhwaldeh.commonsdk.logging.ILogger
+import com.github.adhamkhwaldeh.commonsdk.listeners.errors.ErrorListener
+import com.github.adhamkhwaldeh.commonsdk.logging.Logger
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
-import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -55,7 +54,7 @@ class WeatherSDKTest {
 
     @Test
     fun `addGlobalErrorListener adds a valid listener`() {
-        val listener = mockk<IErrorListener>()
+        val listener = mockk<ErrorListener>()
         weatherSDK.addGlobalErrorListener(listener)
         // Since globalErrorListeners is private in BaseSDK, we implicitly verify via other actions 
         // or assume the CopyOnWriteArrayList logic works.
@@ -63,21 +62,21 @@ class WeatherSDKTest {
 
     @Test
     fun `addGlobalErrorListener prevents duplicate registration`() {
-        val listener = mockk<IErrorListener>()
+        val listener = mockk<ErrorListener>()
         weatherSDK.addGlobalErrorListener(listener)
         weatherSDK.addGlobalErrorListener(listener)
     }
 
     @Test
     fun `removeGlobalErrorListener removes an existing listener`() {
-        val listener = mockk<IErrorListener>()
+        val listener = mockk<ErrorListener>()
         weatherSDK.addGlobalErrorListener(listener)
         weatherSDK.removeGlobalErrorListener(listener)
     }
 
     @Test
     fun `clearGlobalErrorListeners empties the listener collection`() {
-        val listener = mockk<IErrorListener>()
+        val listener = mockk<ErrorListener>()
         weatherSDK.addGlobalErrorListener(listener)
         weatherSDK.clearGlobalErrorListeners()
     }
@@ -98,7 +97,7 @@ class WeatherSDKTest {
 
     @Test
     fun `updateLoggers replaces default loggers with provided list`() {
-        val logger = mockk<ILogger>()
+        val logger = mockk<Logger>()
         weatherSDK.updateLoggers(listOf(logger))
     }
 

@@ -24,7 +24,7 @@ object WeatherSDKTestingBuilder {
         val localStorage = WeatherLocalRepositoryImpl(
             SharedPrefsManagerImpl(
                 application.getSharedPreferences(
-                    SharedPrefsManagerImpl.sharedPrefsUtilPrefix, //+ BuildConfig.APPLICATION_ID,
+                    SharedPrefsManagerImpl.SHARED_PREFS_UTIL_PREFIX, //+ BuildConfig.APPLICATION_ID,
                     Context.MODE_PRIVATE
                 )
             )

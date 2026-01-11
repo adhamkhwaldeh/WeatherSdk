@@ -1,7 +1,7 @@
 package com.github.adhamkhwaldeh.commonsdk.options
 
-import com.github.adhamkhwaldeh.commonsdk.listeners.configs.IManagerConfigBuilder
-import com.github.adhamkhwaldeh.commonsdk.listeners.configs.IManagerConfigInterface
+import com.github.adhamkhwaldeh.commonsdk.listeners.configs.ManagerConfigBuilder
+import com.github.adhamkhwaldeh.commonsdk.listeners.configs.ManagerConfigInterface
 import com.github.adhamkhwaldeh.commonsdk.logging.LogLevel
 
 abstract class BaseSDKOptions(
@@ -10,7 +10,7 @@ abstract class BaseSDKOptions(
     override var isLoggingEnabled: Boolean = true,
     override var overridable: Boolean = true,
     override var logLevel: LogLevel = LogLevel.DEBUG,
-) : IManagerConfigInterface {
+) : ManagerConfigInterface {
 
 
     /**
@@ -65,8 +65,8 @@ abstract class BaseSDKOptions(
      * @param C The type of the configuration object to be built (e.g., AccelerometerConfig)
      */
     @Suppress("UNCHECKED_CAST")
-    abstract class BaseBuilder<T : BaseBuilder<T, C>, C : IManagerConfigInterface> :
-        IManagerConfigBuilder<T, C> {
+    abstract class BaseBuilder<T : BaseBuilder<T, C>, C : ManagerConfigInterface> :
+        ManagerConfigBuilder<T, C> {
 
         // Default values
         protected var isEnabled: Boolean = true
@@ -75,7 +75,7 @@ abstract class BaseSDKOptions(
         protected var logLevel: LogLevel = LogLevel.BODY
         protected var overridable: Boolean = true
 
-        fun fromConfig(sdkConfig: IManagerConfigInterface): T {
+        fun fromConfig(sdkConfig: ManagerConfigInterface): T {
             this.isEnabled = sdkConfig.isEnabled
             this.isDebugMode = sdkConfig.isDebugMode
             this.isLoggingEnabled = sdkConfig.isLoggingEnabled

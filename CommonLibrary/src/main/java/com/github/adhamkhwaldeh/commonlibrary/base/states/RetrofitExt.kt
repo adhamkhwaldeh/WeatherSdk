@@ -9,8 +9,13 @@ package com.github.adhamkhwaldeh.commonlibrary.base.states
  */
 fun <T> Result<T>.asBasState(): BaseState<T> {
     return if (isSuccess && getOrNull() != null) {
-        BaseState.BaseStateLoadedSuccessfully(getOrNull()!!)
+        val res = getOrNull()
+        if (res != null) {
+            BaseState.BaseStateLoadedSuccessfully(res)
+        } else {
+            BaseState.NotDataFound()
+        }
     } else {
-        BaseState.getStateByThrowable(exceptionOrNull()!!)
+        BaseState.getStateByThrowable(exceptionOrNull() ?: Throwable())
     }
 }

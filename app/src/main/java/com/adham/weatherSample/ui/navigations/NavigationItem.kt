@@ -10,10 +10,10 @@ sealed class NavigationItem(val route: String) {
 
     object City : NavigationItem(ScreenEnum.City.name)
 
-    object Forecast : NavigationItem(ScreenEnum.Forecast.name + "/{" + CityTag + "}")
+    object Forecast : NavigationItem(ScreenEnum.Forecast.name + "/{" + CITY_TAG + "}")
 
     companion object {
-        const val CityTag = "City"
+        const val CITY_TAG = "City"
         fun forecastRouteWithParams(city: String): String {
             return ScreenEnum.Forecast.name + "/$city"
         }

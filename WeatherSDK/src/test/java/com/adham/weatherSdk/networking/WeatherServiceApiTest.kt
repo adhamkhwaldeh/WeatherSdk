@@ -85,11 +85,11 @@ class WeatherServiceApiTest {
         // Enqueue success because the interface doesn't validate, only the API would.
         // We verify the URL formed.
         mockWebServer.enqueue(MockResponse().setBody("{\"data\":[]}").setResponseCode(200))
-        
+
         api.current("", "key")
-        
+
         val request = mockWebServer.takeRequest()
-        assertTrue(request.path!!.contains("city="))
+        assertTrue(request.path?.contains("city=") ?: false)
     }
 
     @Test(expected = Exception::class)
@@ -121,12 +121,12 @@ class WeatherServiceApiTest {
     @Test
     fun `forecast method special characters in city name`() = runTest {
         mockWebServer.enqueue(MockResponse().setBody("{\"data\":[]}").setResponseCode(200))
-        
+
         api.forecast("New York", 24, "key")
-        
+
         val request = mockWebServer.takeRequest()
         // Check if encoded correctly
-        assertTrue(request.path!!.contains("city=New%20York"))
+        assertTrue(request.path?.contains("city=New%20York") ?: false)
     }
 
     @Test(expected = HttpException::class)

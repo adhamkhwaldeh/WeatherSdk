@@ -1,9 +1,9 @@
 package com.github.adhamkhwaldeh.commonsdk.managers
 
 import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseSDKException
-import com.github.adhamkhwaldeh.commonsdk.listeners.errors.IErrorListener
+import com.github.adhamkhwaldeh.commonsdk.listeners.errors.ErrorListener
 
-interface IBaseErrorManager<T> where T : IErrorListener {
+interface BaseErrorManager<T> where T : ErrorListener {
 
 
     /**

@@ -1,14 +1,13 @@
 package com.adham.weatherSdk.data.interfaces
 
-import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.ICallbackListener
-import java.lang.Exception
+import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.CallbackListener
 
 /**
  * On sdk status change listener
  *
  * @constructor Create empty On sdk status change listener
  */
-interface OnSdkStatusChangeListener : ICallbackListener {
+interface OnSdkStatusChangeListener : CallbackListener {
 
 
     /**

@@ -1,13 +1,13 @@
 package com.github.adhamkhwaldeh.commonsdk.listeners.configs
 
-interface IManagerConfigInterface : IServiceStatusInterface, IBuildTypeInterface,
-    ILogConfigInterface {
+interface ManagerConfigInterface : ServiceStatusInterface, BuildTypeInterface,
+    LogConfigInterface {
 
-    fun updateDefaultConfig(changeOptions: (options: IManagerConfigInterface) -> IManagerConfigInterface){
+    fun updateDefaultConfig(changeOptions: (options: ManagerConfigInterface) -> ManagerConfigInterface){
         updateDefaultConfig(changeOptions(this))
     }
 
-    fun updateDefaultConfig(configure: IManagerConfigInterface) {
+    fun updateDefaultConfig(configure: ManagerConfigInterface) {
         isLoggingEnabled = configure.isLoggingEnabled
         logLevel = configure.logLevel
         isEnabled = configure.isEnabled

@@ -3,7 +3,7 @@ package com.github.adhamkhwaldeh.commonsdk.exceptions
 abstract class BaseSDKException(
     override val message: String?,
     override val cause: Throwable? = null
-) : Throwable(message, cause), ISDKException {
+) : Throwable(message, cause), SDKException {
     companion object {
         @JvmStatic
         fun fromException(throwable: Throwable): BaseSDKException { // Changed from Exception to Throwable

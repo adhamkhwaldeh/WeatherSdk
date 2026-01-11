@@ -2,7 +2,7 @@ package com.github.adhamkhwaldeh.commonsdk.listeners.errors
 
 import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseSDKException
 
-interface IErrorListener {
+interface ErrorListener {
     /**
      * On error
      *

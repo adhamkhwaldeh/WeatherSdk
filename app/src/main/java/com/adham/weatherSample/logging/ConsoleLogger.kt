@@ -1,9 +1,9 @@
 package com.adham.weatherSample.logging
 
-import com.github.adhamkhwaldeh.commonsdk.logging.ILogger
+import com.github.adhamkhwaldeh.commonsdk.logging.Logger
 import com.github.adhamkhwaldeh.commonsdk.options.BaseSDKOptions
 
-class ConsoleLogger : ILogger {
+class ConsoleLogger : Logger {
     override fun d(
         tag: String,
         message: String,

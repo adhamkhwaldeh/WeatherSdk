@@ -1,8 +1,8 @@
 package com.github.adhamkhwaldeh.commonsdk.managers
 
-import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.ICallbackListener
+import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.CallbackListener
 
-interface IBaseCallbackManager<T> where T : ICallbackListener {
+interface BaseCallbackManager<T> where T : CallbackListener {
 
     /**
      * Add listener

@@ -35,6 +35,7 @@ import com.adham.weatherSdk.helpers.DateHelpers
 import com.adham.weatherSample.viewModels.WeatherViewModel
 import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCompose
 import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCustomActionInterface
+import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -103,7 +104,7 @@ fun ForecastScreen(
                         viewModel.loadCurrentWeather(cityName)
                     }
                 },
-                baseState = currentWeatherState.value!!
+                baseState = currentWeatherState.value ?: BaseState.Initial()
             ) {
                 val model = it.data.firstOrNull()
                 if (model != null) {
@@ -157,7 +158,7 @@ fun ForecastScreen(
                         )
                     }
                 },
-                baseState = forecastState.value!!
+                baseState = forecastState.value  ?: BaseState.Initial()
             ) {
 
                 LazyColumn(
