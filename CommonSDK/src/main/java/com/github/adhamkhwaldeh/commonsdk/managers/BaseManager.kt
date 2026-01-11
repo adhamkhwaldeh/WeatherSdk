@@ -15,10 +15,10 @@ abstract class BaseManager<TCall : ICallbackListener, TError : IErrorListener, T
 
     internal val listeners: CopyOnWriteArrayList<TCall> = CopyOnWriteArrayList()
 
-    val delegatedListeners: List<TCall>
-        get(){
-          return listeners.toList()
-        }
+//    val delegatedListeners: List<TCall>
+//        get(){
+//          return listeners.toList()
+//        }
 
     //#region Listener
     /**
@@ -43,13 +43,22 @@ abstract class BaseManager<TCall : ICallbackListener, TError : IErrorListener, T
         listeners.clear()
     }
 
+    /**
+     * Notify listeners
+     *
+     * @param block
+     */
+    override fun notifyListeners(block: (TCall) -> Unit) {
+        listeners.forEach { block(it) }
+    }
+
     //#endregion
     internal val errorListeners: CopyOnWriteArrayList<TError> = CopyOnWriteArrayList()
 
-    val delegatedErrorListeners: List<TError>
-        get(){
-            return errorListeners.toList()
-        }
+//    val delegatedErrorListeners: List<TError>
+//        get(){
+//            return errorListeners.toList()
+//        }
 
     //#region Error Listener
     /**

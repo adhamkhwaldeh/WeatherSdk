@@ -17,6 +17,18 @@ interface IBaseCallbackManager<T> where T : ICallbackListener {
      * @param listener
      */
     fun removeListener(listener: T)
+
+    /**
+     * Clear listeners
+     *
+     */
     fun clearListeners()
+
+    /**
+     * Notify listeners
+     *
+     * @param block The action to perform for each listener.
+     */
+    fun notifyListeners(block: (T) -> Unit)
 
 }
