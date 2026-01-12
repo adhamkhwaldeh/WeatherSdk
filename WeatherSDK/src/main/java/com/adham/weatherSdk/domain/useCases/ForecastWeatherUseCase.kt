@@ -14,6 +14,7 @@ internal class ForecastWeatherUseCase(
     private val weatherRepository: WeatherRepository,
     private val weatherLocalRepository: WeatherLocalRepository,
 ) : BaseSealedUseCase<ForecastResponse, ForecastWeatherUseCaseParams>() {
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun invoke(params: ForecastWeatherUseCaseParams): Flow<BaseState<ForecastResponse>> =
         flow {
             emit(
@@ -24,7 +25,7 @@ internal class ForecastWeatherUseCase(
                             hours = params.hours,
                             apiKey = weatherLocalRepository.getApiKey(),
                         ).asBasState()
-                } catch (ex: Throwable) {
+                } catch (ex: Exception) {
                     BaseState.getStateByThrowable(ex)
                 },
             )

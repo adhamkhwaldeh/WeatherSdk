@@ -23,7 +23,7 @@ internal class CurrentWeatherUseCase(
                             city = params,
                             apiKey = weatherLocalRepository.getApiKey(),
                         ).asBasState()
-                } catch (ex: Throwable) {
+                } catch (ex: Exception) {
                     BaseState.getStateByThrowable(ex)
                 },
             )

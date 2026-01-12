@@ -1,6 +1,7 @@
 package com.github.adhamkhwaldeh.commonlibrary.base.states
 
 import androidx.annotation.StringRes
+import com.github.adhamkhwaldeh.commonlibrary.base.helpers.CommonConstantHelper
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.UnknownHostException
@@ -121,33 +122,25 @@ sealed class BaseState<out T> {
             errorMessage: String? = null,
         ): BaseState<T> =
             when (it) {
-                is HttpException -> {
-                    if (it.code() == 403) {
-                        NoAuthorized(it.message ?: "")
-                    } else if (it.code() == 400) {
-                        InternalServerError(errorMessage ?: (it.message ?: ""))
-                    } else if (it.code() == 500) {
-                        InternalServerError(errorMessage ?: (it.message ?: ""))
-                    } else {
-                        NoInternetError()
-                    }
-                }
-
-                is UnknownHostException -> {
-                    NoInternetError()
-                }
-
-                is IOException -> {
-                    NoInternetError()
-                }
-
-                is IllegalArgumentException -> {
-                    ValidationError()
-                }
-
-                else -> {
-                    InternalServerError(errorMessage ?: (it.message ?: ""))
-                }
+                is HttpException -> handleHttpException(it, errorMessage)
+                is UnknownHostException -> NoInternetError()
+                is IOException -> NoInternetError()
+                is IllegalArgumentException -> ValidationError()
+                else -> InternalServerError(errorMessage ?: (it.message ?: ""))
             }
+
+        private fun <T> handleHttpException(
+            it: HttpException,
+            errorMessage: String?,
+        ): BaseState<T> {
+            return when (it.code()) {
+                CommonConstantHelper.NOT_AUTHORIZED_CODE -> NoAuthorized(it.message ?: "")
+                CommonConstantHelper.INTERNAL_ERROR_400,
+                CommonConstantHelper.INTERNAL_ERROR_500,
+                -> InternalServerError(errorMessage ?: (it.message ?: ""))
+
+                else -> NoInternetError()
+            }
+        }
     }
 }
