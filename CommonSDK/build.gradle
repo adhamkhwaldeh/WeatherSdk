@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.dokka' version "2.1.0"
     id 'maven-publish'
 }
 
@@ -50,5 +51,20 @@ afterEvaluate {
                 version = '1.0.7'
             }
         }
+    }
+}
+
+dokka {
+    moduleName.set("CommonLibrary")
+    dokkaPublications.html {
+        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
+    }
+
+    dokkaSourceSets.main {
+        sourceRoots.from("src/main/java")
+        skipEmptyPackages.set(true)
+        reportUndocumented.set(true)
+        skipDeprecated.set(true)
+        jdkVersion.set(17)
     }
 }
