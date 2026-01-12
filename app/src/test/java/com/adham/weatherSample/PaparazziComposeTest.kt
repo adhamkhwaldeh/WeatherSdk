@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.cash.paparazzi.Paparazzi
 import com.google.common.truth.Truth.assertThat
-import com.squareup.kotlinpoet
+// import com.squareup.kotlinpoet
 import org.junit.Rule
 import org.junit.Test
 

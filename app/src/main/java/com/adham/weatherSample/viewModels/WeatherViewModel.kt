@@ -30,7 +30,6 @@ class WeatherViewModel(
     private val weatherSDK: WeatherSDK,
     private val dataBase: WeatherDatabase,
 ) : BaseRefactorViewModel(application) {
-
     private val addressDao = dataBase.addressDao()
     val savedAddresses: Flow<List<Address>> = addressDao.loadAllDataFlow()
 
@@ -45,15 +44,18 @@ class WeatherViewModel(
     private fun listenToSdkStatus() {
         viewModelScope.launch {
             weatherSDK.sdkStatus.asFlow().collectLatest { status ->
-                if (status is WeatherSdkStatus.OnLaunchForecast) {
-                    loadCurrentWeather(status.cityName)
-                    loadForecast(ForecastWeatherUseCaseParams(status.cityName))
-                }
+//                if (status is WeatherSdkStatus.OnLaunchForecast) {
+//                    loadCurrentWeather(status.cityName)
+//                    loadForecast(ForecastWeatherUseCaseParams(status.cityName))
+//                }
             }
         }
     }
 
-    fun saveAddress(cityName: String, onBlank: () -> Unit) {
+    fun saveAddress(
+        cityName: String,
+        onBlank: () -> Unit,
+    ) {
         if (cityName.isNotBlank()) {
             viewModelScope.launch(Dispatchers.IO) {
                 val trimmed = cityName.trim()

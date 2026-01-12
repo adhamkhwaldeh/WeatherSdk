@@ -22,7 +22,6 @@ import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 
 class EnterCityScreenKtTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -34,9 +33,11 @@ class EnterCityScreenKtTest {
         stopKoin()
         every { mockWeatherSDK.sdkStatus } returns sdkStatus
         startKoin {
-            modules(module {
-                single { mockWeatherSDK }
-            })
+            modules(
+                module {
+                    single { mockWeatherSDK }
+                },
+            )
         }
     }
 

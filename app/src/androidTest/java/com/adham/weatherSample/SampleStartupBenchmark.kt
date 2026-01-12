@@ -6,7 +6,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class SampleStartupBenchmark {
@@ -14,16 +13,17 @@ class SampleStartupBenchmark {
     val benchmarkRule = MacrobenchmarkRule()
 
     @Test
-    fun startup() = benchmarkRule.measureRepeated(
-        packageName = TARGET_PACKAGE,
-        metrics = listOf(StartupTimingMetric()),
-        iterations = DEFAULT_ITERATIONS,
-        setupBlock = {
-            // Press home button before each run to ensure the starting activity isn't visible.
-            pressHome()
+    fun startup() =
+        benchmarkRule.measureRepeated(
+            packageName = TARGET_PACKAGE,
+            metrics = listOf(StartupTimingMetric()),
+            iterations = DEFAULT_ITERATIONS,
+            setupBlock = {
+                // Press home button before each run to ensure the starting activity isn't visible.
+                pressHome()
+            },
+        ) {
+            // starts default launch activity
+            startActivityAndWait()
         }
-    ) {
-        // starts default launch activity
-        startActivityAndWait()
-    }
 }

@@ -11,14 +11,13 @@ import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 class ForecastScreenTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
     fun testWeatherDisplayAndForecastList() {
         composeTestRule.setContent {
-            ForecastScreen(cityName = "Berlin")//, weatherData = mockWeatherData
+            ForecastScreen(cityName = "Berlin") // , weatherData = mockWeatherData
         }
 
         // Verify weather details are displayed
@@ -31,7 +30,7 @@ class ForecastScreenTest {
     @Test
     fun testNoInternetShowsRetryButton() {
         composeTestRule.setContent {
-            ForecastScreen(cityName = "Berlin")//, weatherData = null, isNetworkAvailable = false)
+            ForecastScreen(cityName = "Berlin") // , weatherData = null, isNetworkAvailable = false)
         }
 
         // Verify "No Connection" message appears
@@ -44,7 +43,7 @@ class ForecastScreenTest {
     @Test
     fun testApiFailureShowsErrorMessage() {
         composeTestRule.setContent {
-            ForecastScreen(cityName = "Berlin")//, weatherData = null, isApiError = true)
+            ForecastScreen(cityName = "Berlin") // , weatherData = null, isApiError = true)
         }
 
         // Verify error message appears
@@ -57,7 +56,7 @@ class ForecastScreenTest {
     @Test
     fun testLoadingIndicatorIsDisplayed() {
         composeTestRule.setContent {
-            ForecastScreen(cityName = "Berlin")// isLoading = true)
+            ForecastScreen(cityName = "Berlin") // isLoading = true)
         }
 
         // Vérifier que l’indicateur de chargement est visible

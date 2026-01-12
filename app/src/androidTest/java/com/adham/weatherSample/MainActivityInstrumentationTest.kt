@@ -10,11 +10,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
-//Instrumentation
+// Instrumentation
 @RunWith(AndroidJUnit4::class)
 class MainActivityInstrumentationTest {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
@@ -24,5 +22,4 @@ class MainActivityInstrumentationTest {
         composeTestRule.onNodeWithTag("searchButton").performClick()
         composeTestRule.onNodeWithText("Weather in Berlin").assertExists()
     }
-
 }

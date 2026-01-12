@@ -136,8 +136,8 @@ private fun ValidationErrorState(
 private fun <T> SuccessState(
     baseState: BaseState.BaseStateLoadedSuccessfully<T>,
     content: (
-        @Composable @UiComposable
-        (data: T) -> Unit
+        @Composable
+        @UiComposable (data: T) -> Unit
     )?,
 ) {
     Box {

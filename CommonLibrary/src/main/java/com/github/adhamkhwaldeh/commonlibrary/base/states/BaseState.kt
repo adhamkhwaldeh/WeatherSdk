@@ -132,15 +132,15 @@ sealed class BaseState<out T> {
         private fun <T> handleHttpException(
             it: HttpException,
             errorMessage: String?,
-        ): BaseState<T> {
-            return when (it.code()) {
+        ): BaseState<T> =
+            when (it.code()) {
                 CommonConstantHelper.NOT_AUTHORIZED_CODE -> NoAuthorized(it.message ?: "")
+
                 CommonConstantHelper.INTERNAL_ERROR_400,
                 CommonConstantHelper.INTERNAL_ERROR_500,
                 -> InternalServerError(errorMessage ?: (it.message ?: ""))
 
                 else -> NoInternetError()
             }
-        }
     }
 }
