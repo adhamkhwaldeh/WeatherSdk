@@ -29,56 +29,6 @@ dependencies {
 
 ---
 
-## CI/CD & Automation
-
-This project utilizes **GitHub Actions** for continuous integration and delivery. Our automated
-pipeline ensures code quality and provides ready-to-use build artifacts.
-
-- **Workflow Configuration**: **[build-android.yml](.github/workflows/build-android.yml)**
-- **Latest Pipeline Run**: *
-  *[View Workflow Run #20938179350](https://github.com/adhamkhwaldeh/WeatherSdk/actions/runs/20938179350)
-  **
-
-### Build Artifacts
-
-From each successful pipeline run, the following artifacts are exported:
-
-- 📦 *
-  *[Download Sample APK](https://github.com/adhamkhwaldeh/WeatherSdk/actions/runs/20938179350/artifacts/5105218708)
-  **: Direct link to the latest generated application.
-- 📚 *
-  *[Download Dokka Documentation](https://github.com/adhamkhwaldeh/WeatherSdk/actions/runs/20938179350/artifacts/5105156616)
-  **: Full technical API reference generated automatically.
-
----
-
-## Quality Assurance & Testing
-
-This project adheres to high-quality code standards and rigorous testing practices, all automated
-via **GitHub Actions**:
-
-- **Continuous Integration**: A full **GitHub Pipeline** is configured to run tests, linting, and
-  documentation checks on every push and pull request.
-- **Static Analysis**: Configured with **detekt** for code smells and **ktlint** for consistent code
-  formatting.
-- **Architectural Linting**: Uses **Konsist** to enforce architectural rules and project structure.
-  Check out our **[KonsistTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/KonsistTest.kt)**
-  for specific rules (e.g., ViewModel naming, domain layer isolation, and immutable DTOs).
-- **Documentation**: Fully documented using **KDoc** syntax, with **Dokka** used to generate
-  professional HTML API references.
-- **Testing Strategy**:
-    - **Unit Tests**: Comprehensive testing of business logic and UseCases. Key tests include *
-      *[CurrentWeatherUseCaseTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/useCases/CurrentWeatherUseCaseTest.kt)
-      ** and *
-      *[ForecastWeatherUseCaseTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/useCases/ForecastWeatherUseCaseTest.kt)
-      **.
-    - **UI Testing**: Automated Compose UI tests to ensure seamless user interactions. Our primary
-      end-to-end validation is found in *
-      *[End2EndSuccessTesting.kt](./app/src/androidTest/java/com/adham/weatherSample/End2EndSuccessTesting.kt)
-      **.
-
----
-
 ## Setup & Configuration
 
 ### Step 1: Initialize the SDK
@@ -134,6 +84,56 @@ LaunchedEffect(sdkStatus) {
 |                                    Dashboard                                     |                                    Search                                     |                                    Forecast                                     |
 |:--------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|
 | ![Dashboard](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.weatherSDK.jpg) | ![Search](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.weatherSDK.jpg) | ![Forecast](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.weatherSDK.jpg) |
+
+---
+
+## CI/CD & Automation
+
+This project utilizes **GitHub Actions** for continuous integration and delivery. Our automated
+pipeline ensures code quality and provides ready-to-use build artifacts.
+
+- **Workflow Configuration**: **[build-android.yml](.github/workflows/build-android.yml)**
+- **Latest Pipeline Run**: *
+  *[View Workflow Run #20938179350](https://github.com/adhamkhwaldeh/WeatherSdk/actions/runs/20938179350)
+  **
+
+### Build Artifacts
+
+From each successful pipeline run, the following artifacts are exported:
+
+- 📦 *
+  *[Download Sample APK](https://github.com/adhamkhwaldeh/WeatherSdk/actions/runs/20938179350/artifacts/5105218708)
+  **: Direct link to the latest generated application.
+- 📚 *
+  *[Download Dokka Documentation](https://github.com/adhamkhwaldeh/WeatherSdk/actions/runs/20938179350/artifacts/5105156616)
+  **: Full technical API reference generated automatically.
+
+---
+
+## Quality Assurance & Testing
+
+This project adheres to high-quality code standards and rigorous testing practices, all automated
+via **GitHub Actions**:
+
+- **Continuous Integration**: A full **GitHub Pipeline** is configured to run tests, linting, and
+  documentation checks on every push and pull request.
+- **Static Analysis**: Configured with **detekt** for code smells and **ktlint** for consistent code
+  formatting.
+- **Architectural Linting**: Uses **Konsist** to enforce architectural rules and project structure.
+  Check out our **[KonsistTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/KonsistTest.kt)**
+  for specific rules (e.g., ViewModel naming, domain layer isolation, and immutable DTOs).
+- **Documentation**: Fully documented using **KDoc** syntax, with **Dokka** used to generate
+  professional HTML API references.
+- **Testing Strategy**:
+  - **Unit Tests**: Comprehensive testing of business logic and UseCases. Key tests include *
+    *[CurrentWeatherUseCaseTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/useCases/CurrentWeatherUseCaseTest.kt)
+    ** and *
+    *[ForecastWeatherUseCaseTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/useCases/ForecastWeatherUseCaseTest.kt)
+    **.
+  - **UI Testing**: Automated Compose UI tests to ensure seamless user interactions. Our primary
+    end-to-end validation is found in *
+    *[End2EndSuccessTesting.kt](./app/src/androidTest/java/com/adham/weatherSample/End2EndSuccessTesting.kt)
+    **.
 
 ---
 
