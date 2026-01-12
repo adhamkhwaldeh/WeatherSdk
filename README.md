@@ -60,8 +60,8 @@ This project adheres to high-quality code standards and rigorous testing practic
 - **Architectural Linting**: Uses **Konsist** to enforce architectural rules and project structure. Check out our **[KonsistTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/KonsistTest.kt)** for specific rules (e.g., ViewModel naming, domain layer isolation, and immutable DTOs).
 - **Documentation**: Fully documented using **KDoc** syntax, with **Dokka** used to generate professional HTML API references.
 - **Testing Strategy**:
-    - **Unit Tests**: Comprehensive testing of business logic, ViewModels, and UseCases.
-    - **UI Testing**: Automated Compose UI tests to ensure seamless user interactions and accessibility.
+    - **Unit Tests**: Comprehensive testing of business logic and UseCases. Key tests include **[CurrentWeatherUseCaseTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/useCases/CurrentWeatherUseCaseTest.kt)** and **[ForecastWeatherUseCaseTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/useCases/ForecastWeatherUseCaseTest.kt)**.
+    - **UI Testing**: Automated Compose UI tests to ensure seamless user interactions. Our primary end-to-end validation is found in **[End2EndSuccessTesting.kt](./app/src/androidTest/java/com/adham/weatherSample/End2EndSuccessTesting.kt)**.
 
 Run all checks locally using:
 ```bash
@@ -98,9 +98,9 @@ LaunchedEffect(sdkStatus) {
 
 ### Application Preview
 
-| Dashboard | Search | Forecast |
-| :---: | :---: | :---: |
-| ![Screenshot 1](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.weatherSDK.jpg) | ![Screenshot 2](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.weatherSDK.jpg) | ![Screenshot 3](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.weatherSDK.jpg) |
+|                                      Dashboard                                      | Search | Forecast |
+|:-----------------------------------------------------------------------------------:| :---: | :---: |
+| ![Screenshot 1](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.weatherSDK.png) | ![Screenshot 2](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.weatherSDK.jpg) | ![Screenshot 3](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.weatherSDK.jpg) |
 
 ---
 
