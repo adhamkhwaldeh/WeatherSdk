@@ -29,6 +29,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxDefaults
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -64,7 +65,7 @@ import org.koin.compose.koinInject
 @Composable
 fun EnterCityScreen(
     modifier: Modifier = Modifier,
-    weatherSDK: WeatherSDK = koinInject()
+    weatherSDK: WeatherSDK = koinInject(),
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -77,19 +78,23 @@ fun EnterCityScreen(
     Scaffold(
         modifier = modifier,
         topBar = { EnterCityTopAppBar() },
-        contentWindowInsets = WindowInsets(4.dp, 4.dp, 4.dp, 4.dp)
+        contentWindowInsets = WindowInsets(4.dp, 4.dp, 4.dp, 4.dp),
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
         ) {
             CityInputSection(
                 cityName = cityName,
-                onCityNameChange = { cityName = it; isError = false },
+                onCityNameChange = {
+                    cityName = it
+                    isError = false
+                },
                 isError = isError,
                 onSaveAddress = {
                     if (cityName.isNotBlank()) {
@@ -99,14 +104,18 @@ fun EnterCityScreen(
                                 addressDao.insert(Address(name = trimmed))
                             }
                         }
-                    } else { isError = true }
-                }
+                    } else {
+                        isError = true
+                    }
+                },
             )
 
             WeatherForecastSection(
                 cityName = cityName,
                 onShowError = { isError = true },
-                onLaunchForecast = { weatherSDK.sdkStatus.value = WeatherSdkStatus.OnLaunchForecast(it) }
+                onLaunchForecast = {
+                    weatherSDK.sdkStatus.value = WeatherSdkStatus.OnLaunchForecast(it)
+                },
             )
 
             if (savedAddresses.isNotEmpty()) {
@@ -116,7 +125,7 @@ fun EnterCityScreen(
                         cityName = it
                         weatherSDK.sdkStatus.value = WeatherSdkStatus.OnLaunchForecast(it)
                     },
-                    onDeleteAddress = { scope.launch(Dispatchers.IO) { addressDao.delete(it) } }
+                    onDeleteAddress = { scope.launch(Dispatchers.IO) { addressDao.delete(it) } },
                 )
             }
         }
@@ -128,7 +137,7 @@ fun EnterCityScreen(
 private fun EnterCityTopAppBar() {
     CenterAlignedTopAppBar(
         title = { Text(stringResource(R.string.ExampleApp)) },
-        modifier = Modifier.shadow(elevation = 2.dp)
+        modifier = Modifier.shadow(elevation = 2.dp),
     )
 }
 
@@ -137,25 +146,33 @@ private fun WeatherForecastSection(
     cityName: String,
     onShowError: () -> Unit,
     onLaunchForecast: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier){
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.EnterTheCityNameForTheWeatherForecast),
-            style = MaterialTheme.typography.labelLarge
+            style = MaterialTheme.typography.labelLarge,
         )
         OutlinedButton(
-            modifier = Modifier.padding(8.dp).testTag("weatherForecastButton"),
+            modifier =
+                Modifier
+                    .padding(8.dp)
+                    .testTag("weatherForecastButton"),
             onClick = {
-                if (cityName.isBlank()) onShowError()
-                else onLaunchForecast(cityName)
+                if (cityName.isBlank()) {
+                    onShowError()
+                } else {
+                    onLaunchForecast(cityName)
+                }
             },
         ) {
             Text(text = stringResource(R.string.WeatherForecast))
         }
     }
-
 }
 
 @Composable
@@ -163,7 +180,7 @@ private fun CityInputSection(
     cityName: String,
     onCityNameChange: (String) -> Unit,
     isError: Boolean,
-    onSaveAddress: () -> Unit
+    onSaveAddress: () -> Unit,
 ) {
     OutlinedTextField(
         value = cityName,
@@ -177,7 +194,7 @@ private fun CityInputSection(
                 Icon(
                     imageVector = Icons.Default.AddLocation,
                     contentDescription = "Save Address",
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
         },
@@ -187,12 +204,15 @@ private fun CityInputSection(
                     Icon(
                         painter = painterResource(android.R.drawable.ic_menu_close_clear_cancel),
                         contentDescription = "Clear text",
-                        tint = Color.Gray
+                        tint = Color.Gray,
                     )
                 }
             }
         },
-        modifier = Modifier.fillMaxWidth().testTag("cityInput")
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .testTag("cityInput"),
     )
 }
 
@@ -208,19 +228,22 @@ private fun SavedAddressesSection(
         Text(
             text = "Saved Addresses",
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth().testTag("savedAddressesList"),
-            contentPadding = PaddingValues(vertical = 8.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .testTag("savedAddressesList"),
+            contentPadding = PaddingValues(vertical = 8.dp),
         ) {
             items(items = savedAddresses, key = { it.id }) { address ->
                 AddressListItem(
                     address = address,
                     onClick = { onAddressClick(address.name) },
-                    onDelete = { onDeleteAddress(address) }
+                    onDelete = { onDeleteAddress(address) },
                 )
             }
         }
@@ -233,37 +256,52 @@ private fun AddressListItem(
     address: Address,
     onClick: () -> Unit,
     onDelete: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val dismissState = rememberSwipeToDismissBoxState(
-        confirmValueChange = {
-            if (it == SwipeToDismissBoxValue.EndToStart) {
-                onDelete()
-                true
-            } else false
-        }
-    )
+    val dismissState =
+        rememberSwipeToDismissBoxState(
+            SwipeToDismissBoxValue.Settled,
+            SwipeToDismissBoxDefaults.positionalThreshold,
+        )
+
+    if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
+        onDelete()
+        true
+    } else {
+        false
+    }
 
     SwipeToDismissBox(
         modifier = modifier,
         state = dismissState,
         backgroundContent = {
-            val color = if (dismissState.dismissDirection == SwipeToDismissBoxValue.EndToStart)
-                Color.Red else Color.Transparent
+            val color =
+                if (dismissState.dismissDirection == SwipeToDismissBoxValue.EndToStart) {
+                    Color.Red
+                } else {
+                    Color.Transparent
+                }
             Box(
-                modifier = Modifier.fillMaxSize().background(color).padding(horizontal = 16.dp),
-                contentAlignment = Alignment.CenterEnd
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .background(color)
+                        .padding(horizontal = 16.dp),
+                contentAlignment = Alignment.CenterEnd,
             ) {
                 Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color.White)
             }
         },
-        enableDismissFromStartToEnd = false
+        enableDismissFromStartToEnd = false,
     ) {
         ListItem(
             headlineContent = { Text(address.name) },
             leadingContent = { Icon(Icons.Default.LocationCity, contentDescription = null) },
-            modifier = Modifier.fillMaxWidth().clickable(onClick = onClick)
-                .testTag("addressItem_${address.name}")
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onClick)
+                    .testTag("addressItem_${address.name}"),
         )
     }
 }

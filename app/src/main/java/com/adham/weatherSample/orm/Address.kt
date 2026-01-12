@@ -16,10 +16,9 @@ class Address() {
     var name: String = ""
 
     @Ignore
-//    @JvmOverloads
     constructor(
         id: Int = 0,
-        name: String = ""
+        name: String = "",
     ) : this() {
         this.id = id
         this.name = name

@@ -17,24 +17,22 @@ import androidx.fragment.app.Fragment
  * @constructor Create empty Forecast screen fragment
  */
 class ForecastScreenFragment : Fragment() {
-
     private val cityName: String
         get() {
             return arguments?.getString(CITY_NAME_TAG, "") ?: ""
         }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val composeView = ComposeView(requireContext())
         composeView.isTransitionGroup = true
         composeView.setContent {
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
+                color = MaterialTheme.colorScheme.background,
             ) {
                 ForecastScreen(cityName = cityName)
             }
@@ -44,6 +42,7 @@ class ForecastScreenFragment : Fragment() {
 
     companion object {
         private const val CITY_NAME_TAG = "City"
+
         fun newInstance(cityName: String): ForecastScreenFragment {
             val f = ForecastScreenFragment()
             val bundle = Bundle()

@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     // Recommended: Use the alias from libs.versions.toml
@@ -21,7 +23,16 @@ plugins {
 subprojects {
     apply plugin: 'org.jetbrains.dokka'
     apply plugin: "io.gitlab.arturbosch.detekt"
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
 
+    ktlint {
+        android = true
+        ignoreFailures = false
+        reporters {
+            reporter(ReporterType.PLAIN)
+            reporter(ReporterType.CHECKSTYLE)
+        }
+    }
     detekt {
         // Points to a config file we will create in step 3
         config.setFrom(files("$rootDir/config/detekt/detekt.yml"))

@@ -7,7 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adham.weatherSdk.data.dtos.ForecastResponse
 import com.adham.weatherSample.helpers.ConstantsHelpers
 import com.adham.weatherSample.helpers.DummyDataHelper
-import com.adham.weatherSdk.WeatherSDKTestingBuilder
+import com.adham.weatherSdk.WeatherSDK
 import io.mockk.coEvery
 import io.mockk.coVerify
 import kotlinx.coroutines.Dispatchers
@@ -62,9 +62,7 @@ class WeatherViewModelForecastTest : KoinTest {
      */
     @Before
     fun setUp() {
-        WeatherSDKTestingBuilder.initialize(
-            application
-        )
+        WeatherSDK.Builder().build()
         Dispatchers.setMain(testDispatcher)
     }
 

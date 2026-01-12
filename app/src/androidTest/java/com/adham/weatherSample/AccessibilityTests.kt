@@ -5,7 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.adham.weatherSample.ui.EnterCityScreen
 import com.adham.weatherSample.ui.theme.WeatherSDKTheme
-import com.adham.weatherSdk.WeatherSDKTestingBuilder
+import com.adham.weatherSdk.WeatherSDK
 import org.junit.Rule
 import org.junit.Test
 
@@ -15,8 +15,8 @@ class AccessibilityTests {
 
     @Test
     fun testEnterCityScreen_TextElementsAreAccessible() {
-        val mockSdk = WeatherSDKTestingBuilder.createMockedWeatherSDK()
-        
+        val mockSdk = WeatherSDK.Builder().build()
+
         composeTestRule.setContent {
             WeatherSDKTheme {
                 EnterCityScreen(weatherSDK = mockSdk)

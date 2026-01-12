@@ -8,11 +8,12 @@ import org.junit.Test
 
 class ForecastScreenPaparazziTest {
     @get:Rule
-    val paparazzi = Paparazzi(
-        deviceConfig = DeviceConfig.PIXEL_5,
-        theme = "android:Theme.Material.Light.NoActionBar"
-        // ...see docs for more options
-    )
+    val paparazzi =
+        Paparazzi(
+            deviceConfig = DeviceConfig.PIXEL_5,
+            theme = "android:Theme.Material.Light.NoActionBar",
+            // ...see docs for more options
+        )
 
     @Test
     fun launchComposable() {

@@ -15,16 +15,17 @@ import java.io.IOException
 
 @RunWith(RobolectricTestRunner::class)
 class AddressDaoTest {
-
     private lateinit var addressDao: AddressDao
     private lateinit var db: WeatherDatabase
 
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, WeatherDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+        db =
+            Room
+                .inMemoryDatabaseBuilder(context, WeatherDatabase::class.java)
+                .allowMainThreadQueries()
+                .build()
         addressDao = db.addressDao()
     }
 
@@ -67,38 +68,42 @@ class AddressDaoTest {
     }
 
     @Test
-    fun `loadAllDataFlow initial emission`() = runBlocking {
-        val address = Address(id = 1, name = "London")
-        addressDao.insert(address)
+    fun `loadAllDataFlow initial emission`() =
+        runBlocking {
+            val address = Address(id = 1, name = "London")
+            addressDao.insert(address)
 
-        val allAddresses = addressDao.loadAllDataFlow().first()
-        assertThat(allAddresses).hasSize(1)
-        assertThat(allAddresses[0].name).isEqualTo("London")
-    }
-
-    @Test
-    fun `findByName exact match`() = runBlocking {
-        val address = Address(id = 1, name = "London")
-        addressDao.insert(address)
-
-        val found = addressDao.findByName("London")
-        assertThat(found?.id).isEqualTo(1)
-    }
+            val allAddresses = addressDao.loadAllDataFlow().first()
+            assertThat(allAddresses).hasSize(1)
+            assertThat(allAddresses[0].name).isEqualTo("London")
+        }
 
     @Test
-    fun `findByName no match`() = runBlocking {
-        val found = addressDao.findByName("Unknown")
-        assertThat(found).isNull()
-    }
+    fun `findByName exact match`() =
+        runBlocking {
+            val address = Address(id = 1, name = "London")
+            addressDao.insert(address)
+
+            val found = addressDao.findByName("London")
+            assertThat(found?.id).isEqualTo(1)
+        }
 
     @Test
-    fun `findByName limit constraint`() = runBlocking {
-        val address1 = Address(id = 1, name = "London")
-        val address2 = Address(id = 2, name = "London")
-        addressDao.insert(listOf(address1, address2))
+    fun `findByName no match`() =
+        runBlocking {
+            val found = addressDao.findByName("Unknown")
+            assertThat(found).isNull()
+        }
 
-        val found = addressDao.findByName("London")
-        // Should return one of them due to LIMIT 1
-        assertThat(found).isNotNull()
-    }
+    @Test
+    fun `findByName limit constraint`() =
+        runBlocking {
+            val address1 = Address(id = 1, name = "London")
+            val address2 = Address(id = 2, name = "London")
+            addressDao.insert(listOf(address1, address2))
+
+            val found = addressDao.findByName("London")
+            // Should return one of them due to LIMIT 1
+            assertThat(found).isNotNull()
+        }
 }

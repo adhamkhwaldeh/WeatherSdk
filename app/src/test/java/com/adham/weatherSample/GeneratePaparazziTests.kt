@@ -1,13 +1,13 @@
-//import app.cash.paparazzi.DeviceConfig
-//import app.cash.paparazzi.Paparazzi
-//import com.android.ide.common.rendering.api.SessionParams
-//import org.junit.Rule
-//import org.junit.Test
+// import app.cash.paparazzi.DeviceConfig
+// import app.cash.paparazzi.Paparazzi
+// import com.android.ide.common.rendering.api.SessionParams
+// import org.junit.Rule
+// import org.junit.Test
 //
 //
 
 class GeneratePaparazziTests {
-///**
+// /**
 // * Finds all files in the components module which have Compose previews
 // * and generates Paparazzi screenshot tests for them.
 // *
@@ -17,7 +17,7 @@ class GeneratePaparazziTests {
 // * To verify that the current implementation matches the recorded screenshots
 // * ./gradlew components:verifyPaparazziInternalDebug
 // */
-//fun main() {
+// fun main() {
 //    val path = System.getProperty("user.dir") ?: error("Can't get user dir")
 //
 //    // Paparazzi does not currently work in the app module: https://github.com/cashapp/paparazzi/issues/107
@@ -29,13 +29,13 @@ class GeneratePaparazziTests {
 //                processFileWithPreviews(it)
 //            }
 //        }
-//}
+// }
 //
-///**
+// /**
 // * Reads the given file, finds the names of all the functions annotated with @Preview
 // * and uses them to generate a Paparazzi test file with one test for each preview.
 // */
-//private fun processFileWithPreviews(file: File) {
+// private fun processFileWithPreviews(file: File) {
 //    val lines = file.readLines()
 //    val previewNames = mutableListOf<String>()
 //    var saveNextFunctionName = false
@@ -60,14 +60,14 @@ class GeneratePaparazziTests {
 //        testFilePath,
 //        previewNames
 //    )
-//}
+// }
 //
-//fun generatePaparazziTest(
+// fun generatePaparazziTest(
 //    packageName: String,
 //    fileName: String,
 //    path: Path,
 //    previewNames: List<String>
-//) {
+// ) {
 //    val classBuilder = TypeSpec.classBuilder(fileName)
 //        .superclass(PaparazziTest::class)
 //        .addAnnotation(
@@ -92,9 +92,9 @@ class GeneratePaparazziTests {
 //        .build()
 //    val nioPath = path.toNioPath()
 //    testFile.writeTo(nioPath)
-//}
+// }
 //
-//open class PaparazziTest {
+// open class PaparazziTest {
 //
 //    @get:Rule
 //    val paparazziRule: Paparazzi = Paparazzi(
@@ -102,9 +102,9 @@ class GeneratePaparazziTests {
 //        deviceConfig = DeviceConfig.NEXUS_5.copy(softButtons = false, screenHeight = 1),
 //        renderingMode = SessionParams.RenderingMode.V_SCROLL
 //    )
-//}
+// }
 //
-//class AlertViewPaparazziTest : PaparazziTest() {
+// class AlertViewPaparazziTest : PaparazziTest() {
 //
 //    @get:Rule
 //    val paparazziRule: Paparazzi = Paparazzi(
@@ -117,5 +117,5 @@ class GeneratePaparazziTests {
 //    fun alert() {
 //        paparazziRule.snapshot { AlertPreview() }
 //    }
-//}
+// }
 }

@@ -12,22 +12,20 @@ import androidx.test.uiautomator.UiSelector
 import com.adham.weatherSample.ui.EnterCityScreen
 import com.adham.weatherSample.ui.theme.WeatherSDKTheme
 import com.adham.weatherSdk.WeatherSDK
-import com.adham.weatherSdk.WeatherSDKTestingBuilder
-import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
+import com.adham.weatherSdk.localStorages.SharedPrefsManager
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
 class ComprehensiveInstrumentationTests {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
     // 1. Accessibility & UI Test
     @Test
     fun testEnterCityScreen_UIAndAccessibility() {
-        val mockSdk = WeatherSDKTestingBuilder.createMockedWeatherSDK()
-        
+        val mockSdk = WeatherSDK.Builder().build()
+
         composeTestRule.setContent {
             WeatherSDKTheme {
                 EnterCityScreen(weatherSDK = mockSdk)
@@ -36,7 +34,7 @@ class ComprehensiveInstrumentationTests {
 
         // Verify elements are displayed
         composeTestRule.onNodeWithText("Enter your city name").assertIsDisplayed()
-        
+
         // Test Interaction
         composeTestRule.onNodeWithText("City name").performTextInput("London")
         composeTestRule.onNodeWithText("Weather Forecast").performClick()
@@ -47,17 +45,18 @@ class ComprehensiveInstrumentationTests {
     fun testSDKBuilder_PersistsApiKeyInRealPrefs() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val testApiKey = "instr_test_api_key"
-        
+
         // Build the SDK (this saves the key to SharedPreferences)
         WeatherSDK.Builder(context, testApiKey).build()
-        
+
         // Access the actual SharedPreferences to verify persistence
-        val prefs = context.getSharedPreferences(
-            SharedPrefsManagerImpl.SHARED_PREFS_UTIL_PREFIX,
-            Context.MODE_PRIVATE
-        )
-        
-        val savedKey = prefs.getString(SharedPrefsManagerImpl.API_KEY, null)
+        val prefs =
+            context.getSharedPreferences(
+                SharedPrefsManager.SHARED_PREFS_UTIL_PREFIX,
+                Context.MODE_PRIVATE,
+            )
+
+        val savedKey = prefs.getString(SharedPrefsManager.API_KEY, null)
         assertEquals(testApiKey, savedKey)
     }
 
@@ -65,15 +64,16 @@ class ComprehensiveInstrumentationTests {
     @Test
     fun testDeviceHomeAndBackButtons() {
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        
+
         // Simulate pressing the Home button
         device.pressHome()
-        
+
         // Verify we are on the home screen (check for a common launcher element)
         // This is a generic check; usually you search for your app icon
-        val launcherExists = device.findObject(UiSelector().descriptionContains("Apps")).exists() || 
-                             device.findObject(UiSelector().packageName("com.google.android.apps.nexuslauncher")).exists()
-        
+        val launcherExists =
+            device.findObject(UiSelector().descriptionContains("Apps")).exists() ||
+                device.findObject(UiSelector().packageName("com.google.android.apps.nexuslauncher")).exists()
+
         // Return to the test app
         device.pressRecentApps()
         device.findObject(UiSelector().descriptionContains("WeatherSDK")).click()
@@ -83,7 +83,7 @@ class ComprehensiveInstrumentationTests {
     @Test
     fun testHandlePossibleSystemDialog() {
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        
+
         // If a "Keep app open?" or "Allow notification" dialog appears
         val allowButton = device.findObject(UiSelector().textMatches("(?i)Allow|OK|Accept"))
         if (allowButton.exists()) {

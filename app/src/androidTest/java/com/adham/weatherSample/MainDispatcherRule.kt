@@ -1,4 +1,4 @@
-package com.adham.weatherSdk
+package com.adham.weatherSample
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.Dispatchers

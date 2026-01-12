@@ -7,26 +7,26 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [Address::class, AddressHourlyForecast::class], version = 1)
 abstract class WeatherDatabase : RoomDatabase() {
-
     abstract fun addressDao(): AddressDao
 
     abstract fun addressHourlyForecastDao(): AddressHourlyForecastDao
 
     companion object {
         @Volatile
-        private var INSTANCE: WeatherDatabase? = null
+        private var instance: WeatherDatabase? = null
 
-        fun getDatabase(context: Context): WeatherDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    WeatherDatabase::class.java,
-                    "weather_database"
-                ).fallbackToDestructiveMigration(true).build()
-                INSTANCE = instance
+        fun getDatabase(context: Context): WeatherDatabase =
+            instance ?: synchronized(this) {
+                val instance =
+                    Room
+                        .databaseBuilder(
+                            context.applicationContext,
+                            WeatherDatabase::class.java,
+                            "weather_database",
+                        ).fallbackToDestructiveMigration(true)
+                        .build()
+                Companion.instance = instance
                 instance
             }
-        }
     }
 }
-

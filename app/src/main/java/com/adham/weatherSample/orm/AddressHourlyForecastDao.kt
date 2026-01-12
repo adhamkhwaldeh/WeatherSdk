@@ -4,7 +4,6 @@ import androidx.room.Dao
 
 @Dao
 interface AddressHourlyForecastDao : BaseDao<AddressHourlyForecast> {
-
     // Transaction method
 //    @Transaction
 //    suspend fun addPointAndUpdateTrip(

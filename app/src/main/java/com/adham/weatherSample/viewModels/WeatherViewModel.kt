@@ -13,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
 /**
  * Weather view model
  *
@@ -25,7 +24,6 @@ class WeatherViewModel(
     private val application: Application,
     private val weatherSDK: WeatherSDK,
 ) : BaseRefactorViewModel(application) {
-
     val currentWeather = MutableLiveData<BaseState<CurrentWeatherResponse>>(BaseState.Initial())
 //    private val _currentWeather= MutableSharedFlow<BaseState<Unit>>()
 //    val currentWeather: SharedFlow<BaseState<Unit>> = _currentWeather
@@ -48,6 +46,7 @@ class WeatherViewModel(
     val forecast = MutableLiveData<BaseState<ForecastResponse>>(BaseState.Initial())
 //    private val _forecast= MutableSharedFlow<BaseState<Unit>>()
 //    val forecast: SharedFlow<BaseState<Unit>> = _forecast
+
     /**
      * Load forecast
      *
@@ -62,5 +61,4 @@ class WeatherViewModel(
             }
         }
     }
-
 }

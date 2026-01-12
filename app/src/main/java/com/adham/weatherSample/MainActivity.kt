@@ -17,21 +17,17 @@ import com.adham.weatherSample.ui.theme.WeatherSDKTheme
  * @constructor Create empty Main activity
  */
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             WeatherSDKTheme {
-
                 AppNavHost(
                     modifier = Modifier.fillMaxSize(),
                 )
-
             }
         }
     }
 }
-
 
 /**
  * Greeting preview
@@ -40,12 +36,10 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 private fun GreetingPreview() {
-
     WeatherSDKTheme {
         AppNavHost(
             modifier = Modifier.fillMaxSize(),
-            navController = rememberNavController()
+            navController = rememberNavController(),
         )
     }
-
 }

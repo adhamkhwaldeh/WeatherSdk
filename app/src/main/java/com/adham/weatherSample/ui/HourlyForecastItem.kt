@@ -20,7 +20,6 @@ import com.adham.weatherSample.R
 import com.adham.weatherSdk.data.dtos.HourlyForecastModel
 import com.adham.weatherSdk.helpers.DateHelpers
 
-
 /**
  * Hourly forecast item
  *
@@ -29,47 +28,49 @@ import com.adham.weatherSdk.helpers.DateHelpers
 @Composable
 fun HourlyForecastItem(
     item: HourlyForecastModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val textPadding = PaddingValues(4.dp)
     Card(
-        modifier = modifier
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .fillMaxWidth()
 //            .padding(4.dp)
-            .background(MaterialTheme.colorScheme.surface),
+                .background(MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(0.0.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-        )
-
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
 //                .background(MaterialTheme.colorScheme.surface),
         ) {
             Text(
                 text = DateHelpers.getHoursOnlyFromStanderFormat(item.timeStampLocal),
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(textPadding)
+                modifier = Modifier.padding(textPadding),
             )
             Text(
                 text = "${item.temp}${stringResource(R.string.celsius)}",
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                modifier = Modifier
-                    .padding(textPadding)
-                    .padding(
-                        end = 4.dp
-                    )
+                modifier =
+                    Modifier
+                        .padding(textPadding)
+                        .padding(
+                            end = 4.dp,
+                        ),
             )
             Text(
                 text = item.weather.description,
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
-                modifier = Modifier.padding(textPadding)
+                modifier = Modifier.padding(textPadding),
             )
         }
         HorizontalDivider()
     }
-
 }

@@ -24,7 +24,6 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class WeatherViewModelTest {
-
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -51,46 +50,51 @@ class WeatherViewModelTest {
     }
 
     @Test
-    fun `loadCurrentWeather loading state transition`() = runTest {
-        val city = "London"
-        coEvery { weatherSDK.currentWeatherUseCase(city) } returns flowOf()
+    fun `loadCurrentWeather loading state transition`() =
+        runTest {
+            val city = "London"
+            coEvery { weatherSDK.currentWeatherUseCase(city) } returns flowOf()
 
-        viewModel.loadCurrentWeather(city)
+            viewModel.loadCurrentWeather(city)
 
-        assertThat(viewModel.currentWeather.value).isInstanceOf(BaseState.Loading::class.java)
-    }
-
-    @Test
-    fun `loadCurrentWeather success response delivery`() = runTest {
-        val city = "London"
-        val mockResponse = mockk<CurrentWeatherResponse>()
-        coEvery { weatherSDK.currentWeatherUseCase(city) } returns flowOf(
-            BaseState.BaseStateLoadedSuccessfully(mockResponse)
-        )
-
-        viewModel.loadCurrentWeather(city)
-        testDispatcher.scheduler.advanceUntilIdle()
-
-        val state = viewModel.currentWeather.value
-        assertThat(state).isInstanceOf(BaseState.BaseStateLoadedSuccessfully::class.java)
-        assertThat((state as BaseState.BaseStateLoadedSuccessfully).data).isEqualTo(mockResponse)
-    }
+            assertThat(viewModel.currentWeather.value).isInstanceOf(BaseState.Loading::class.java)
+        }
 
     @Test
-    fun `loadCurrentWeather error state handling`() = runTest {
-        val city = "London"
-        val errorMessage = "Network Error"
-        coEvery { weatherSDK.currentWeatherUseCase(city) } returns flowOf(
-            BaseState.InternalServerError(errorMessage)
-        )
+    fun `loadCurrentWeather success response delivery`() =
+        runTest {
+            val city = "London"
+            val mockResponse = mockk<CurrentWeatherResponse>()
+            coEvery { weatherSDK.currentWeatherUseCase(city) } returns
+                flowOf(
+                    BaseState.BaseStateLoadedSuccessfully(mockResponse),
+                )
 
-        viewModel.loadCurrentWeather(city)
-        testDispatcher.scheduler.advanceUntilIdle()
+            viewModel.loadCurrentWeather(city)
+            testDispatcher.scheduler.advanceUntilIdle()
 
-        val state = viewModel.currentWeather.value
-        assertThat(state).isInstanceOf(BaseState.InternalServerError::class.java)
-        assertThat((state as BaseState.InternalServerError).errorMessage).isEqualTo(errorMessage)
-    }
+            val state = viewModel.currentWeather.value
+            assertThat(state).isInstanceOf(BaseState.BaseStateLoadedSuccessfully::class.java)
+            assertThat((state as BaseState.BaseStateLoadedSuccessfully).data).isEqualTo(mockResponse)
+        }
+
+    @Test
+    fun `loadCurrentWeather error state handling`() =
+        runTest {
+            val city = "London"
+            val errorMessage = "Network Error"
+            coEvery { weatherSDK.currentWeatherUseCase(city) } returns
+                flowOf(
+                    BaseState.InternalServerError(errorMessage),
+                )
+
+            viewModel.loadCurrentWeather(city)
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            val state = viewModel.currentWeather.value
+            assertThat(state).isInstanceOf(BaseState.InternalServerError::class.java)
+            assertThat((state as BaseState.InternalServerError).errorMessage).isEqualTo(errorMessage)
+        }
 
     @Test
     fun `forecast initial state check`() {
@@ -98,34 +102,38 @@ class WeatherViewModelTest {
     }
 
     @Test
-    fun `loadForecast success response delivery`() = runTest {
-        val params = ForecastWeatherUseCaseParams("London", 3)
-        val mockResponse = mockk<ForecastResponse>()
-        coEvery { weatherSDK.forecastWeatherUseCase(params) } returns flowOf(
-            BaseState.BaseStateLoadedSuccessfully(mockResponse)
-        )
+    fun `loadForecast success response delivery`() =
+        runTest {
+            val params = ForecastWeatherUseCaseParams("London", 3)
+            val mockResponse = mockk<ForecastResponse>()
+            coEvery { weatherSDK.forecastWeatherUseCase(params) } returns
+                flowOf(
+                    BaseState.BaseStateLoadedSuccessfully(mockResponse),
+                )
 
-        viewModel.loadForecast(params)
-        testDispatcher.scheduler.advanceUntilIdle()
+            viewModel.loadForecast(params)
+            testDispatcher.scheduler.advanceUntilIdle()
 
-        val state = viewModel.forecast.value
-        assertThat(state).isInstanceOf(BaseState.BaseStateLoadedSuccessfully::class.java)
-        assertThat((state as BaseState.BaseStateLoadedSuccessfully).data).isEqualTo(mockResponse)
-    }
+            val state = viewModel.forecast.value
+            assertThat(state).isInstanceOf(BaseState.BaseStateLoadedSuccessfully::class.java)
+            assertThat((state as BaseState.BaseStateLoadedSuccessfully).data).isEqualTo(mockResponse)
+        }
 
     @Test
-    fun `loadForecast error state handling`() = runTest {
-        val params = ForecastWeatherUseCaseParams("London", 3)
-        val errorMessage = "Server Error"
-        coEvery { weatherSDK.forecastWeatherUseCase(params) } returns flowOf(
-            BaseState.InternalServerError(errorMessage)
-        )
+    fun `loadForecast error state handling`() =
+        runTest {
+            val params = ForecastWeatherUseCaseParams("London", 3)
+            val errorMessage = "Server Error"
+            coEvery { weatherSDK.forecastWeatherUseCase(params) } returns
+                flowOf(
+                    BaseState.InternalServerError(errorMessage),
+                )
 
-        viewModel.loadForecast(params)
-        testDispatcher.scheduler.advanceUntilIdle()
+            viewModel.loadForecast(params)
+            testDispatcher.scheduler.advanceUntilIdle()
 
-        val state = viewModel.forecast.value
-        assertThat(state).isInstanceOf(BaseState.InternalServerError::class.java)
-        assertThat((state as BaseState.InternalServerError).errorMessage).isEqualTo(errorMessage)
-    }
+            val state = viewModel.forecast.value
+            assertThat(state).isInstanceOf(BaseState.InternalServerError::class.java)
+            assertThat((state as BaseState.InternalServerError).errorMessage).isEqualTo(errorMessage)
+        }
 }

@@ -13,11 +13,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.adham.weatherSample.ui.navigations.NavigationItem
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
-import com.adham.weatherSample.ui.navigations.NavigationItem
 import org.koin.compose.koinInject
-
 
 /**
  * App nav host
@@ -33,7 +32,6 @@ fun AppNavHost(
     startDestination: String = NavigationItem.City.route,
     weatherSDK: WeatherSDK = koinInject(),
 ) {
-
     val sdkStatus = weatherSDK.sdkStatus.observeAsState()
     LaunchedEffect(sdkStatus.value) {
         val current = sdkStatus.value
@@ -47,24 +45,27 @@ fun AppNavHost(
     // A surface container using the 'background' color from the theme
     Surface(
         modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.background,
     ) {
         NavHost(
             navController = navController,
-            startDestination = startDestination
+            startDestination = startDestination,
         ) {
             composable(NavigationItem.City.route) {
                 EnterCityScreen()
             }
             composable(
                 NavigationItem.Forecast.route,
-                arguments = listOf(navArgument(NavigationItem.CITY_TAG) {
-                    type = NavType.StringType
-                }),
+                arguments =
+                    listOf(
+                        navArgument(NavigationItem.CITY_TAG) {
+                            type = NavType.StringType
+                        },
+                    ),
             ) { backStackEntry ->
                 val cityName = backStackEntry.arguments?.getString(NavigationItem.CITY_TAG) ?: ""
 //                ForecastScreen(navController, cityName)
-                ForecastScreen(cityName =  cityName)
+                ForecastScreen(cityName = cityName)
             }
         }
     }

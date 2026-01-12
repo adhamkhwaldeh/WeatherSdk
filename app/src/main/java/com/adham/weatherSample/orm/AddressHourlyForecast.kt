@@ -13,37 +13,34 @@ class AddressHourlyForecast() {
     var id: Int = 0
 
     @ColumnInfo(name = "addressName")
-    var addressName:String =""
+    var addressName: String = ""
 
     @ColumnInfo(name = "forecastDate")
-    var forecastDate:String =""
+    var forecastDate: String = ""
 
     @ColumnInfo(name = "temp")
     var temp: Double = 0.0
 
     @ColumnInfo(name = "timestamp_local")
-    var timeStampLocal: String =""
+    var timeStampLocal: String = ""
 
     @ColumnInfo(name = "description")
     var description: String = ""
 
     @Ignore
-//    @JvmOverloads
     constructor(
         id: Int = 0,
         addressName: String = "",
-        forecastDate:String = "",
+        forecastDate: String = "",
         temp: Double = 0.0,
-        timeStampLocal: String ="",
-        description: String = ""
+        timeStampLocal: String = "",
+        description: String = "",
     ) : this() {
         this.id = id
         this.addressName = addressName
-
         this.forecastDate = forecastDate
         this.temp = temp
         this.timeStampLocal = timeStampLocal
         this.description = description
     }
-
 }

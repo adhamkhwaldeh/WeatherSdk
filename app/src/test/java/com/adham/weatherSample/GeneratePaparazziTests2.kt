@@ -1,10 +1,10 @@
-//import com.android.utils.usLocaleDecapitalize
-//import okio.Path.Companion.toPath
-//import org.junit.Test
-//import java.io.File
-//import java.nio.file.Path
+// import com.android.utils.usLocaleDecapitalize
+// import okio.Path.Companion.toPath
+// import org.junit.Test
+// import java.io.File
+// import java.nio.file.Path
 //
-///**
+// /**
 // * Finds all files in the components module which have Compose previews
 // * and generates Paparazzi screenshot tests for them.
 // *
@@ -15,7 +15,7 @@
 // * ./gradlew components:verifyPaparazziInternalDebug
 // */
 class GeneratePaparazziTests2 {
-//fun main() {
+// fun main() {
 //    val path = System.getProperty("user.dir") ?: error("Can't get user dir")
 //
 //    // Paparazzi does not currently work in the app module: https://github.com/cashapp/paparazzi/issues/107
@@ -26,13 +26,13 @@ class GeneratePaparazziTests2 {
 //            processFileWithPreviews(it)
 //        }
 //    }
-//}
+// }
 //
-///**
+// /**
 // * Reads the given file, finds the names of all the functions annotated with @Preview
 // * and uses them to generate a Paparazzi test file with one test for each preview.
 // */
-//private fun processFileWithPreviews(file: File) {
+// private fun processFileWithPreviews(file: File) {
 //    val lines = file.readLines()
 //    val previewNames = mutableListOf<String>()
 //    var saveNextFunctionName = false
@@ -52,9 +52,9 @@ class GeneratePaparazziTests2 {
 //    val pathString = file.path.replace("src/main", "src/test").split("java").first() + "java"
 //    val testFilePath = pathString.toPath()
 //    generatePaparazziTest(packageName, file.nameWithoutExtension + "PaparazziTest", testFilePath, previewNames)
-//}
+// }
 //
-//fun generatePaparazziTest(packageName: String, fileName: String, path: Path, previewNames: List<String>) {
+// fun generatePaparazziTest(packageName: String, fileName: String, path: Path, previewNames: List<String>) {
 //    val classBuilder = TypeSpec.classBuilder(fileName)
 //        .superclass(PaparazziTest::class)
 //        .addAnnotation(
@@ -79,6 +79,5 @@ class GeneratePaparazziTests2 {
 //        .build()
 //    val nioPath = path.toNioPath()
 //    testFile.writeTo(nioPath)
-//}
-
+// }
 }
