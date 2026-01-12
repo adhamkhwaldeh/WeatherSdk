@@ -52,10 +52,12 @@ import androidx.compose.ui.unit.dp
 import com.adham.weatherSample.R
 import com.adham.weatherSample.orm.Address
 import com.adham.weatherSample.orm.WeatherDatabase
+import com.adham.weatherSample.viewModels.WeatherViewModel
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
 /**
@@ -65,13 +67,9 @@ import org.koin.compose.koinInject
 @Composable
 fun EnterCityScreen(
     modifier: Modifier = Modifier,
-    weatherSDK: WeatherSDK = koinInject(),
+    weatherViewModel: WeatherViewModel = koinViewModel(),
 ) {
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val addressDao = remember { WeatherDatabase.getDatabase(context).addressDao() }
-    val savedAddresses by addressDao.loadAllDataFlow().collectAsState(initial = emptyList())
-
+    val savedAddresses by weatherViewModel.savedAddresses.collectAsState(initial = emptyList())
     var cityName by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
 
@@ -97,35 +95,25 @@ fun EnterCityScreen(
                 },
                 isError = isError,
                 onSaveAddress = {
-                    if (cityName.isNotBlank()) {
-                        scope.launch(Dispatchers.IO) {
-                            val trimmed = cityName.trim()
-                            if (addressDao.findByName(trimmed) == null) {
-                                addressDao.insert(Address(name = trimmed))
-                            }
-                        }
-                    } else {
-                        isError = true
-                    }
+                    weatherViewModel.saveAddress(cityName) { isError = true }
                 },
             )
-
             WeatherForecastSection(
                 cityName = cityName,
                 onShowError = { isError = true },
                 onLaunchForecast = {
-                    weatherSDK.sdkStatus.value = WeatherSdkStatus.OnLaunchForecast(it)
+                    weatherViewModel.updateSdkStatus(WeatherSdkStatus.OnLaunchForecast(it))
                 },
             )
-
             if (savedAddresses.isNotEmpty()) {
                 SavedAddressesSection(
                     savedAddresses = savedAddresses,
                     onAddressClick = {
                         cityName = it
-                        weatherSDK.sdkStatus.value = WeatherSdkStatus.OnLaunchForecast(it)
+                        isError = false
+                        weatherViewModel.updateSdkStatus(WeatherSdkStatus.OnLaunchForecast(it))
                     },
-                    onDeleteAddress = { scope.launch(Dispatchers.IO) { addressDao.delete(it) } },
+                    onDeleteAddress = { weatherViewModel.deleteAddress(it) },
                 )
             }
         }
