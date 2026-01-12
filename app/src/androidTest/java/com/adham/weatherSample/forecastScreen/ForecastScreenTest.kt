@@ -1,9 +1,15 @@
-package com.adham.weatherSample
+package com.adham.weatherSample.forecastScreen
 
+import android.app.Application
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.adham.weatherSample.R
+import com.adham.weatherSample.helpers.TestingConstantHelper
 import com.adham.weatherSample.ui.ForecastScreen
 import org.junit.Rule
 import org.junit.runner.RunWith
@@ -14,17 +20,39 @@ class ForecastScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val application = ApplicationProvider.getApplicationContext<Application>()
+
+    @OptIn(ExperimentalTestApi::class)
     @Test
     fun testWeatherDisplayAndForecastList() {
+        val cityName = "Berlin"
         composeTestRule.setContent {
-            ForecastScreen(cityName = "Berlin") // , weatherData = mockWeatherData
+            ForecastScreen(cityName = cityName) // , weatherData = mockWeatherData
         }
 
+        // Wait for the API call to complete and the result to be displayed
+        composeTestRule.waitUntilAtLeastOneExists(
+            matcher =
+                hasText(
+                    "${application.getString(R.string.TheWeatherIn)} $cityName ${
+                        application.getString(R.string.IS)
+                    }",
+                    substring = true,
+                ),
+            timeoutMillis = 30000,
+        )
         // Verify weather details are displayed
-        composeTestRule.onNodeWithText("Weather in Berlin").assertExists()
+        composeTestRule
+            .onNodeWithText(
+                "${application.getString(R.string.TheWeatherIn)} $cityName ${
+                    application.getString(R.string.IS)
+                }",
+            ).assertExists()
 
         // Check if hourly forecast list is displayed
-        composeTestRule.onNodeWithTag("hourlyForecastList").assertExists()
+        composeTestRule
+            .onNodeWithTag(TestingConstantHelper.HOURLY_FORECAST_LIST)
+            .assertExists()
     }
 
     @Test
@@ -43,7 +71,7 @@ class ForecastScreenTest {
     @Test
     fun testApiFailureShowsErrorMessage() {
         composeTestRule.setContent {
-            ForecastScreen(cityName = "Berlin") // , weatherData = null, isApiError = true)
+            ForecastScreen(cityName = "123") // , weatherData = null, isApiError = true)
         }
 
         // Verify error message appears

@@ -172,7 +172,10 @@ private fun CityInputSection(
         singleLine = true,
         isError = isError,
         leadingIcon = {
-            IconButton(onClick = onSaveAddress, modifier = Modifier.testTag("saveAddressButton")) {
+            IconButton(
+                onClick = onSaveAddress,
+                modifier = Modifier.testTag(TestingConstantHelper.SAVE_ADDRESS_BUTTON),
+            ) {
                 Icon(
                     imageVector = Icons.Default.AddLocation,
                     contentDescription = "Save Address",

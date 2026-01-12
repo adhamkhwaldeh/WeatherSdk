@@ -1,21 +1,7 @@
-package com.adham.weatherSample
+package com.adham.weatherSample.experimental
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.runner.RunWith
-
-// import androidx.test.platform.app.InstrumentationRegistry
-// import androidx.test.uiautomator.By
-// import androidx.test.uiautomator.UiDevice
-// import androidx.test.uiautomator.UiSelector
-// import androidx.test.uiautomator.Until
-// import org.junit.Rule
-// import org.junit.Test
-// import androidx.compose.ui.test.junit4.createAndroidComposeRule
-// import androidx.compose.ui.test.onNodeWithText
-// import androidx.compose.ui.test.performClick
-// import com.adham.weatherSdk.localStorages.SharedPrefsManager
-// import androidx.test.uiautomator.UiDevice
-// import androidx.test.uiautomator.UiSelector
 
 @RunWith(AndroidJUnit4::class)
 class ComposeWithUiAutomatorTest {

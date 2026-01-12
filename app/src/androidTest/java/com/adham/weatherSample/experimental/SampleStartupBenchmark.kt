@@ -1,4 +1,4 @@
-package com.adham.weatherSample
+package com.adham.weatherSample.experimental
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
