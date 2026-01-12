@@ -14,41 +14,58 @@ interface StatesLayoutCustomInterface {
      *
      * @return
      */
-    fun noContent(): (@Composable @UiComposable () -> Unit)? = null
+    fun noContent(): (
+        @Composable
+        @UiComposable () -> Unit
+    )? = null
 
     /**
      * Internal server error
      *
      * @return
      */
-    fun internalServerError(): (@Composable @UiComposable () -> Unit)? = null
+    fun internalServerError(): (
+        @Composable
+        @UiComposable () -> Unit
+    )? = null
 
     /**
      * Invalid data
      *
      * @return
      */
-    fun invalidData(): (@Composable @UiComposable () -> Unit)? = null
+    fun invalidData(): (
+        @Composable
+        @UiComposable () -> Unit
+    )? = null
 
     /**
      * Not authorized
      *
      * @return
      */
-    fun notAuthorized(): (@Composable @UiComposable () -> Unit)? = null
+    fun notAuthorized(): (
+        @Composable
+        @UiComposable () -> Unit
+    )? = null
 
     /**
      * No internet error
      *
      * @return
      */
-    fun noInternetError(): (@Composable @UiComposable () -> Unit)? = null
+    fun noInternetError(): (
+        @Composable
+        @UiComposable () -> Unit
+    )? = null
 
     /**
      * Validation error
      *
      * @return
      */
-    fun validationError(): (@Composable @UiComposable () -> Unit)? = null
-
+    fun validationError(): (
+        @Composable
+        @UiComposable () -> Unit
+    )? = null
 }

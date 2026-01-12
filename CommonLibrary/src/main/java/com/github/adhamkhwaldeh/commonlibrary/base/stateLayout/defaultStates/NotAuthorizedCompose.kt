@@ -12,24 +12,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.github.adhamkhwaldeh.commonlibrary.R
 
-
 /**
  * Not authorized compose
  *
  */
 @Composable
 fun NotAuthorizedCompose(modifier: Modifier = Modifier) {
-
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = stringResource(R.string.youAreNotAuthorized),
-            style = MaterialTheme.typography.labelLarge
+            style = MaterialTheme.typography.labelLarge,
         )
     }
 }

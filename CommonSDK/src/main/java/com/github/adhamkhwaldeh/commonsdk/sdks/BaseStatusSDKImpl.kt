@@ -3,9 +3,8 @@ package com.github.adhamkhwaldeh.commonsdk.sdks
 import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.CallbackListener
 import java.util.concurrent.CopyOnWriteArrayList
 
-class BaseStatusSDKImpl<TSdkStatus : CallbackListener> : BaseStatusSDK<TSdkStatus> {
-
-    //#region SDK-level Status actions
+internal class BaseStatusSDKImpl<TSdkStatus : CallbackListener> : BaseStatusSDK<TSdkStatus> {
+    // #region SDK-level Status actions
     private val globalStatusListeners = CopyOnWriteArrayList<TSdkStatus>()
 
     override fun addGlobalStatusListener(listener: TSdkStatus) {
@@ -23,5 +22,5 @@ class BaseStatusSDKImpl<TSdkStatus : CallbackListener> : BaseStatusSDK<TSdkStatu
     override fun notifyListeners(block: (TSdkStatus) -> Unit) {
         globalStatusListeners.forEach { block(it) }
     }
-    //#endregion
+    // #endregion
 }

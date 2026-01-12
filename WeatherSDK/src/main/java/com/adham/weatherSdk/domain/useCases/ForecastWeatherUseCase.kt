@@ -17,12 +17,16 @@ internal class ForecastWeatherUseCase(
     override suspend fun invoke(params: ForecastWeatherUseCaseParams): Flow<BaseState<ForecastResponse>> =
         flow {
             emit(
-                weatherRepository
-                    .forecast(
-                        city = params.city,
-                        hours = params.hours,
-                        apiKey = weatherLocalRepository.getApiKey(),
-                    ).asBasState(),
+                try {
+                    weatherRepository
+                        .forecast(
+                            city = params.city,
+                            hours = params.hours,
+                            apiKey = weatherLocalRepository.getApiKey(),
+                        ).asBasState()
+                } catch (ex: Throwable) {
+                    BaseState.getStateByThrowable(ex)
+                },
             )
         }
 }

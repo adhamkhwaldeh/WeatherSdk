@@ -55,12 +55,13 @@ dependencies {
     //    // Optional - Integration with LiveData
     implementation libs.androidx.compose.runtime.livedata
 
+    implementation libs.retrofit
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
 
-    detektPlugins("io.nlopez.compose.rules:detekt:0.4.22")
+    detektPlugins(libs.detekt)
 
 }
 

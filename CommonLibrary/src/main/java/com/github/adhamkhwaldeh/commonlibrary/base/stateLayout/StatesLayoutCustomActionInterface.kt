@@ -12,5 +12,4 @@ interface StatesLayoutCustomActionInterface {
      * @return
      */
     fun retry(): Unit? = null
-
 }

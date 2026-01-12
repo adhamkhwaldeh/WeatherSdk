@@ -1,6 +1,6 @@
 package com.github.adhamkhwaldeh.commonsdk.exceptions
 
-class DefaultSDKException (
+class DefaultSDKException(
     override val message: String?,
-    override val cause: Throwable? = null
+    override val cause: Throwable? = null,
 ) : BaseSDKException(message, cause)

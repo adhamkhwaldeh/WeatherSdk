@@ -2,8 +2,6 @@ package com.github.adhamkhwaldeh.commonlibrary.base
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-//import org.koin.core.component.KoinComponent
-
 
 /**
  * Base refactor view model
@@ -12,7 +10,7 @@ import androidx.lifecycle.AndroidViewModel
  *
  * @param androidApplication
  */
-abstract class BaseRefactorViewModel(androidApplication: Application) :
-    AndroidViewModel(androidApplication) {//, KoinComponent
-
+abstract class BaseRefactorViewModel(
+    androidApplication: Application,
+) : AndroidViewModel(androidApplication) { // , KoinComponent
 }

@@ -15,10 +15,13 @@ var weatherSDKModule =
                 .Builder(
                     androidApplication(),
                     AppConstantsHelper.API_KEY,
+//                    AppConstantsHelper.API_KEY_EXPIRED,
                 ).setupOptions(
                     WeatherSDKOptions
-                        .Builder(AppConstantsHelper.API_KEY)
-                        .setLogLevel(LogLevel.DEBUG)
+                        .Builder(
+//                            AppConstantsHelper.API_KEY_EXPIRED,
+                            AppConstantsHelper.API_KEY,
+                        ).setLogLevel(LogLevel.DEBUG)
                         .setOverridable(false)
                         .setDebugMode(true)
                         .build(),

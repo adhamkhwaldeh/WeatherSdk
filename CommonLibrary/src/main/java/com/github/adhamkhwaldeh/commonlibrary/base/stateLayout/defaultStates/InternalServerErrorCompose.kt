@@ -19,21 +19,19 @@ import com.github.adhamkhwaldeh.commonlibrary.R
 @Composable
 fun InternalServerErrorCompose(
     message: String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = message ?: stringResource(R.string.internalServerError),
-            style = MaterialTheme.typography.labelLarge
+            style = MaterialTheme.typography.labelLarge,
         )
     }
 }
-
-

@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.github.adhamkhwaldeh.commonlibrary.R
 
-
 /**
  * No internet connection compose
  *
@@ -24,20 +23,19 @@ import com.github.adhamkhwaldeh.commonlibrary.R
 @Composable
 fun NoInternetConnectionCompose(
     retry: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-
     Column(
-        modifier = modifier
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .fillMaxWidth(),
 //            .fillMaxHeight()
-        ,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = stringResource(R.string.noConnection),
-            style = MaterialTheme.typography.labelLarge
+            style = MaterialTheme.typography.labelLarge,
         )
         OutlinedButton(
             modifier = Modifier.padding(8.dp),

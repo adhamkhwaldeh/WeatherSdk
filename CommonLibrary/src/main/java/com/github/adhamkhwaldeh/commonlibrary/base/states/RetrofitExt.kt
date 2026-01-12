@@ -1,14 +1,13 @@
 package com.github.adhamkhwaldeh.commonlibrary.base.states
 
-
 /**
  * As bas state
  *
  * @param T
  * @return
  */
-fun <T> Result<T>.asBasState(): BaseState<T> {
-    return if (isSuccess && getOrNull() != null) {
+fun <T> Result<T>.asBasState(): BaseState<T> =
+    if (isSuccess && getOrNull() != null) {
         val res = getOrNull()
         if (res != null) {
             BaseState.BaseStateLoadedSuccessfully(res)
@@ -18,4 +17,3 @@ fun <T> Result<T>.asBasState(): BaseState<T> {
     } else {
         BaseState.getStateByThrowable(exceptionOrNull() ?: Throwable(message = "Unexpected error"))
     }
-}

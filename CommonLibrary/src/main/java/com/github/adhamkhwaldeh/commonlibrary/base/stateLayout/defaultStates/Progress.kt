@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
-
 /**
  * Progress
  *
@@ -28,16 +27,17 @@ fun Progress(value: Boolean = true) {
     if (showDialog.value) {
         Dialog(
             onDismissRequest = { showDialog.value = false },
-            DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+            DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
         ) {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .size(100.dp)
-                    .background(White, shape = RoundedCornerShape(8.dp))
+                modifier =
+                    Modifier
+                        .size(100.dp)
+                        .background(White, shape = RoundedCornerShape(8.dp)),
             ) {
                 CircularProgressIndicator(
-                    color = Color.Blue//colorResource(id = R.color.dark_blue)
+                    color = Color.Blue, // colorResource(id = R.color.dark_blue)
                 )
             }
         }

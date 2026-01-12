@@ -1,7 +1,7 @@
 package com.adham.weatherSdk
 
-import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.KoModifier
+import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.ext.list.functions
 import com.lemonappdev.konsist.api.ext.list.imports
 import com.lemonappdev.konsist.api.ext.list.properties
@@ -23,15 +23,17 @@ class KonsistTest {
 
     @Test
     fun `ViewModels should not expose mutable state`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .classes()
             .withNameEndingWith("ViewModel")
             .properties()
             .filter {
-                it.hasPublicModifier || (!it.hasInternalModifier &&
-                        !it.hasPrivateModifier && !it.hasProtectedModifier)
-            }
-            .assertTrue {
+                it.hasPublicModifier || (
+                    !it.hasInternalModifier &&
+                        !it.hasPrivateModifier && !it.hasProtectedModifier
+                )
+            }.assertTrue {
                 val type = it.type?.name ?: ""
                 !type.contains("Mutable")
             }
@@ -39,7 +41,8 @@ class KonsistTest {
 
     @Test
     fun `no context leak in viewmodels`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .classes()
             .withNameEndingWith("ViewModel")
             .properties()
@@ -60,7 +63,8 @@ class KonsistTest {
 
     @Test
     fun `repository functions should be reactive or suspend`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .interfaces()
             .withNameEndingWith("Repository")
             .filter { it.name != "WeatherLocalRepository" }
@@ -83,15 +87,18 @@ class KonsistTest {
     fun `public api should have kdoc`() {
         val scope = Konsist.scopeFromProject()
 
-        scope.classes()
+        scope
+            .classes()
             .filter { it.hasPublicModifier }
             .assertTrue { it.hasKDoc }
 
-        scope.functions()
+        scope
+            .functions()
             .filter { it.hasPublicModifier }
             .assertTrue { it.hasKDoc }
 
-        scope.properties()
+        scope
+            .properties()
             .filter { it.hasPublicModifier }
             .assertTrue { it.hasKDoc }
     }
@@ -109,7 +116,8 @@ class KonsistTest {
 
     @Test
     fun `classes with 'Impl' suffix should be internal`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .classes()
             .filter { !it.hasModifier(KoModifier.ABSTRACT) }
             .withNameEndingWith("Impl")
@@ -125,10 +133,13 @@ class KonsistTest {
             .filter { !it.hasModifier(KoModifier.ABSTRACT) }
             .assertTrue { koClass ->
                 koClass.hasFunction { func ->
-                    func.name == "invoke" &&
-                            (func.hasPublicModifier || !func.hasInternalModifier
-                                    && !func.hasPrivateModifier && !func.hasProtectedModifier)
-                            && func.hasSuspendModifier
+                    (func.name == "invoke") && (
+                        func.hasPublicModifier ||
+                            (
+                                !func.hasInternalModifier &&
+                                    !func.hasPrivateModifier && !func.hasProtectedModifier
+                            )
+                    ) && func.hasSuspendModifier
                 }
             }
     }
@@ -141,11 +152,13 @@ class KonsistTest {
             .withNameEndingWith("UseCase")
             .filter { !it.hasModifier(KoModifier.ABSTRACT) }
             .assertTrue { koClass ->
-                val publicMethods = koClass.functions(includeNested = false)
-                    .count {
-                        it.hasPublicModifier ||
+                val publicMethods =
+                    koClass
+                        .functions(includeNested = false)
+                        .count {
+                            it.hasPublicModifier ||
                                 (!it.hasInternalModifier && !it.hasPrivateModifier && !it.hasProtectedModifier)
-                    }
+                        }
                 publicMethods == 1
             }
     }
@@ -163,13 +176,14 @@ class KonsistTest {
 
     @Test
     fun `domain layer should not have platform or library dependencies`() {
-        val forbiddenPackages = listOf(
-            "android.",
-            "retrofit2.",
-            "okhttp3.",
-            "androidx.room.",
-            "com.squareup.moshi."
-        )
+        val forbiddenPackages =
+            listOf(
+                "android.",
+                "retrofit2.",
+                "okhttp3.",
+                "androidx.room.",
+                "com.squareup.moshi.",
+            )
         Konsist
             .scopeFromProject()
             .files
@@ -177,9 +191,10 @@ class KonsistTest {
             .assertTrue { file ->
                 file.imports.none { import ->
                     forbiddenPackages.any {
-                        import.name.startsWith(it) && !import.name.startsWith(
-                            "android.annotation"
-                        )
+                        import.name.startsWith(it) &&
+                            !import.name.startsWith(
+                                "android.annotation",
+                            )
                     }
                 }
             }
@@ -187,7 +202,8 @@ class KonsistTest {
 
     @Test
     fun `no resource imports in domain`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .files
             .withPackage("..domain..")
             .assertTrue { file ->
@@ -206,7 +222,8 @@ class KonsistTest {
 
     @Test
     fun `dtos should use moshi JsonClass annotation`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .classes()
             .withPackage("..data.dtos..")
             .assertTrue { it.hasAnnotation { anno -> anno.name == "JsonClass" } }
@@ -276,14 +293,15 @@ class KonsistTest {
             .packages
             .assertTrue {
                 //   it.name == it.name.lowercase()
-                it.name[0].isLowerCase()
-                        && !it.name.contains("_")
+                it.name[0].isLowerCase() &&
+                    !it.name.contains("_")
             }
     }
 
     @Test
     fun `all packages should start with project base package`() {
-        Konsist.scopeFromModule("WeatherSDK")
+        Konsist
+            .scopeFromModule("WeatherSDK")
             .packages
             .assertTrue { it.name.startsWith("com.adham.weatherSdk") }
     }
@@ -298,7 +316,8 @@ class KonsistTest {
 
     @Test
     fun `networking and localStorages should be internal`() {
-        Konsist.scopeFromProduction()
+        Konsist
+            .scopeFromProduction()
             .classes()
             .filter { it.resideInPackage("..networking..") || it.resideInPackage("..localStorages..") }
             .filter { !it.resideInPackage("..test..") }
@@ -309,27 +328,32 @@ class KonsistTest {
     fun `providers and helpers should be internal`() {
         val scope = Konsist.scopeFromProject()
 
-        scope.classes()
+        scope
+            .classes()
             .filter { it.resideInPackage("..providers..") }
             .filter { !it.resideInPackage("..test..") }
             .assertTrue { it.hasInternalModifier }
 
-        scope.interfaces()
+        scope
+            .interfaces()
             .filter { it.resideInPackage("..providers..") }
             .filter { !it.resideInPackage("..test..") }
             .assertTrue { it.hasInternalModifier }
 
-        scope.objects()
+        scope
+            .objects()
             .filter { it.resideInPackage("..providers..") }
             .filter { !it.resideInPackage("..test..") }
             .assertTrue { it.hasInternalModifier }
 
-        scope.functions(includeNested = false)
+        scope
+            .functions(includeNested = false)
             .filter { it.resideInPackage("..providers..") }
             .filter { !it.resideInPackage("..test..") }
             .assertTrue { it.hasInternalModifier }
 
-        scope.properties(includeNested = false)
+        scope
+            .properties(includeNested = false)
             .filter { it.resideInPackage("..providers..") }
             .filter { !it.resideInPackage("..test..") }
             .assertTrue { it.hasInternalModifier }
@@ -337,7 +361,8 @@ class KonsistTest {
 
     @Test
     fun `domain and dtos should be immutable`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .classes()
             .filter { it.resideInPackage("..domain..") || it.resideInPackage("..data.dtos..") }
             .properties()
@@ -348,19 +373,23 @@ class KonsistTest {
 
     @Test
     fun `no nullable collections`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .functions()
             .assertTrue {
                 val type = it.returnType?.name ?: ""
                 if (type.contains("List") || type.contains("Set") || type.contains("Map")) {
                     !(it.returnType?.isNullable ?: true)
-                } else true
+                } else {
+                    true
+                }
             }
     }
 
     @Test
     fun `no lateinit in domain`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .classes()
             .withPackage("..domain..")
             .properties()
@@ -369,30 +398,33 @@ class KonsistTest {
 
     @Test
     fun `boolean properties should have prefix`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .properties()
             .filter { it.type?.name == "Boolean" }
             .assertTrue {
                 val name = it.name
-                name.startsWith("is") || name.startsWith("has")
-                        || name.startsWith("can") || name.startsWith("should")
-                        || name.endsWith("able")
+                name.startsWith("is") || name.startsWith("has") ||
+                    name.startsWith("can") || name.startsWith("should") ||
+                    name.endsWith("able")
             }
     }
 
     @Test
     fun `every class should be tested with corresponding test name`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .classes()
             .filter {
-                it.name.endsWith("UseCase") || it.name.endsWith("RepositoryImpl") || it.name.endsWith(
-                    "ViewModel"
-                )
-            }
-            .filter { !it.hasModifier(KoModifier.ABSTRACT) }
+                it.name.endsWith("UseCase") || it.name.endsWith("RepositoryImpl") ||
+                    it.name.endsWith(
+                        "ViewModel",
+                    )
+            }.filter { !it.hasModifier(KoModifier.ABSTRACT) }
             .assertTrue { koClass ->
                 val testName = "${koClass.name}Test"
-                Konsist.scopeFromProject()
+                Konsist
+                    .scopeFromProject()
                     .files
                     .any { it.name.startsWith(testName) }
             }
@@ -423,25 +455,27 @@ class KonsistTest {
 
     @Test
     fun `no unsafe calls allowed`() {
-        Konsist.scopeFromProduction()
+        Konsist
+            .scopeFromProduction()
             .files
             .filter {
                 !it.name.contains("DataProvider")
                 //        && !it.name.contains("KonsistTest")
-            }
-            .assertTrue { !it.text.contains("!!") }
+            }.assertTrue { !it.text.contains("!!") }
     }
 
     @Test
     fun `constructor and function parameter count limit`() {
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .classes()
             .assertTrue {
                 val constructor = it.primaryConstructor
                 constructor == null || constructor.parameters.size <= 7
             }
 
-        Konsist.scopeFromProject()
+        Konsist
+            .scopeFromProject()
             .functions()
             .assertTrue { it.parameters.size <= 5 }
     }
