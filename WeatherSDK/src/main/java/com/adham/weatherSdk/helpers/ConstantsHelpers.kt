@@ -11,4 +11,7 @@ object ConstantsHelpers {
     const val TEST_API_KEY = "0e3cc1c8040a4d4882b318e57c60581e"
 
     const val NETWORK_REQUEST_TIMEOUT: Long = 10
+
+    const val SHARED_PREFS_UTIL_PREFIX_TAG = "mySharedD_"
+    const val API_KEY_TAG = "apiKey"
 }

@@ -48,6 +48,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.adham.weatherSample.R
+import com.adham.weatherSample.helpers.TestingConstantHelper
 import com.adham.weatherSample.orm.Address
 import com.adham.weatherSample.viewModels.WeatherViewModel
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
@@ -142,7 +143,7 @@ private fun WeatherForecastSection(
             modifier =
                 Modifier
                     .padding(8.dp)
-                    .testTag("weatherForecastButton"),
+                    .testTag(TestingConstantHelper.WEATHER_FORECAST_BUTTON),
             onClick = {
                 if (cityName.isBlank()) {
                     onShowError()
@@ -184,7 +185,7 @@ private fun CityInputSection(
                 IconButton(onClick = { onCityNameChange("") }) {
                     Icon(
                         painter = painterResource(android.R.drawable.ic_menu_close_clear_cancel),
-                        contentDescription = "Clear text",
+                        contentDescription = TestingConstantHelper.CLEAR_TEXT,
                         tint = Color.Gray,
                     )
                 }
@@ -193,7 +194,7 @@ private fun CityInputSection(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .testTag("cityInput"),
+                .testTag(TestingConstantHelper.CITY_INPUT_TAG),
     )
 }
 

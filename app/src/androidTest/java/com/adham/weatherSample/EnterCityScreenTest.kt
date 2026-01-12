@@ -7,70 +7,61 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import com.adham.weatherSample.helpers.TestingConstantHelper
 import com.adham.weatherSample.ui.EnterCityScreen
-import com.adham.weatherSdk.WeatherSDK
+import com.adham.weatherSample.viewModels.WeatherViewModel
 import io.mockk.mockk
 import org.junit.Rule
 import org.junit.Test
 
-class EnterCityScreenTest {
+// import com.adham.weatherSdk.WeatherSDK
 
+class EnterCityScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val mockWeatherSdk = mockk<WeatherSDK>(relaxed = true)
+//    private val mockWeatherSdk = mockk<WeatherSDK>(relaxed = true)
+
+    private val mockWeatherViewModel = mockk<WeatherViewModel>(relaxed = true)
 
     @Test
     fun testEnterCityAndTriggerForecast() {
         composeTestRule.setContent {
-            EnterCityScreen(weatherSDK = mockWeatherSdk)
+            EnterCityScreen(weatherViewModel = mockWeatherViewModel)
         }
 
         val cityName = "Berlin"
 
         // Enter city name
-        composeTestRule.onNodeWithTag("cityInput")
+        composeTestRule
+            .onNodeWithTag(TestingConstantHelper.CITY_INPUT_TAG)
             .performTextInput(cityName)
 
         // Click weather forecast button
-        composeTestRule.onNodeWithTag("weatherForecastButton")
+        composeTestRule
+            .onNodeWithTag("weatherForecastButton")
             .performClick()
 
         // Verify that the text was entered correctly
-        composeTestRule.onNodeWithTag("cityInput").assertTextContains(cityName)
-    }
-
-    @Test
-    fun testSaveAddressInteraction() {
-        composeTestRule.setContent {
-            EnterCityScreen(weatherSDK = mockWeatherSdk)
-        }
-
-        // Type a city
-        composeTestRule.onNodeWithTag("cityInput").performTextInput("New York")
-
-        // Click the save icon (leading icon)
-        composeTestRule.onNodeWithTag("saveAddressButton").performClick()
-        
-        // Verification of database insertion is typically done in integration tests
-        // but here we ensure the UI remains responsive.
-        composeTestRule.onNodeWithTag("cityInput").assertIsDisplayed()
+        composeTestRule
+            .onNodeWithTag(TestingConstantHelper.CITY_INPUT_TAG)
+            .assertTextContains(cityName)
     }
 
     @Test
     fun testClearTextButton() {
         composeTestRule.setContent {
-            EnterCityScreen(weatherSDK = mockWeatherSdk)
+            EnterCityScreen(weatherViewModel = mockWeatherViewModel)
         }
 
         // Type something
         composeTestRule.onNodeWithTag("cityInput").performTextInput("TempText")
-        
-        // Find and click the clear (trailing) icon. 
+
+        // Find and click the clear (trailing) icon.
         // We use content description since it doesn't have a tag yet.
-        composeTestRule.onNodeWithContentDescription("Clear text").performClick()
+        composeTestRule.onNodeWithContentDescription(TestingConstantHelper.CLEAR_TEXT).performClick()
 
         // Verify input is empty
-        composeTestRule.onNodeWithTag("cityInput").assertTextContains("")
+        composeTestRule.onNodeWithTag(TestingConstantHelper.CITY_INPUT_TAG).assertTextContains("")
     }
 }

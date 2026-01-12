@@ -64,7 +64,7 @@ class WeatherViewModelCurrentWeatherTest : KoinTest {
      */
     @Before
     fun setUp() {
-        WeatherSDK.Builder().build()
+        WeatherSDK.Builder(application, ConstantsHelpers.TEST_API_KEY).build()
         Dispatchers.setMain(testDispatcher)
     }
 

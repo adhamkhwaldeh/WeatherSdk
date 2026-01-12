@@ -18,7 +18,7 @@ object DummyDataHelper {
 
     val noInternetException = UnknownHostException()
 
-    val notAuthorizeException =
+    val notAuthorizeException: Throwable =
         HttpException(
             Response.error<ResponseBody>(
                 403,
@@ -26,7 +26,7 @@ object DummyDataHelper {
             ),
         )
 
-    val internalServerError =
+    val internalServerError: Throwable =
         HttpException(
             Response.error<ResponseBody>(
                 500,

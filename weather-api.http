@@ -1,3 +1,16 @@
-### Refresh license
-POST https://api.artificient.de/api/v1/Auth/refresh-license?license=eyJpZCI6ImNiNmE5ODY3LTU3NzMtNDNiMy1iZDVhLWMxMTBhZmEzZGFhYyIsImxpY2Vuc2UtdHlwZSI6MSwiZXhwaXJhdGlvbi1kYXRlIjoiMjAyNS0xMC0xNFQyMzo1OTo1OSIsInBhY2thZ2UtbmFtZSI6ImFuZHJvaWQuZ2l6b3Nkay5uYXRpdmUuZXh0ZW5kLWV4cGlyYXRpb24iLCJzaWduYXR1cmUiOiJka2djWjFlQkdHVzFUUUt2ZlJBckZCQkxySjNOUFZDUzBEd1gwN09VaVdrWnNONlFrRnlQekJWcjR0RnZDaUg3ZldTMy9ieHhkbHFKZDFMMzNac0g2d3dXeGlsR3cyUEtJNkdydTIwd0I3a213RmNsMW8yU2NMb2hTSjZaTlVIYzBjNEF1VmcraElMcCtWdmxKcWVLcDhMZGhVT25qYnVsUWh4dnZsSng4aFBwSG9uMmFsLzd3RkRoOWg4cHhSTE1zYXR6Njl5ZWdOcDIwV3FIS1FnYWtPdFppZ1dvQitHbWZkL1E3Y1dMU0lpKzNWM0ErdXBmQkg2WEVncDFaYmlDNU5HSE1mN0U3cGtPNGk5NncrMW1zZHI5UkNvMGlsNzdvSFpmaGFEUGRaYjlpQis4Mk04RGE5RkpIeTlCVGpML1hqSmVZbmU2eGc2ZEVNZFdINTdUeVE9PSJ9
+### Current with city
+GET http://api.weatherbit.io/v2.0/current?city=12&key=0e3cc1c8040a4d4882b318e57c60581e
+Content-Type: application/json
+
+### Current with number
+GET http://api.weatherbit.io/v2.0/current?city=12&key=0e3cc1c8040a4d4882b318e57c60581e
+Content-Type: application/json
+
+
+### forecast with city
+GET http://api.weatherbit.io/v2.0/forecast/hourly?city=munich&hours=24&key=0e3cc1c8040a4d4882b318e57c60581e
+Content-Type: application/json
+
+### forecast with number
+GET http://api.weatherbit.io/v2.0/forecast/hourly?city=12&hours=24&key=0e3cc1c8040a4d4882b318e57c60581e
 Content-Type: application/json

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.adham.weatherSample
 
 // import app.cash.paparazzi.DeviceConfig

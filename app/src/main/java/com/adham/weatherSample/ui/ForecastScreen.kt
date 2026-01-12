@@ -24,11 +24,13 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adham.weatherSample.R
 import com.adham.weatherSample.helpers.AppConstantsHelper
+import com.adham.weatherSample.helpers.TestingConstantHelper
 import com.adham.weatherSample.viewModels.WeatherViewModel
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
@@ -48,6 +50,7 @@ import org.koin.compose.koinInject
  * @param cityName
  * @param viewModel
  */
+@Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForecastScreen(
@@ -196,7 +199,10 @@ fun ForecastListSection(
         baseState = state,
     ) { response ->
         LazyColumn(
-            modifier = Modifier.fillMaxHeight(),
+            modifier =
+                Modifier
+                    .fillMaxHeight()
+                    .testTag(TestingConstantHelper.HOURLY_FORECAST_LIST),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(bottom = 16.dp),

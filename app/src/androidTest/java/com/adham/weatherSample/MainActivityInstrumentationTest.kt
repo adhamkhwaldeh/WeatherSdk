@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.adham.weatherSample.helpers.TestingConstantHelper
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,7 +19,7 @@ class MainActivityInstrumentationTest {
 
     @Test
     fun testNavigationToWeatherScreen() {
-        composeTestRule.onNodeWithTag("cityInput").performTextInput("Berlin")
+        composeTestRule.onNodeWithTag(TestingConstantHelper.CITY_INPUT_TAG).performTextInput("Berlin")
         composeTestRule.onNodeWithTag("searchButton").performClick()
         composeTestRule.onNodeWithText("Weather in Berlin").assertExists()
     }

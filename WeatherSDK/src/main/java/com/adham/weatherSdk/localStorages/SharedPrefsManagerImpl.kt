@@ -41,9 +41,4 @@ internal class SharedPrefsManagerImpl(
             data
         }
     }
-
-    companion object {
-        const val SHARED_PREFS_UTIL_PREFIX = "mySharedD_"
-        const val API_KEY = "apiKey"
-    }
 }

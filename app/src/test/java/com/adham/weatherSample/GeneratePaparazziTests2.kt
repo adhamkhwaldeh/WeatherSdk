@@ -1,3 +1,7 @@
+@file:Suppress("unused")
+
+package com.adham.weatherSample
+
 // import com.android.utils.usLocaleDecapitalize
 // import okio.Path.Companion.toPath
 // import org.junit.Test

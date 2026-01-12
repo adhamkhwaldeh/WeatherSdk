@@ -1,8 +1,8 @@
 package com.adham.weatherSdk.data.repositories
 
 import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
+import com.adham.weatherSdk.helpers.ConstantsHelpers
 import com.adham.weatherSdk.localStorages.SharedPrefsManager
-import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
 
 /**
  * Weather local repository
@@ -20,7 +20,7 @@ internal class WeatherLocalRepositoryImpl(
      */
     override fun saveApiKey(apiKey: String) {
         sharedPrefsManager.save(
-            SharedPrefsManagerImpl.API_KEY,
+            ConstantsHelpers.API_KEY_TAG,
             apiKey,
         )
     }
@@ -30,5 +30,5 @@ internal class WeatherLocalRepositoryImpl(
      *
      * @return
      */
-    override fun getApiKey(): String = sharedPrefsManager.getStringData(SharedPrefsManagerImpl.API_KEY) ?: ""
+    override fun getApiKey(): String = sharedPrefsManager.getStringData(ConstantsHelpers.API_KEY_TAG) ?: ""
 }

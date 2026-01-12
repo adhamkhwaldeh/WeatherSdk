@@ -1,3 +1,7 @@
+@file:Suppress("unused")
+
+package com.adham.weatherSample
+
 // import app.cash.paparazzi.DeviceConfig
 // import app.cash.paparazzi.Paparazzi
 // import com.android.ide.common.rendering.api.SessionParams
