@@ -24,7 +24,10 @@ abstract class BaseManagerImpl<TCall : CallbackListener, TError : ErrorListener,
     internal val logger: Logger,
     private val callbackManager: BaseCallbackManager<TCall> = BaseCallbackManagerImpl(),
     private val errorManager: BaseErrorManager<TError> = BaseErrorManagerImpl(),
-    private val configurableManager: BaseConfigurableManager<TConfig> = BaseConfigurableManagerImpl(config)
+    private val configurableManager: BaseConfigurableManager<TConfig> =
+        BaseConfigurableManagerImpl(
+            config,
+        ),
 ) : BaseManager<TCall, TError, TConfig>,
     BaseCallbackManager<TCall> by callbackManager,
     BaseErrorManager<TError> by errorManager,

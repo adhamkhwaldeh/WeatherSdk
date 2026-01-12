@@ -29,7 +29,7 @@ internal class LoggerProxyImpl : LoggerProxy {
         loggers.add(DefaultLogger())
     }
 
-   override fun setLoggers(newLoggers: List<Logger>) {
+    override fun setLoggers(newLoggers: List<Logger>) {
         loggers.clear()
         loggers.addAll(newLoggers)
     }
@@ -57,25 +57,42 @@ internal class LoggerProxyImpl : LoggerProxy {
         loggers.clear()
     }
 
-    override fun d(tag: String, message: String, config: BaseSDKOptions) {
+    override fun d(
+        tag: String,
+        message: String,
+        config: BaseSDKOptions,
+    ) {
         for (logger in loggers) {
             logger.d(tag, message, config)
         }
     }
 
-    override fun e(tag: String, message: String, config: BaseSDKOptions, throwable: Throwable?) {
+    override fun e(
+        tag: String,
+        message: String,
+        config: BaseSDKOptions,
+        throwable: Throwable?,
+    ) {
         for (logger in loggers) {
             logger.e(tag, message, config, throwable)
         }
     }
 
-    override fun w(tag: String, message: String, config: BaseSDKOptions) {
+    override fun w(
+        tag: String,
+        message: String,
+        config: BaseSDKOptions,
+    ) {
         for (logger in loggers) {
             logger.w(tag, message, config)
         }
     }
 
-    override fun i(tag: String, message: String, config: BaseSDKOptions) {
+    override fun i(
+        tag: String,
+        message: String,
+        config: BaseSDKOptions,
+    ) {
         for (logger in loggers) {
             logger.i(tag, message, config)
         }

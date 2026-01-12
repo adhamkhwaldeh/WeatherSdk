@@ -3,9 +3,8 @@ package com.github.adhamkhwaldeh.commonsdk.managers
 import com.github.adhamkhwaldeh.commonsdk.listeners.configs.ManagerConfigInterface
 
 internal class BaseConfigurableManagerImpl<T : ManagerConfigInterface>(
-    internal var config: T
+    internal var config: T,
 ) : BaseConfigurableManager<T> {
-
     override fun setEnabled(enabled: Boolean): BaseConfigurableManager<T> {
         this.config.isEnabled = enabled
         return this
@@ -32,7 +31,7 @@ internal class BaseConfigurableManagerImpl<T : ManagerConfigInterface>(
     }
 
     override fun updateDefaultConfig(
-        changeOptions: (options: ManagerConfigInterface) -> ManagerConfigInterface
+        changeOptions: (options: ManagerConfigInterface) -> ManagerConfigInterface,
     ): BaseConfigurableManager<T> {
         this.config.updateDefaultConfig(changeOptions)
         return this
@@ -43,7 +42,5 @@ internal class BaseConfigurableManagerImpl<T : ManagerConfigInterface>(
         return this
     }
 
-    override fun canOverride(): Boolean {
-        return this.config.overridable
-    }
+    override fun canOverride(): Boolean = this.config.overridable
 }

@@ -4,8 +4,7 @@ import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseSDKException
 import com.github.adhamkhwaldeh.commonsdk.listeners.errors.ErrorListener
 
 interface BaseGlobalErrorSDK<TError : ErrorListener> {
-
-    //#region SDK-level Error actions
+    // #region SDK-level Error actions
 
     fun addGlobalErrorListener(listener: TError)
 
@@ -15,6 +14,5 @@ interface BaseGlobalErrorSDK<TError : ErrorListener> {
 
     fun notifyGlobalErrorListeners(error: BaseSDKException)
 
-    //#endregion
-
+    // #endregion
 }

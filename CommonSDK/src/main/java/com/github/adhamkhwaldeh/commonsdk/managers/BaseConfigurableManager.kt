@@ -6,7 +6,6 @@ import com.github.adhamkhwaldeh.commonsdk.listeners.configs.ManagerConfigInterfa
  * IBaseConfigurableManager interface for managers that support configuration.
  */
 interface BaseConfigurableManager<T : ManagerConfigInterface> {
-
     /**
      * Set enabled
      *
@@ -34,20 +33,20 @@ interface BaseConfigurableManager<T : ManagerConfigInterface> {
     /**
      * Update config
      *
-     * @param config
+     * @param changeOptions
      * @return
      */
 
     fun updateConfig(changeOptions: (options: T) -> T): BaseConfigurableManager<T>
+
     fun updateConfig(config: T): BaseConfigurableManager<T>
 
     fun updateDefaultConfig(
-        changeOptions:
-            (options: ManagerConfigInterface) -> ManagerConfigInterface
+        changeOptions: (options: ManagerConfigInterface)
+        -> ManagerConfigInterface,
     ): BaseConfigurableManager<T>
 
     fun updateDefaultConfig(config: ManagerConfigInterface): BaseConfigurableManager<T>
 
     fun canOverride(): Boolean
-
 }

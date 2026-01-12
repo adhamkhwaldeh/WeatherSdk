@@ -9,14 +9,21 @@ import com.github.adhamkhwaldeh.commonsdk.listeners.errors.ErrorListener
  *
  * @constructor Create empty Base manager
  */
-interface BaseManager<TCall : CallbackListener, TError : ErrorListener,
-        TConfig : ManagerConfigInterface> :
-    BaseCallbackManager<TCall>, BaseErrorManager<TError>,
+interface BaseManager<
+    TCall : CallbackListener,
+    TError : ErrorListener,
+    TConfig : ManagerConfigInterface,
+> :
+    BaseCallbackManager<TCall>,
+    BaseErrorManager<TError>,
     BaseConfigurableManager<TConfig> {
-
     fun isStarted(): Boolean
+
     fun start()
+
     fun stop()
+
     fun pause()
+
     fun resume()
 }

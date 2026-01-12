@@ -4,9 +4,9 @@ package com.adham.weatherSample
 
 // import app.cash.paparazzi.DeviceConfig
 // import app.cash.paparazzi.Paparazzi
-import com.adham.weatherSample.ui.ForecastScreen
-import org.junit.Rule
-import org.junit.Test
+// import com.adham.weatherSample.ui.ForecastScreen
+// import org.junit.Rule
+// import org.junit.Test
 
 class ForecastScreenPaparazziTest {
 //    @get:Rule

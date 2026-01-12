@@ -3,8 +3,7 @@ package com.github.adhamkhwaldeh.commonsdk.sdks
 import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.CallbackListener
 
 interface BaseStatusSDK<TSdkStatus : CallbackListener> {
-
-    //#region SDK-level Status actions
+    // #region SDK-level Status actions
 
     fun addGlobalStatusListener(listener: TSdkStatus)
 
@@ -13,6 +12,5 @@ interface BaseStatusSDK<TSdkStatus : CallbackListener> {
     fun clearGlobalStatusListeners()
 
     fun notifyListeners(block: (TSdkStatus) -> Unit)
-    //#endregion
-
+    // #endregion
 }

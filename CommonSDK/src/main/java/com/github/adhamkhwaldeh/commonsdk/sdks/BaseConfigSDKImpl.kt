@@ -12,9 +12,10 @@ import com.github.adhamkhwaldeh.commonsdk.options.BaseSDKOptions
 import java.util.WeakHashMap
 import kotlin.collections.forEach
 
-internal class BaseConfigSDKImpl<TConfig : BaseSDKOptions>
-    (internal var sdkConfig: TConfig) : BaseConfigSDK<TConfig> {
-    //#region SDK-level Logging actions
+internal class BaseConfigSDKImpl<TConfig : BaseSDKOptions>(
+    internal var sdkConfig: TConfig,
+) : BaseConfigSDK<TConfig> {
+    // #region SDK-level Logging actions
     internal val logger: LoggerProxy by lazy {
         LoggerProxyImpl()
     }
@@ -31,15 +32,15 @@ internal class BaseConfigSDKImpl<TConfig : BaseSDKOptions>
             loggers.forEach { logger.addLogger(it) }
         }
     }
-    //#endregion
+    // #endregion
 
-    //#region SDK-level Config Actions
+    // #region SDK-level Config Actions
     internal val behaviorManagers =
         WeakHashMap<ManagerKey, BaseManager<out CallbackListener, out ErrorListener, out ManagerConfigInterface>>()
 
-    //#endregion
+    // #endregion
 
-    //#region SDK-level managers Actions
+    // #region SDK-level managers Actions
 
     /**
      * Update sdk config
@@ -70,8 +71,6 @@ internal class BaseConfigSDKImpl<TConfig : BaseSDKOptions>
                 manager.updateDefaultConfig(newConfig)
             }
         }
-
     }
-    //#endregion
-
+    // #endregion
 }

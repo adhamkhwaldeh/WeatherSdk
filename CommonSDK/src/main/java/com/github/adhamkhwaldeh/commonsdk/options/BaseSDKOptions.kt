@@ -11,8 +11,6 @@ abstract class BaseSDKOptions(
     override var overridable: Boolean = true,
     override var logLevel: LogLevel = LogLevel.DEBUG,
 ) : ManagerConfigInterface {
-
-
     /**
      * Set enabled
      *
@@ -65,9 +63,7 @@ abstract class BaseSDKOptions(
      * @param C The type of the configuration object to be built (e.g., AccelerometerConfig)
      */
     @Suppress("UNCHECKED_CAST")
-    abstract class BaseBuilder<T : BaseBuilder<T, C>, C : ManagerConfigInterface> :
-        ManagerConfigBuilder<T, C> {
-
+    abstract class BaseBuilder<T : BaseBuilder<T, C>, C : ManagerConfigInterface> : ManagerConfigBuilder<T, C> {
         // Default values
         protected var isEnabled: Boolean = true
         protected var isDebugMode: Boolean = false
@@ -113,5 +109,4 @@ abstract class BaseSDKOptions(
          */
         abstract override fun build(): C
     }
-
 }

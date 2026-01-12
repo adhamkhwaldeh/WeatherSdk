@@ -50,7 +50,6 @@ import org.koin.compose.koinInject
  * @param cityName
  * @param viewModel
  */
-@Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForecastScreen(

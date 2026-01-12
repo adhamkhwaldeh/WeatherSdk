@@ -7,8 +7,28 @@ import com.github.adhamkhwaldeh.commonsdk.options.BaseSDKOptions
  * to be replaced by a custom logging library (e.g., Timber, a remote logger) at runtime.
  */
 interface Logger {
-    fun d(tag: String, message: String, config: BaseSDKOptions)
-    fun e(tag: String, message: String, config: BaseSDKOptions, throwable: Throwable? = null)
-    fun w(tag: String, message: String, config: BaseSDKOptions)
-    fun i(tag: String, message: String, config: BaseSDKOptions)
+    fun d(
+        tag: String,
+        message: String,
+        config: BaseSDKOptions,
+    )
+
+    fun e(
+        tag: String,
+        message: String,
+        config: BaseSDKOptions,
+        throwable: Throwable? = null,
+    )
+
+    fun w(
+        tag: String,
+        message: String,
+        config: BaseSDKOptions,
+    )
+
+    fun i(
+        tag: String,
+        message: String,
+        config: BaseSDKOptions,
+    )
 }

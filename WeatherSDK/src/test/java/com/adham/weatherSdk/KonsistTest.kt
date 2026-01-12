@@ -29,10 +29,12 @@ class KonsistTest {
             .withNameEndingWith("ViewModel")
             .properties()
             .filter {
-                it.hasPublicModifier || (
-                    !it.hasInternalModifier &&
-                        !it.hasPrivateModifier && !it.hasProtectedModifier
-                )
+                it.hasPublicModifier ||
+                    (
+                        !it.hasInternalModifier &&
+                            !it.hasPrivateModifier &&
+                            !it.hasProtectedModifier
+                    )
             }.assertTrue {
                 val type = it.type?.name ?: ""
                 !type.contains("Mutable")
@@ -133,13 +135,16 @@ class KonsistTest {
             .filter { !it.hasModifier(KoModifier.ABSTRACT) }
             .assertTrue { koClass ->
                 koClass.hasFunction { func ->
-                    (func.name == "invoke") && (
-                        func.hasPublicModifier ||
-                            (
-                                !func.hasInternalModifier &&
-                                    !func.hasPrivateModifier && !func.hasProtectedModifier
-                            )
-                    ) && func.hasSuspendModifier
+                    (func.name == "invoke") &&
+                        (
+                            func.hasPublicModifier ||
+                                (
+                                    !func.hasInternalModifier &&
+                                        !func.hasPrivateModifier &&
+                                        !func.hasProtectedModifier
+                                )
+                        ) &&
+                        func.hasSuspendModifier
                 }
             }
     }
@@ -404,8 +409,10 @@ class KonsistTest {
             .filter { it.type?.name == "Boolean" }
             .assertTrue {
                 val name = it.name
-                name.startsWith("is") || name.startsWith("has") ||
-                    name.startsWith("can") || name.startsWith("should") ||
+                name.startsWith("is") ||
+                    name.startsWith("has") ||
+                    name.startsWith("can") ||
+                    name.startsWith("should") ||
                     name.endsWith("able")
             }
     }
@@ -416,10 +423,9 @@ class KonsistTest {
             .scopeFromProject()
             .classes()
             .filter {
-                it.name.endsWith("UseCase") || it.name.endsWith("RepositoryImpl") ||
-                    it.name.endsWith(
-                        "ViewModel",
-                    )
+                it.name.endsWith("UseCase") ||
+                    it.name.endsWith("RepositoryImpl") ||
+                    it.name.endsWith("ViewModel")
             }.filter { !it.hasModifier(KoModifier.ABSTRACT) }
             .assertTrue { koClass ->
                 val testName = "${koClass.name}Test"

@@ -1,9 +1,10 @@
 package com.github.adhamkhwaldeh.commonsdk.listeners.configs
 
-interface ManagerConfigInterface : ServiceStatusInterface, BuildTypeInterface,
+interface ManagerConfigInterface :
+    ServiceStatusInterface,
+    BuildTypeInterface,
     LogConfigInterface {
-
-    fun updateDefaultConfig(changeOptions: (options: ManagerConfigInterface) -> ManagerConfigInterface){
+    fun updateDefaultConfig(changeOptions: (options: ManagerConfigInterface) -> ManagerConfigInterface) {
         updateDefaultConfig(changeOptions(this))
     }
 
@@ -15,6 +16,4 @@ interface ManagerConfigInterface : ServiceStatusInterface, BuildTypeInterface,
 
 //        overridable = configure.overridable
     }
-
-
 }

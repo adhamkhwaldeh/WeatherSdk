@@ -27,7 +27,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class WeatherSDKTest {
-
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -40,10 +39,10 @@ class WeatherSDKTest {
         context = mockk(relaxed = true)
         mockkObject(DataProvider)
         mockkObject(DomainProvider)
-        
+
         val localRepo = mockk<WeatherLocalRepository>(relaxed = true)
         every { DataProvider.provideWeatherLocalRepository(any()) } returns localRepo
-        
+
         weatherSDK = WeatherSDK.Builder(context, apiKey).build()
     }
 
@@ -56,7 +55,7 @@ class WeatherSDKTest {
     fun `addGlobalErrorListener adds a valid listener`() {
         val listener = mockk<ErrorListener>()
         weatherSDK.addGlobalErrorListener(listener)
-        // Since globalErrorListeners is private in BaseSDK, we implicitly verify via other actions 
+        // Since globalErrorListeners is private in BaseSDK, we implicitly verify via other actions
         // or assume the CopyOnWriteArrayList logic works.
     }
 
@@ -113,38 +112,50 @@ class WeatherSDKTest {
     }
 
     @Test
-    fun `currentWeatherUseCase success state`() = runTest {
-        val city = "London"
-        val expectedResponse = mockk<CurrentWeatherResponse>()
-        val useCase = mockk<com.adham.weatherSdk.domain.useCases.CurrentWeatherUseCase>()
-        
-        every { DomainProvider.provideCurrentWeatherUseCase(any()) } returns useCase
-        coEvery { useCase.invoke(city) } returns flowOf(BaseState.BaseStateLoadedSuccessfully(expectedResponse))
+    fun `currentWeatherUseCase success state`() =
+        runTest {
+            val city = "London"
+            val expectedResponse = mockk<CurrentWeatherResponse>()
+            val useCase = mockk<com.adham.weatherSdk.domain.useCases.CurrentWeatherUseCase>()
 
-        val resultFlow = weatherSDK.currentWeatherUseCase(city)
-        
-        resultFlow.collect { state ->
-            assertTrue(state is BaseState.BaseStateLoadedSuccessfully)
-            assertEquals(expectedResponse, (state as BaseState.BaseStateLoadedSuccessfully).data)
+            every { DomainProvider.provideCurrentWeatherUseCase(any()) } returns useCase
+            coEvery { useCase.invoke(city) } returns
+                flowOf(
+                    BaseState.BaseStateLoadedSuccessfully(
+                        expectedResponse,
+                    ),
+                )
+
+            val resultFlow = weatherSDK.currentWeatherUseCase(city)
+
+            resultFlow.collect { state ->
+                assertTrue(state is BaseState.BaseStateLoadedSuccessfully)
+                assertEquals(expectedResponse, (state as BaseState.BaseStateLoadedSuccessfully).data)
+            }
         }
-    }
 
     @Test
-    fun `forecastWeatherUseCase success state`() = runTest {
-        val params = ForecastWeatherUseCaseParams("London", 24)
-        val expectedResponse = mockk<ForecastResponse>()
-        val useCase = mockk<com.adham.weatherSdk.domain.useCases.ForecastWeatherUseCase>()
-        
-        every { DomainProvider.provideForecastWeatherUseCase(any()) } returns useCase
-        coEvery { useCase.invoke(params) } returns flowOf(BaseState.BaseStateLoadedSuccessfully(expectedResponse))
+    fun `forecastWeatherUseCase success state`() =
+        runTest {
+            val params = ForecastWeatherUseCaseParams("London", 24)
+            val expectedResponse = mockk<ForecastResponse>()
+            val useCase = mockk<com.adham.weatherSdk.domain.useCases.ForecastWeatherUseCase>()
 
-        val resultFlow = weatherSDK.forecastWeatherUseCase(params)
-        
-        resultFlow.collect { state ->
-            assertTrue(state is BaseState.BaseStateLoadedSuccessfully)
-            assertEquals(expectedResponse, (state as BaseState.BaseStateLoadedSuccessfully).data)
+            every { DomainProvider.provideForecastWeatherUseCase(any()) } returns useCase
+            coEvery { useCase.invoke(params) } returns
+                flowOf(
+                    BaseState.BaseStateLoadedSuccessfully(
+                        expectedResponse,
+                    ),
+                )
+
+            val resultFlow = weatherSDK.forecastWeatherUseCase(params)
+
+            resultFlow.collect { state ->
+                assertTrue(state is BaseState.BaseStateLoadedSuccessfully)
+                assertEquals(expectedResponse, (state as BaseState.BaseStateLoadedSuccessfully).data)
+            }
         }
-    }
 
     private fun assertTrue(condition: Boolean) {
         assert(condition)

@@ -5,8 +5,7 @@ import com.github.adhamkhwaldeh.commonsdk.listeners.errors.ErrorListener
 import java.util.concurrent.CopyOnWriteArrayList
 
 internal class BaseGlobalErrorSDKImpl<T : ErrorListener> : BaseGlobalErrorSDK<T> {
-
-    //#region SDK-level Error actions
+    // #region SDK-level Error actions
     private val globalErrorListeners = CopyOnWriteArrayList<ErrorListener>()
 
     /**
@@ -39,6 +38,5 @@ internal class BaseGlobalErrorSDKImpl<T : ErrorListener> : BaseGlobalErrorSDK<T>
         }
     }
 
-    //#endregion
-
+    // #endregion
 }

@@ -3,7 +3,6 @@ package com.github.adhamkhwaldeh.commonsdk.managers
 import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.CallbackListener
 
 interface BaseCallbackManager<T> where T : CallbackListener {
-
     /**
      * Add listener
      *
@@ -30,5 +29,4 @@ interface BaseCallbackManager<T> where T : CallbackListener {
      * @param block The action to perform for each listener.
      */
     fun notifyListeners(block: (T) -> Unit)
-
 }

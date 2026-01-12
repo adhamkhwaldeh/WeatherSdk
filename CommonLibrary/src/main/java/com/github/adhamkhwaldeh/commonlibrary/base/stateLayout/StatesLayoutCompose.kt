@@ -31,8 +31,8 @@ fun <T> StatesLayoutCompose(
     customContent: StatesLayoutCustomInterface? = null,
     customAction: StatesLayoutCustomActionInterface? = null,
     content: (
-        @Composable @UiComposable
-        (data: T) -> Unit
+        @Composable
+        @UiComposable (data: T) -> Unit
     )? = null,
 ) {
     Column(modifier = modifier) {

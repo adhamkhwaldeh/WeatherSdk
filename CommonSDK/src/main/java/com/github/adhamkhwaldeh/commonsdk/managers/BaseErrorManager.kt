@@ -4,8 +4,6 @@ import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseSDKException
 import com.github.adhamkhwaldeh.commonsdk.listeners.errors.ErrorListener
 
 interface BaseErrorManager<T> where T : ErrorListener {
-
-
     /**
      * Add error listener
      *
@@ -26,5 +24,4 @@ interface BaseErrorManager<T> where T : ErrorListener {
     fun clearErrorListeners()
 
     fun notifyErrorListeners(error: BaseSDKException)
-
 }
