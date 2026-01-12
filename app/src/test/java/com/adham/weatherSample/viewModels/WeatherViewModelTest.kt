@@ -2,6 +2,7 @@ package com.adham.weatherSample.viewModels
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.adham.weatherSample.orm.WeatherDatabase
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
 import com.adham.weatherSdk.data.dtos.ForecastResponse
@@ -33,10 +34,12 @@ class WeatherViewModelTest {
     private val application: Application = mockk(relaxed = true)
     private val weatherSDK: WeatherSDK = mockk()
 
+    private val dataBase: WeatherDatabase = mockk()
+
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = WeatherViewModel(application, weatherSDK)
+        viewModel = WeatherViewModel(application, weatherSDK, dataBase)
     }
 
     @After

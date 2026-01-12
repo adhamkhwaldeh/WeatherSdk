@@ -187,7 +187,11 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
     androidTestImplementation(libs.androidx.uiautomator)
 
-    detektPlugins("io.nlopez.compose.rules:detekt:0.4.22")
+    testImplementation libs.robolectric
+    androidTestImplementation(libs.robolectric)
+
+
+    detektPlugins(libs.detekt)
 
     implementation project(':WeatherSDK')
 
