@@ -21,9 +21,9 @@ Add the following dependencies to your `build.gradle` file (using JitPack):
 
 ```gradle
 dependencies {
-    implementation 'com.github.adhamkhwaldeh.WeatherSdk:WeatherSDK:1.0.7'
-    implementation 'com.github.adhamkhwaldeh.WeatherSdk:CommonSDK:1.0.7'
-    implementation 'com.github.adhamkhwaldeh.WeatherSdk:CommonLibrary:1.0.7'
+    implementation 'com.github.adhamkhwaldeh.WeatherSdk:WeatherSDK:1.0.9'
+    implementation 'com.github.adhamkhwaldeh.WeatherSdk:CommonSDK:1.0.9'
+    implementation 'com.github.adhamkhwaldeh.WeatherSdk:CommonLibrary:1.0.9'
 }
 ```
 

@@ -62,7 +62,7 @@ dependencies {
 Add the following to your `build.gradle`:
 ```gradle
 dependencies {
-    implementation 'com.github.adhamkhwaldeh.WeatherSdk:CommonLibrary:1.0.7'
+    implementation 'com.github.adhamkhwaldeh.WeatherSdk:CommonLibrary:1.0.9'
 }
 ```
 

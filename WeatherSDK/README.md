@@ -79,7 +79,7 @@ dependencies {
 ### Remote (JitPack)
 ```gradle
 dependencies {
-    implementation 'com.github.adhamkhwaldeh.WeatherSdk:WeatherSDK:1.0.7'
+    implementation 'com.github.adhamkhwaldeh.WeatherSdk:WeatherSDK:1.0.9'
 }
 ```
 

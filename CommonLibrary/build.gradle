@@ -73,7 +73,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.adhamkhwaldeh.WeatherSdk'
                 artifactId = 'CommonLibrary'
-                version = '1.0.7'
+                version = '1.0.9'
             }
         }
     }
