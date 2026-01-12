@@ -4,5 +4,5 @@ import com.github.adhamkhwaldeh.commonsdk.exceptions.BaseSDKException
 
 class ApiKeyNotValidException(
     message: String?,
-    cause: Throwable? = null
+    cause: Throwable? = null,
 ) : BaseSDKException(message, cause)

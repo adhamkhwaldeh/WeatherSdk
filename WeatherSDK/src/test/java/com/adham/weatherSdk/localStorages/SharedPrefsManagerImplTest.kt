@@ -10,7 +10,6 @@ import org.junit.Before
 import org.junit.Test
 
 class SharedPrefsManagerImplTest {
-
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var sharedPrefsManager: SharedPrefsManagerImpl

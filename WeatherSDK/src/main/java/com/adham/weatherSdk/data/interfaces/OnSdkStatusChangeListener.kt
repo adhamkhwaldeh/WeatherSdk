@@ -8,12 +8,9 @@ import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.CallbackListener
  * @constructor Create empty On sdk status change listener
  */
 interface OnSdkStatusChangeListener : CallbackListener {
-
-
     /**
      * On sdk initialized
      *
      */
     fun onSdkInitialized()
-
 }

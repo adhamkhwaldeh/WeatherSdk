@@ -13,7 +13,6 @@ import java.util.Locale
  * @constructor Create empty Date helpers
  */
 object DateHelpers {
-
     /**
      * Convert timestamp to local time
      *
@@ -45,6 +44,6 @@ object DateHelpers {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
         val date = LocalDateTime.parse(dateStr, formatter)
         return String.format(Locale.ENGLISH, "%02d", date.hour) + ":" +
-                String.format(Locale.ENGLISH, "%02d", date.minute)
+            String.format(Locale.ENGLISH, "%02d", date.minute)
     }
 }

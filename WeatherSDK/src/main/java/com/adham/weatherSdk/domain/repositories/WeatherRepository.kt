@@ -9,7 +9,6 @@ import com.adham.weatherSdk.data.dtos.ForecastResponse
  * @constructor Create empty Weather repository imp
  */
 interface WeatherRepository {
-
     /**
      * Current
      *
@@ -17,8 +16,10 @@ interface WeatherRepository {
      * @param apiKey
      * @return
      */
-    suspend fun current(city: String, apiKey: String): Result<CurrentWeatherResponse>
-
+    suspend fun current(
+        city: String,
+        apiKey: String,
+    ): Result<CurrentWeatherResponse>
 
     /**
      * Forecast
@@ -28,6 +29,9 @@ interface WeatherRepository {
      * @param apiKey
      * @return
      */
-    suspend fun forecast(city: String, hours: Int, apiKey: String): Result<ForecastResponse>
-
+    suspend fun forecast(
+        city: String,
+        hours: Int,
+        apiKey: String,
+    ): Result<ForecastResponse>
 }

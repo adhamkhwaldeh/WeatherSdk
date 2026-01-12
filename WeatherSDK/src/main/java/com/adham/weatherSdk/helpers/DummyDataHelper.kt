@@ -12,53 +12,57 @@ import retrofit2.Response
 import java.net.UnknownHostException
 
 object DummyDataHelper {
-
-    //#region general properties
+    // #region general properties
     const val CITY_NAME = "munich"
     const val DEFAULT_HOURS = 24
 
     val noInternetException = UnknownHostException()
 
-    val notAuthorizeException = HttpException(
-        Response.error<ResponseBody>(
-            403,
-            "some content".toResponseBody("plain/text".toMediaType())
+    val notAuthorizeException =
+        HttpException(
+            Response.error<ResponseBody>(
+                403,
+                "some content".toResponseBody("plain/text".toMediaType()),
+            ),
         )
-    )
 
-    val internalServerError = HttpException(
-        Response.error<ResponseBody>(
-            500,
-            "some content".toResponseBody("plain/text".toMediaType())
+    val internalServerError =
+        HttpException(
+            Response.error<ResponseBody>(
+                500,
+                "some content".toResponseBody("plain/text".toMediaType()),
+            ),
         )
-    )
 
-    //#endregion
+    // #endregion
 
-    //#region weather properties
-    val weatherSuccessData = CurrentWeatherResponse(
-        0,
-        mutableListOf()
-    )
+    // #region weather properties
+    val weatherSuccessData =
+        CurrentWeatherResponse(
+            0,
+            mutableListOf(),
+        )
 
-    val weatherSuccessState = BaseState.BaseStateLoadedSuccessfully(
-        data = weatherSuccessData
-    )
-    //#endregion
+    val weatherSuccessState =
+        BaseState.BaseStateLoadedSuccessfully(
+            data = weatherSuccessData,
+        )
+    // #endregion
 
+    // #region forecast properties
+    val forecastWeatherUseCaseParams =
+        ForecastWeatherUseCaseParams(
+            city = CITY_NAME,
+            DEFAULT_HOURS,
+        )
+    val forecastSuccessData =
+        ForecastResponse(
+            listOf(),
+        )
 
-    //#region forecast properties
-    val forecastWeatherUseCaseParams = ForecastWeatherUseCaseParams(
-        city = CITY_NAME, DEFAULT_HOURS
-    )
-    val forecastSuccessData = ForecastResponse(
-        listOf()
-    )
-
-    val forecastSuccessState = BaseState.BaseStateLoadedSuccessfully(
-        data = forecastSuccessData
-    )
-    //#endregion
-
-
+    val forecastSuccessState =
+        BaseState.BaseStateLoadedSuccessfully(
+            data = forecastSuccessData,
+        )
+    // #endregion
 }

@@ -9,19 +9,19 @@ class WeatherSDKOptions private constructor(
     isLoggingEnabled: Boolean,
     overridable: Boolean,
     logLevel: LogLevel,
-    val apiKey: String
+    val apiKey: String,
 ) : BaseSDKOptions(isEnabled, isDebugMode, isLoggingEnabled, overridable, logLevel) {
-
-
     /**
      * The Builder for creating UserBehaviorSDKConfig instances.
      */
-    class Builder(private val apiKey: String) : BaseBuilder<Builder, WeatherSDKOptions>() {
+    class Builder(
+        private val apiKey: String,
+    ) : BaseBuilder<Builder, WeatherSDKOptions>() {
         /**
          * Creates the final UserBehaviorSDKConfig object.
          */
-        override fun build(): WeatherSDKOptions {
-            return WeatherSDKOptions(
+        override fun build(): WeatherSDKOptions =
+            WeatherSDKOptions(
                 apiKey = apiKey,
                 isEnabled = isEnabled,
                 isDebugMode = isDebugMode,
@@ -29,6 +29,5 @@ class WeatherSDKOptions private constructor(
                 logLevel = logLevel,
                 overridable = overridable,
             )
-        }
     }
 }

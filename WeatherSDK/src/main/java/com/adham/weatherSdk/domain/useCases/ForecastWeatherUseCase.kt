@@ -1,6 +1,5 @@
 package com.adham.weatherSdk.domain.useCases
 
-
 import com.adham.weatherSdk.data.dtos.ForecastResponse
 import com.adham.weatherSdk.data.params.ForecastWeatherUseCaseParams
 import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
@@ -13,20 +12,17 @@ import kotlinx.coroutines.flow.flow
 
 internal class ForecastWeatherUseCase(
     private val weatherRepository: WeatherRepository,
-    private val weatherLocalRepository: WeatherLocalRepository
+    private val weatherLocalRepository: WeatherLocalRepository,
 ) : BaseSealedUseCase<ForecastResponse, ForecastWeatherUseCaseParams>() {
-
-    override suspend fun invoke(params: ForecastWeatherUseCaseParams): Flow<BaseState<ForecastResponse>> {
-        return flow {
+    override suspend fun invoke(params: ForecastWeatherUseCaseParams): Flow<BaseState<ForecastResponse>> =
+        flow {
             emit(
-                weatherRepository.forecast(
-                    city = params.city,
-                    hours = params.hours,
-                    apiKey = weatherLocalRepository.getApiKey()
-                ).asBasState()
+                weatherRepository
+                    .forecast(
+                        city = params.city,
+                        hours = params.hours,
+                        apiKey = weatherLocalRepository.getApiKey(),
+                    ).asBasState(),
             )
         }
-    }
-
-
 }

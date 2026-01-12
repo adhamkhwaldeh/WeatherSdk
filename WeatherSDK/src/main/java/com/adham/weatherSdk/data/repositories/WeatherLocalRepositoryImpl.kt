@@ -10,28 +10,25 @@ import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
  * @property sharedPrefsManager
  * @constructor Create empty Weather local repository
  */
-internal class WeatherLocalRepositoryImpl(private val sharedPrefsManager: SharedPrefsManager):
-    WeatherLocalRepository {
-
+internal class WeatherLocalRepositoryImpl(
+    private val sharedPrefsManager: SharedPrefsManager,
+) : WeatherLocalRepository {
     /**
      * Save api key
      *
      * @param apiKey
      */
-   override fun saveApiKey(apiKey: String) {
+    override fun saveApiKey(apiKey: String) {
         sharedPrefsManager.save(
-            SharedPrefsManagerImpl.API_KEY, apiKey
+            SharedPrefsManagerImpl.API_KEY,
+            apiKey,
         )
     }
-
 
     /**
      * Get api key
      *
      * @return
      */
-    override fun getApiKey(): String {
-        return sharedPrefsManager.getStringData(SharedPrefsManagerImpl.API_KEY) ?: ""
-    }
-
+    override fun getApiKey(): String = sharedPrefsManager.getStringData(SharedPrefsManagerImpl.API_KEY) ?: ""
 }

@@ -6,7 +6,6 @@ package com.adham.weatherSdk.helpers
  * @constructor Create empty Constants helpers
  */
 object ConstantsHelpers {
-
     const val BASE_URL = "http://api.weatherbit.io/"
 
     //    const val testApiKey = "6ac62e830e334742924401be0e80573d"

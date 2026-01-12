@@ -16,22 +16,21 @@ import com.github.adhamkhwaldeh.commonsdk.listeners.errors.ErrorListener
 import com.github.adhamkhwaldeh.commonsdk.sdks.BaseSDKImpl
 import kotlinx.coroutines.flow.Flow
 
-
 /**
  * Weather sdk builder
  *
  */
 class WeatherSDK private constructor(
     context: Context,
-    sdkConfig: WeatherSDKOptions
+    sdkConfig: WeatherSDKOptions,
 ) : BaseSDKImpl<OnSdkStatusChangeListener, ErrorListener, WeatherSDKOptions>(context, sdkConfig) {
-
     init {
         if (sdkConfig.apiKey.isEmpty()) {
             notifyGlobalErrorListeners(ApiKeyNotValidException("Api Key is not valid"))
         } else {
             val localStorage = DataProvider.provideWeatherLocalRepository(context)
             localStorage.saveApiKey(sdkConfig.apiKey)
+            notifyListeners { it.onSdkInitialized() }
         }
     }
 
@@ -41,18 +40,18 @@ class WeatherSDK private constructor(
      * Builder for creating and configuring a `UserBehaviorCoreSDK` instance.
      * @param context The application context.
      */
-    class Builder(context: Context, private val apiKey: String) :
-        BaseSDKImpl.Builder<Builder, OnSdkStatusChangeListener,ErrorListener, WeatherSDKOptions, WeatherSDK>(
-            context
+    class Builder(
+        context: Context,
+        private val apiKey: String,
+    ) : BaseSDKImpl.Builder<Builder, OnSdkStatusChangeListener, ErrorListener, WeatherSDKOptions, WeatherSDK>(
+            context,
         ) {
-
         /**
          * Builds and returns a configured instance of the UserBehaviorCoreSDK.
          *
          * @return A new instance of UserBehaviorCoreSDK.
          */
         override fun build(): WeatherSDK {
-
             val sdkConfig = sdkConfig ?: WeatherSDKOptions.Builder(apiKey).build()
             val sdk = WeatherSDK(context, sdkConfig)
 
@@ -62,21 +61,15 @@ class WeatherSDK private constructor(
 
             return sdk
         }
-
     }
 
-    suspend fun currentWeatherUseCase(
-        params: String
-    ): Flow<BaseState<CurrentWeatherResponse>> {
+    suspend fun currentWeatherUseCase(params: String): Flow<BaseState<CurrentWeatherResponse>> {
         val useCase = DomainProvider.provideCurrentWeatherUseCase(context)
         return useCase.invoke(params)
     }
 
-    suspend fun forecastWeatherUseCase(
-        params: ForecastWeatherUseCaseParams
-    ): Flow<BaseState<ForecastResponse>> {
+    suspend fun forecastWeatherUseCase(params: ForecastWeatherUseCaseParams): Flow<BaseState<ForecastResponse>> {
         val useCase = DomainProvider.provideForecastWeatherUseCase(context)
         return useCase.invoke(params)
     }
-
 }

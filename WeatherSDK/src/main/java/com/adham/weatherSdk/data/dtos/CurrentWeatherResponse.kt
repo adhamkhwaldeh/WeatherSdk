@@ -12,5 +12,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class CurrentWeatherResponse(
     val count: Int,
-    val data: List<CurrentWeatherModel>
+    val data: List<CurrentWeatherModel>,
 )

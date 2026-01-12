@@ -9,26 +9,23 @@ import com.github.adhamkhwaldeh.commonlibrary.base.states.asBasState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-
 internal class CurrentWeatherUseCase(
     private val weatherRepository: WeatherRepository,
-    private val weatherLocalRepository: WeatherLocalRepository
+    private val weatherLocalRepository: WeatherLocalRepository,
 ) : BaseSealedUseCase<CurrentWeatherResponse, String>() {
-
     @Suppress("TooGenericExceptionCaught")
-    override suspend fun invoke(params: String): Flow<BaseState<CurrentWeatherResponse>> {
-        return flow {
+    override suspend fun invoke(params: String): Flow<BaseState<CurrentWeatherResponse>> =
+        flow {
             emit(
                 try {
-                    weatherRepository.current(
-                        city = params,
-                        apiKey = weatherLocalRepository.getApiKey()
-                    ).asBasState()
+                    weatherRepository
+                        .current(
+                            city = params,
+                            apiKey = weatherLocalRepository.getApiKey(),
+                        ).asBasState()
                 } catch (ex: Throwable) {
                     BaseState.getStateByThrowable(ex)
-                }
+                },
             )
         }
-    }
-
 }

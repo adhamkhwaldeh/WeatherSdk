@@ -6,11 +6,12 @@ import com.adham.weatherSdk.data.dtos.ForecastResponse
 interface BaseWeatherServiceApi {
     suspend fun current(
         city: String,
-        key: String
+        key: String,
     ): CurrentWeatherResponse
+
     suspend fun forecast(
         city: String,
         hours: Int,
-        key: String
+        key: String,
     ): ForecastResponse
 }

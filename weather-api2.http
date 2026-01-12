@@ -1,0 +1,16 @@
+### Current with city
+GET http://api.weatherbit.io/v2.0/current?city=12&key=0e3cc1c8040a4d4882b318e57c60581e
+Content-Type: application/json
+
+### Current with number
+GET http://api.weatherbit.io/v2.0/current?city=12&key=0e3cc1c8040a4d4882b318e57c60581e
+Content-Type: application/json
+
+
+### forecast with city
+GET http://api.weatherbit.io/v2.0/forecast/hourly?city=munich&hours=24&key=0e3cc1c8040a4d4882b318e57c60581e
+Content-Type: application/json
+
+### forecast with number
+GET http://api.weatherbit.io/v2.0/forecast/hourly?city=12&hours=24&key=0e3cc1c8040a4d4882b318e57c60581e
+Content-Type: application/json
