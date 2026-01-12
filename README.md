@@ -1,112 +1,111 @@
-# Module WeatherSDK
+# WeatherSDK Project
 
-# Integration Guide: [Weather SDK]
+A modular Android project providing a comprehensive Weather SDK and a sample application. Built with Jetpack Compose, Koin, Coroutines, and a clean, state-driven architecture.
 
-## Table of Contents
-1. [Introduction]
-2. [Prerequisites]
-3. [Setup Instructions]
-    1. [Step 1: Install Dependencies]
-    2. [Step 2: Configure the Integration]
-    3. [Step 3: Test the Integration]
-4. [Demo]
-5. [Authentication]
-6. [API Reference]
-7. [Common Errors & Troubleshooting]
-8. [FAQs]
-9. [Support]
+## Project Structure
+
+The project is divided into three main modules:
+- **[WeatherSDK](./WeatherSDK/README.md)**: The core library for fetching weather and forecast data.
+- **[CommonSDK](./CommonSDK/README.md)**: Foundational logic for building standardized SDKs (Lifecycle, Logging, Error handling).
+- **[CommonLibrary](./CommonLibrary/README.md)**: Shared UI components, base classes, and state management (`BaseState`).
 
 ---
 
-## Introduction
+## Installation
 
-This guide provides step-by-step instructions for integrating [Weather Sdk] into your project.
-Follow the instructions to quickly get started and connect your system with [Weather Sdk].
+Add the following dependencies to your `build.gradle` file (using JitPack):
+
+```gradle
+dependencies {
+    implementation 'com.github.adhamkhwaldeh.WeatherSdk:WeatherSDK:1.0.7'
+    implementation 'com.github.adhamkhwaldeh.WeatherSdk:CommonSDK:1.0.7'
+    implementation 'com.github.adhamkhwaldeh.WeatherSdk:CommonLibrary:1.0.7'
+}
+```
 
 ---
 
-## Prerequisites
-Before you begin the integration process, make sure you have the following:
-- A ApiKey service from [Weather Sdk]
-- Access to your [system’s] configuration settings
+## Setup & Configuration
 
-## Setup Instructions
+### Step 1: Initialize the SDK
+Configure the SDK in your `Application` class or DI module using the `Builder` pattern:
 
-### Step 1: Install Dependencies
-Start by installing the required dependencies to your project.
-Use one of the following commands based on your package manager.
-use Gradle:
+```kotlin
+val weatherSDK = WeatherSDK.Builder(context, "YOUR_API_KEY")
+    .setupOptions(
+        WeatherSDKOptions.Builder("YOUR_API_KEY")
+            .setLogLevel(LogLevel.DEBUG)
+            .build()
+    )
+    .build()
+```
 
-       repositories {
-           google()
-           mavenCentral()
-       }
-       
-       dependencies {
-          implementation 'com.adham.weatherSdk:latest'
-       }
+### Step 2: Dependency Injection (Koin)
+The project uses modern Koin DSL. Register your ViewModels using `viewModelOf`:
 
-### Step 2: Configure the Integration
+```kotlin
+val viewModelsModule = module {
+    viewModelOf(::WeatherViewModel)
+}
+```
 
-Next, you’ll need to configure your integration settings.
-Add the following details in your application class .
-WeatherSDKBuilder.initialize(
-this,
-"your api key"
-)
-### Step 3: Test the Integration
+---
 
-#### Update sdk status to launch
-        WeatherSDKBuilder.sdkStatus.value =
-                            WeatherSdkStatus.OnLaunchForecast(cityName)
+## Quality Assurance & Testing
 
-#### Observe SDK status and replace it with  ForecastScreenFragment
-     WeatherSDKBuilder.sdkStatus.observe(this) {
-            if (it is WeatherSdkStatus.OnFinish) {
-                replace(EnterCityScreenFragment(), EnterCityScreenFragment::class.java.name)
-            } else if (it is WeatherSdkStatus.OnLaunchForecast) {
-                replace(
-                    ForecastScreenFragment.newInstance(it.cityName),
-                    ForecastScreenFragment::class.java.name
-                )
-            }
+This project adheres to high-quality code standards and rigorous testing practices, all automated via **GitHub Actions**:
+
+- **Continuous Integration**: A full **GitHub Pipeline** is configured to run tests, linting, and documentation checks on every push and pull request.
+- **Static Analysis**: Configured with **detekt** for code smells and **ktlint** for consistent code formatting.
+- **Architectural Linting**: Uses **Konsist** to enforce architectural rules and project structure. Check out our **[KonsistTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/KonsistTest.kt)** for specific rules (e.g., ViewModel naming, domain layer isolation, and immutable DTOs).
+- **Documentation**: Fully documented using **KDoc** syntax, with **Dokka** used to generate professional HTML API references.
+- **Testing Strategy**:
+    - **Unit Tests**: Comprehensive testing of business logic, ViewModels, and UseCases.
+    - **UI Testing**: Automated Compose UI tests to ensure seamless user interactions and accessibility.
+
+Run all checks locally using:
+```bash
+./gradlew check
+./gradlew dokkaHtml
+```
+
+---
+
+## Usage Example
+
+### Navigation and SDK Status
+Observe the `sdkStatus` to handle navigation between the city selection and forecast screens:
+
+```kotlin
+val sdkStatus by weatherSDK.sdkStatus.observeAsState()
+
+LaunchedEffect(sdkStatus) {
+    when (val current = sdkStatus) {
+        is WeatherSdkStatus.OnLaunchForecast -> {
+            navController.navigate("forecast/${current.cityName}")
         }
-
-#### Observe SDK status and replace it with ForecastScreen if you are using compose
-    val sdkStatus = WeatherSDKBuilder.sdkStatus.observeAsState()
-    LaunchedEffect(sdkStatus.value) {
-        val current = sdkStatus.value
-        if (current is WeatherSdkStatus.OnFinish) {
-            navController.navigateUp()
-        } else if (current is WeatherSdkStatus.OnLaunchForecast) {
-            navController.navigate(NavigationItem.forecastRouteWithParams(current.cityName))
+        is WeatherSdkStatus.OnFinish -> {
+            navController.popBackStack()
         }
+        else -> Unit
     }
+}
+```
 
-#### You can replace ForecastScreenFragment.newInstance(it.cityName) or ForecastScreen compose directly
+---
 
-## Demo
+## Demo & Screenshots
 
-### Screenshots
+### Application Preview
 
-- **Dashboard View**
+| Dashboard | Search | Forecast |
+| :---: | :---: | :---: |
+| ![Screenshot 1](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.weatherSDK.jpg) | ![Screenshot 2](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.weatherSDK.jpg) | ![Screenshot 3](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.weatherSDK.jpg) |
 
-| !["](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.weatherSdk.jpg) | !["](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.weatherSdk.jpg) | !["](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.weatherSdk.jpg) |
-|-------------------------------------------------------------------------------|-------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+---
 
-## Authorization
-You need to get Weather Api key (e.g register to website )
+## Support & Resources
 
-## Api reference
-https://www.weatherbit.io/
-https://www.weatherbit.io/api/weather-current
-https://www.weatherbit.io/api/weather-forecast-hourly
-
-## Common Errors & Troubleshooting
-https://github.com/adhamkhwaldeh/WeatherSdk/issues
-
-## FAQs
-https://github.com/adhamkhwaldeh/WeatherSdk/issues
-
-## Support
-https://github.com/adhamkhwaldeh/WeatherSdk
+- **API Reference**: [Weatherbit.io](https://www.weatherbit.io)
+- **Issues & Support**: [GitHub Issues](https://github.com/adhamkhwaldeh/WeatherSdk/issues)
+- **Documentation**: Technical API docs can be generated per module using `./gradlew dokkaHtml`.

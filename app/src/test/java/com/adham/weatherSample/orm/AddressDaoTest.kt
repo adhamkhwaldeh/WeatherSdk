@@ -36,6 +36,15 @@ class AddressDaoTest {
     }
 
     @Test
+    fun `drop address table`() {
+        val currentAddresses = addressDao.loadAllData()
+        addressDao.delete(currentAddresses)
+
+        val allAddresses = addressDao.loadAllData()
+        assertThat(allAddresses).isEmpty()
+    }
+
+    @Test
     fun `loadAllData empty table`() {
         val allAddresses = addressDao.loadAllData()
         assertThat(allAddresses).isEmpty()
