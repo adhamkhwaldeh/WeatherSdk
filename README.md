@@ -1,13 +1,17 @@
 # WeatherSDK Project
 
-A modular Android project providing a comprehensive Weather SDK and a sample application. Built with Jetpack Compose, Koin, Coroutines, and a clean, state-driven architecture.
+A modular Android project providing a comprehensive Weather SDK and a sample application. Built with
+Jetpack Compose, Koin, Coroutines, and a clean, state-driven architecture.
 
 ## Project Structure
 
 The project is divided into three main modules:
+
 - **[WeatherSDK](./WeatherSDK/README.md)**: The core library for fetching weather and forecast data.
-- **[CommonSDK](./CommonSDK/README.md)**: Foundational logic for building standardized SDKs (Lifecycle, Logging, Error handling).
-- **[CommonLibrary](./CommonLibrary/README.md)**: Shared UI components, base classes, and state management (`BaseState`).
+- **[CommonSDK](./CommonSDK/README.md)**: Foundational logic for building standardized SDKs (
+  Lifecycle, Logging, Error handling).
+- **[CommonLibrary](./CommonLibrary/README.md)**: Shared UI components, base classes, and state
+  management (`BaseState`).
 
 ---
 
@@ -25,10 +29,61 @@ dependencies {
 
 ---
 
+## CI/CD & Automation
+
+This project utilizes **GitHub Actions** for continuous integration and delivery. Our automated
+pipeline ensures code quality and provides ready-to-use build artifacts.
+
+- **Workflow Configuration**: **[build-android.yml](.github/workflows/build-android.yml)**
+- **Latest Pipeline Run**: *
+  *[View Workflow Run #20938179350](https://github.com/adhamkhwaldeh/WeatherSdk/actions/runs/20938179350)
+  **
+
+### Build Artifacts
+
+From each successful pipeline run, the following artifacts are exported:
+
+- 📦 *
+  *[Download Sample APK](https://github.com/adhamkhwaldeh/WeatherSdk/actions/runs/20938179350/artifacts/5105218708)
+  **: Direct link to the latest generated application.
+- 📚 *
+  *[Download Dokka Documentation](https://github.com/adhamkhwaldeh/WeatherSdk/actions/runs/20938179350/artifacts/5105156616)
+  **: Full technical API reference generated automatically.
+
+---
+
+## Quality Assurance & Testing
+
+This project adheres to high-quality code standards and rigorous testing practices, all automated
+via **GitHub Actions**:
+
+- **Continuous Integration**: A full **GitHub Pipeline** is configured to run tests, linting, and
+  documentation checks on every push and pull request.
+- **Static Analysis**: Configured with **detekt** for code smells and **ktlint** for consistent code
+  formatting.
+- **Architectural Linting**: Uses **Konsist** to enforce architectural rules and project structure.
+  Check out our **[KonsistTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/KonsistTest.kt)**
+  for specific rules (e.g., ViewModel naming, domain layer isolation, and immutable DTOs).
+- **Documentation**: Fully documented using **KDoc** syntax, with **Dokka** used to generate
+  professional HTML API references.
+- **Testing Strategy**:
+    - **Unit Tests**: Comprehensive testing of business logic and UseCases. Key tests include *
+      *[CurrentWeatherUseCaseTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/useCases/CurrentWeatherUseCaseTest.kt)
+      ** and *
+      *[ForecastWeatherUseCaseTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/useCases/ForecastWeatherUseCaseTest.kt)
+      **.
+    - **UI Testing**: Automated Compose UI tests to ensure seamless user interactions. Our primary
+      end-to-end validation is found in *
+      *[End2EndSuccessTesting.kt](./app/src/androidTest/java/com/adham/weatherSample/End2EndSuccessTesting.kt)
+      **.
+
+---
+
 ## Setup & Configuration
 
 ### Step 1: Initialize the SDK
-Configure the SDK in your `Application` class or DI module using the `Builder` pattern:
+
+Configure the SDK using the `Builder` pattern:
 
 ```kotlin
 val weatherSDK = WeatherSDK.Builder(context, "YOUR_API_KEY")
@@ -41,7 +96,6 @@ val weatherSDK = WeatherSDK.Builder(context, "YOUR_API_KEY")
 ```
 
 ### Step 2: Dependency Injection (Koin)
-The project uses modern Koin DSL. Register your ViewModels using `viewModelOf`:
 
 ```kotlin
 val viewModelsModule = module {
@@ -51,29 +105,10 @@ val viewModelsModule = module {
 
 ---
 
-## Quality Assurance & Testing
-
-This project adheres to high-quality code standards and rigorous testing practices, all automated via **GitHub Actions**:
-
-- **Continuous Integration**: A full **GitHub Pipeline** is configured to run tests, linting, and documentation checks on every push and pull request.
-- **Static Analysis**: Configured with **detekt** for code smells and **ktlint** for consistent code formatting.
-- **Architectural Linting**: Uses **Konsist** to enforce architectural rules and project structure. Check out our **[KonsistTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/KonsistTest.kt)** for specific rules (e.g., ViewModel naming, domain layer isolation, and immutable DTOs).
-- **Documentation**: Fully documented using **KDoc** syntax, with **Dokka** used to generate professional HTML API references.
-- **Testing Strategy**:
-    - **Unit Tests**: Comprehensive testing of business logic and UseCases. Key tests include **[CurrentWeatherUseCaseTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/useCases/CurrentWeatherUseCaseTest.kt)** and **[ForecastWeatherUseCaseTest.kt](./WeatherSDK/src/test/java/com/adham/weatherSdk/useCases/ForecastWeatherUseCaseTest.kt)**.
-    - **UI Testing**: Automated Compose UI tests to ensure seamless user interactions. Our primary end-to-end validation is found in **[End2EndSuccessTesting.kt](./app/src/androidTest/java/com/adham/weatherSample/End2EndSuccessTesting.kt)**.
-
-Run all checks locally using:
-```bash
-./gradlew check
-./gradlew dokkaHtml
-```
-
----
-
 ## Usage Example
 
 ### Navigation and SDK Status
+
 Observe the `sdkStatus` to handle navigation between the city selection and forecast screens:
 
 ```kotlin
@@ -96,11 +131,9 @@ LaunchedEffect(sdkStatus) {
 
 ## Demo & Screenshots
 
-### Application Preview
-
-|                                      Dashboard                                      | Search | Forecast |
-|:-----------------------------------------------------------------------------------:| :---: | :---: |
-| ![Screenshot 1](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.weatherSDK.png) | ![Screenshot 2](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.weatherSDK.jpg) | ![Screenshot 3](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.weatherSDK.jpg) |
+|                                    Dashboard                                     |                                    Search                                     |                                    Forecast                                     |
+|:--------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|
+| ![Dashboard](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.weatherSDK.jpg) | ![Search](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.weatherSDK.jpg) | ![Forecast](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.weatherSDK.jpg) |
 
 ---
 
@@ -108,4 +141,3 @@ LaunchedEffect(sdkStatus) {
 
 - **API Reference**: [Weatherbit.io](https://www.weatherbit.io)
 - **Issues & Support**: [GitHub Issues](https://github.com/adhamkhwaldeh/WeatherSdk/issues)
-- **Documentation**: Technical API docs can be generated per module using `./gradlew dokkaHtml`.
