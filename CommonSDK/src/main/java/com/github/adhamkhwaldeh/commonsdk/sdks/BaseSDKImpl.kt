@@ -40,6 +40,11 @@ abstract class BaseSDKImpl<
             return (configSDK as BaseConfigSDKImpl<TConfig>).logger
         }
 
+    protected val sdkConfig: TConfig
+        get() {
+            return (configSDK as BaseConfigSDKImpl<TConfig>).sdkConfig
+        }
+
     protected val behaviorManagers:
         WeakHashMap<ManagerKey, BaseManager<out CallbackListener, out ErrorListener, out ManagerConfigInterface>>
         get() {
