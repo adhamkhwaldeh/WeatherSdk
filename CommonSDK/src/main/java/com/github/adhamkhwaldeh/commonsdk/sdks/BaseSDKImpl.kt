@@ -3,9 +3,14 @@ package com.github.adhamkhwaldeh.commonsdk.sdks
 import android.content.Context
 import com.github.adhamkhwaldeh.commonsdk.BaseSDKOptionBuilder
 import com.github.adhamkhwaldeh.commonsdk.listeners.callbacks.CallbackListener
+import com.github.adhamkhwaldeh.commonsdk.listeners.configs.ManagerConfigInterface
 import com.github.adhamkhwaldeh.commonsdk.listeners.errors.ErrorListener
 import com.github.adhamkhwaldeh.commonsdk.logging.Logger
+import com.github.adhamkhwaldeh.commonsdk.logging.LoggerProxy
+import com.github.adhamkhwaldeh.commonsdk.managers.BaseManager
+import com.github.adhamkhwaldeh.commonsdk.models.ManagerKey
 import com.github.adhamkhwaldeh.commonsdk.options.BaseSDKOptions
+import java.util.WeakHashMap
 
 /**
  * Base s d k
@@ -30,6 +35,17 @@ abstract class BaseSDKImpl<
     BaseStatusSDK<TSdkStatus> by callbackSdk,
     BaseGlobalErrorSDK<TError> by errorSdk,
     BaseConfigSDK<TConfig> by configSDK {
+    protected val logger: LoggerProxy
+        get() {
+            return (configSDK as BaseConfigSDKImpl).logger
+        }
+
+    protected val behaviorManagers:
+        WeakHashMap<ManagerKey, BaseManager<out CallbackListener, out ErrorListener, out ManagerConfigInterface>>
+        get() {
+            return (configSDK as BaseConfigSDKImpl).behaviorManagers
+        }
+
     /**
      * Generic Builder for the SDK.
      *
