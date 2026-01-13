@@ -25,25 +25,25 @@ abstract class BaseSDKImpl<
     TSdkStatus : CallbackListener,
     TError : ErrorListener,
     TConfig : BaseSDKOptions,
->(
+> private constructor(
     val context: Context,
     sdkConfig: TConfig,
-    private val callbackSdk: BaseStatusSDK<TSdkStatus> = BaseStatusSDKImpl(),
-    private val errorSdk: BaseGlobalErrorSDK<TError> = BaseGlobalErrorSDKImpl(),
-    private val configSDK: BaseConfigSDK<TConfig> = BaseConfigSDKImpl(sdkConfig),
+    private val callbackSdk: BaseStatusSDKImpl<TSdkStatus> = BaseStatusSDKImpl(),
+    private val errorSdk: BaseGlobalErrorSDKImpl<TError> = BaseGlobalErrorSDKImpl(),
+    private val configSDK: BaseConfigSDKImpl<TConfig> = BaseConfigSDKImpl(sdkConfig),
 ) : BaseSDK<TSdkStatus, TError, TConfig>,
     BaseStatusSDK<TSdkStatus> by callbackSdk,
     BaseGlobalErrorSDK<TError> by errorSdk,
     BaseConfigSDK<TConfig> by configSDK {
     protected val logger: LoggerProxy
         get() {
-            return (configSDK as BaseConfigSDKImpl).logger
+            return configSDK.logger
         }
 
     protected val behaviorManagers:
         WeakHashMap<ManagerKey, BaseManager<out CallbackListener, out ErrorListener, out ManagerConfigInterface>>
         get() {
-            return (configSDK as BaseConfigSDKImpl).behaviorManagers
+            return configSDK.behaviorManagers
         }
 
     /**
