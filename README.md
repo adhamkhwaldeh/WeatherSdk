@@ -7,7 +7,7 @@ A modular Android project providing a comprehensive Weather SDK and a sample app
 The project is divided into three main modules:
 
 - **[WeatherSDK](./WeatherSDK/README.md)**: The core library for fetching weather and forecast data.
-- **[CommonSDK](./CommonSDK/README.md)**: Foundational logic for building standardized SDKs (Lifecycle, Logging, Error handling). *Also utilized in **[UserBehaviorSDK](https://github.com/adhamkhwaldeh/UserBehaviorSDK)**.*
+- **[CommonSDK](./CommonSDK/README.md)**: Foundational logic for building standardized SDKs (Lifecycle, Logging, Error handling). *Also utilized in **[UserBehaviorSDK](https://github.com/adhamkhwaldeh/UserBehaviorSDK)** and **[liveTrackingSdk](https://github.com/adhamkhwaldeh/liveTrackingSdk)**.*
 - **[CommonLibrary](./CommonLibrary/README.md)**: Shared UI components, base classes, and state management (`BaseState`). *Also utilized in **[liveTrackingSdk](https://github.com/adhamkhwaldeh/liveTrackingSdk)**.*
 
 ---
