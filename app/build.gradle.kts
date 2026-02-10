@@ -1,0 +1,225 @@
+// import androidx.glance.appwidget.compose
+// import androidx.navigation.compose.navigation
+
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.dokka") version "2.1.0"
+    id("org.jetbrains.kotlin.plugin.compose")
+    id("io.gitlab.arturbosch.detekt")
+    id("kotlin-kapt")
+}
+android {
+    namespace = "com.adham.weatherSample"
+    compileSdk = 36
+
+    defaultConfig {
+        applicationId = "com.adham.weatherSample"
+        minSdk = 30
+        targetSdk = 36
+        versionCode = 1
+        versionName = "1.0"
+        multiDexEnabled = true
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
+            packagingOptions {
+                jniLibs {
+                    useLegacyPackaging = false
+                }
+            }
+        }
+        debug {
+            packagingOptions {
+                jniLibs {
+                    useLegacyPackaging = false
+                }
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
+    }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/NOTICE.md"
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+            excludes += "mockito-extensions/org.mockito.plugins.MemberAccessor"
+        }
+    }
+
+//    lintOptions {
+// //        abortOnError false
+// //        disable 'UnusedResources' //
+//    }
+}
+
+dependencies {
+    // Support Packages
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+
+    implementation(platform(libs.kotlin.bom))
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.ui.ui)
+    implementation(libs.androidx.compose.ui.ui.graphics)
+    implementation(libs.androidx.compose.ui.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.runtime.livedata)
+
+    //region Koin
+    val koinVersion = "3.4.3"
+    implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
+    //region Testing package
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.ui.test.manifest)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    implementation(libs.androidx.security.crypto)
+    kapt(libs.androidx.room.compiler)
+    testImplementation(libs.androidx.room.testing)
+
+    androidTestImplementation("io.insert-koin:koin-test:$koinVersion")
+    testImplementation("io.insert-koin:koin-test:$koinVersion")
+    debugImplementation("io.insert-koin:koin-test:$koinVersion")
+
+    androidTestImplementation(libs.core.testing)
+    androidTestImplementation(libs.core)
+    testImplementation(libs.core)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.core.testing)
+
+    androidTestImplementation(libs.androidx.runner)
+    androidTestUtil(libs.androidx.orchestrator)
+
+    testImplementation(libs.hamcrest.all)
+    testImplementation(libs.mockito.core)
+
+    implementation(libs.mockk.mockk.android)
+    testImplementation(libs.mockk)
+    androidTestImplementation(libs.mockk.mockk.android)
+    testImplementation(libs.truth)
+    androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
+    androidTestImplementation(libs.androidx.uiautomator)
+    testImplementation(libs.robolectric)
+
+    detektPlugins(libs.detekt)
+    implementation(project(":WeatherSDK"))
+
+    // Documentation
+    implementation(libs.dokka.gradle.plugin)
+    dokkaPlugin(libs.android.documentation.plugin)
+    dokkaPlugin(libs.mathjax.plugin)
+    dokkaHtmlPlugin(libs.kotlin.as1.java.plugin)
+    dokka(project(":WeatherSDK"))
+
+    // Having the actual dependency helps, instead of removing it by accident
+    // when adding the fix originally present, which is also not needed anymore.
+
+//    testImplementation 'org.mockito.kotlin:mockito-kotlin:5.4.0'
+//    androidTestImplementation 'org.mockito.kotlin:mockito-kotlin:5.4.0'
+
+//    implementation "io.mockk:mockk:1.13.5"
+//    implementation "org.mockito:mockito-core:5.15.2" // For pure unit tests
+//    implementation "org.mockito:mockito-inline:5.2.0" // For final classes or static methods
+//    implementation "org.mockito:mockito-android:5.15.2"
+//    implementation("org.mockito:mockito-android:")
+
+//    testImplementation "io.mockk:mockk:1.13.5"
+//    testImplementation "org.mockito:mockito-core:5.15.2" // For pure unit tests
+//    testImplementation "org.mockito:mockito-inline:5.2.0" // For final classes or static methods
+//    testImplementation "org.mockito:mockito-android:5.5.0"
+//    testImplementation "org.mockito:mockito-android:5.15.2"
+
+//    androidTestImplementation "io.mockk:mockk:1.13.5"
+//    androidTestImplementation "org.mockito:mockito-core:5.15.2" // For pure unit tests
+//    androidTestImplementation "org.mockito:mockito-inline:5.2.0"
+    // For final classes or static methods
+//    androidTestImplementation "org.mockito:mockito-android:5.5.0"
+//    androidTestImplementation "org.mockito:mockito-android:5.15.2"
+//    androidTestImplementation 'com.squareup.retrofit2:retrofit-mock:2.11.0'
+
+//    testImplementation ("org.mockito.kotlin:mockito-kotlin:$latest_version")
+    // For Android instrumentation tests
+//    implementation(libs.androidx.benchmark.macro)
+//    androidTestImplementation(libs.androidx.benchmark.macro)
+//    androidTestImplementation(libs.androidx.benchmark.junit4)
+}
+
+subprojects {
+    apply(plugin = "org.jetbrains.dokka")
+}
+
+dokka {
+    moduleName.set("App")
+    dokkaPublications.html {
+        outputDirectory.set(layout.buildDirectory.dir("dokkaDir"))
+    }
+
+    dokkaSourceSets.main {
+        // Only set the actual Kotlin/Java dirs once
+        sourceRoots.from("src/main/java")
+//    dokkaSourceSets.named("main") {
+        includes.from("IntegrationGuide.md")
+        skipEmptyPackages.set(true)
+//        includeNonPublic.set(false)
+//        includes.from("IntegrationGuide.md")
+        sourceLink {
+//            localDirectory.set(file("src/main/java"))
+            remoteUrl("https://github.com/adhamkhwaldeh/WeatherSdk/tree/main/app/src/main/java")
+            remoteLineSuffix.set("#L")
+        }
+
+        reportUndocumented.set(true) // Warn about undocumented public APIs
+        skipDeprecated.set(true) // Exclude deprecated elements
+        suppress.set(false) // Include suppressed elements
+        sourceRoots.from(file("src/main/java"))
+        sourceRoots.from("src/main/java")
+        jdkVersion.set(17)
+    }
+}
