@@ -1,7 +1,7 @@
 package com.github.adhamkhwaldeh.commonlibrary.base.states
 
 import androidx.annotation.StringRes
-import com.github.adhamkhwaldeh.commonlibrary.base.helpers.CommonConstantHelper
+import com.github.adhamkhwaldeh.commonlibrary.helpers.CommonConstantHelper
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.UnknownHostException

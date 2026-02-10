@@ -1,4 +1,5 @@
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+// import androidx.compose.ui.graphics.setFrom
+// import androidx.glance.appwidget.compose
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
@@ -9,30 +10,50 @@ plugins {
 //    id 'com.android.application' version '8.13.2' apply false
 //    id 'com.android.library' version '8.13.2' apply false
 //    id 'org.jetbrains.kotlin.android' version '2.3.0' apply false
-    id 'org.jetbrains.compose' version "1.9.3"
-    id "org.jetbrains.kotlin.jvm" version "2.3.0"
-    id 'org.jetbrains.dokka' version "2.1.0"
-    id 'org.jetbrains.kotlin.plugin.compose' version '2.3.0' //apply false
-
-    id 'org.jlleitschuh.gradle.ktlint' version '14.0.1'
-
-    id "io.gitlab.arturbosch.detekt" version "1.23.8"
-
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.compose)
 }
 
 subprojects {
-    apply plugin: 'org.jetbrains.dokka'
-    apply plugin: "io.gitlab.arturbosch.detekt"
-    apply plugin: "org.jlleitschuh.gradle.ktlint"
+    apply(plugin = "org.jetbrains.dokka")
+    apply(plugin = "io.gitlab.arturbosch.detekt")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
-    ktlint {
-        android = true
-        ignoreFailures = false
+//    ktlint {
+//        android = true
+//        ignoreFailures = false
+//        reporters {
+//            reporter(ReporterType.PLAIN)
+//            reporter(ReporterType.CHECKSTYLE)
+//        }
+//    }
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        android.set(true)
+        ignoreFailures.set(false)
         reporters {
-            reporter(ReporterType.PLAIN)
-            reporter(ReporterType.CHECKSTYLE)
+            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
         }
     }
+
+//    configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
+//        config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+//        baseline.set(file("$rootDir/config/detekt/baseline.xml"))
+//        buildUponDefaultConfig.set(true)
+//        allRules.set(false)
+//        autoCorrect.set(true)
+//
+//        reports {
+//            html.required.set(true)
+//            xml.required.set(true)
+//            txt.required.set(false)
+//        }
+//    }
+
     detekt {
         // Points to a config file we will create in step 3
         config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
@@ -46,12 +67,11 @@ subprojects {
 
         reports {
             html.required.set(true) // Readable in browser
-            xml.required.set(true)  // For CI/CD tools
+            xml.required.set(true) // For CI/CD tools
             txt.required.set(false)
         }
     }
 }
-
 
 dokka {
     moduleName.set("WeatherSDK")
@@ -78,9 +98,9 @@ dokka {
     dokkaSourceSets.configureEach {
 
         includes.from("IntegrationGuide.md") // Include custom documentation
-        reportUndocumented.set(true)          // Warn about undocumented public APIs
-        skipDeprecated.set(true)              // Exclude deprecated elements
-        suppress.set(false)                   // Include suppressed elements
+        reportUndocumented.set(true) // Warn about undocumented public APIs
+        skipDeprecated.set(true) // Exclude deprecated elements
+        suppress.set(false) // Include suppressed elements
         sourceRoots.from(file("src/main/java"))
         sourceRoots.from("src/main/java")
         jdkVersion.set(17)
@@ -98,6 +118,4 @@ dokka {
 //    }
 //    // Runs Dokka in the current Gradle process
 //    dokkaGeneratorIsolation = ClassLoaderIsolation()
-
 }
-

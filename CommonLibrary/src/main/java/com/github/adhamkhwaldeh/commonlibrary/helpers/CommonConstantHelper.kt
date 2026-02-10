@@ -1,4 +1,4 @@
-package com.github.adhamkhwaldeh.commonlibrary.base.helpers
+package com.github.adhamkhwaldeh.commonlibrary.helpers
 
 object CommonConstantHelper {
     const val NOT_AUTHORIZED_CODE: Int = 403
