@@ -11,7 +11,9 @@ plugins {
 }
 android {
     namespace = "com.adham.weatherSample"
-    compileSdk = 36
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
         applicationId = "com.adham.weatherSample"

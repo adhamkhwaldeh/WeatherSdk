@@ -11,7 +11,9 @@ plugins {
 
 android {
     namespace = "com.adham.weatherSdk"
-    compileSdk = 36
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
         minSdk = 30
