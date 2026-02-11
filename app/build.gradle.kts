@@ -1,12 +1,9 @@
-// import androidx.glance.appwidget.compose
-// import androidx.navigation.compose.navigation
-
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.dokka") version "2.1.0"
-    id("org.jetbrains.kotlin.plugin.compose")
-    id("io.gitlab.arturbosch.detekt")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.detekt)
     id("kotlin-kapt")
 }
 android {

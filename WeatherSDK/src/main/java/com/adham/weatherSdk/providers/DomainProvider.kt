@@ -1,6 +1,7 @@
 package com.adham.weatherSdk.providers
 
 import android.content.Context
+import com.adham.weatherSdk.domain.useCases.CurrentWeatherMapForecastUseCase
 import com.adham.weatherSdk.domain.useCases.CurrentWeatherMapUseCase
 import com.adham.weatherSdk.domain.useCases.CurrentWeatherUseCase
 import com.adham.weatherSdk.domain.useCases.ForecastWeatherUseCase
@@ -22,6 +23,12 @@ internal object DomainProvider {
 
     fun provideCurrentWeatherMapUseCase(context: Context) =
         CurrentWeatherMapUseCase(
+            DataProvider.provideWeatherMapRepository(context),
+            DataProvider.provideWeatherMapLocalRepository(context),
+        )
+
+    fun provideCurrentWeatherMapForecastUseCase(context: Context) =
+        CurrentWeatherMapForecastUseCase(
             DataProvider.provideWeatherMapRepository(context),
             DataProvider.provideWeatherMapLocalRepository(context),
         )
