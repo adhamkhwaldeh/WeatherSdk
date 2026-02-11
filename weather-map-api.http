@@ -1,0 +1,16 @@
+### Current with city
+GET https://api.openweathermap.org/data/2.5/weather?lat=48.5665&lon=13.43122&appid=8e8bc5392f5b1d77d4f74997edc70a99
+Content-Type: application/json
+
+### Current with number
+GET http://api.openweathermap.org/data/2.5/forecast?lat=48.5665&lon=13.43122&appid=8e8bc5392f5b1d77d4f74997edc70a99
+Content-Type: application/json
+// api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+
+### Current with number
+GET http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=8e8bc5392f5b1d77d4f74997edc70a99
+Content-Type: application/json
+
+### Current with number
+GET http://api.openweathermap.org/geo/1.0/reverse?lat=48.5665&lon=13.43122&appid=8e8bc5392f5b1d77d4f74997edc70a99
+Content-Type: application/json

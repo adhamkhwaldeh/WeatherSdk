@@ -14,4 +14,6 @@ object ConstantsHelpers {
 
     const val SHARED_PREFS_UTIL_PREFIX_TAG = "mySharedD_"
     const val API_KEY_TAG = "apiKey"
+
+    const val API_WEATHER_KEY_TAG = "API_WEATHER_KEY_TAG"
 }

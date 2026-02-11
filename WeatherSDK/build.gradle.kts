@@ -76,6 +76,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     packaging {
@@ -120,7 +121,6 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    //    // Optional - Integration with LiveData
     implementation(libs.androidx.compose.runtime.livedata)
     testImplementation(libs.junit.jupiter)
     //endregion
@@ -137,11 +137,8 @@ dependencies {
     //endregion
 
     //region Testing package
-    // Use the BOM to align versions (fixes the OutputDirectoryProvider error)
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.jupiter.junit.jupiter)
-
-    // Maintain JUnit 4 support if you have older tests
     testImplementation(libs.junit)
     testRuntimeOnly(libs.junit.vintage.engine)
 
@@ -154,13 +151,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-// Koin dependencies
-//    androidTestImplementation("io.insert-koin:koin-test:$koinVersion") // Koin testing tools
-//            {
-//                exclude group: 'org.mockito'
-//            }
-    testImplementation(libs.koin.test) // Koin testing tools
-    debugImplementation(libs.koin.test) // Koin testing tools
+    testImplementation(libs.koin.test)
+    debugImplementation(libs.koin.test)
 
     androidTestImplementation(libs.core.testing)
     androidTestImplementation(libs.core)
@@ -175,13 +167,37 @@ dependencies {
     testImplementation(libs.hamcrest.all)
     testImplementation(libs.mockito.core)
 
+    implementation(libs.mockk.mockk.android)
+
+    testImplementation(libs.mockk)
+    androidTestImplementation(libs.mockk.mockk.android)
+
+    testImplementation(libs.truth)
+
+    testImplementation(libs.paparazzi)
+    testImplementation(libs.androidx.compose.ui.ui.test.junit4)
+    runtimeOnly(libs.kotlinpoet)
+    androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
+
+    // archunit
+    testImplementation(libs.archunit)
+    testImplementation(libs.archunit.junit4)
+    testImplementation(libs.archunit.junit5)
+
+    // konsist
+    testImplementation(libs.konsist)
+
+    //endregion
+
+    api(project(":CommonLibrary"))
+    api(project(":CommonSDK"))
+
     // Having the actual dependency helps, instead of removing it by accident
     // when adding the fix originally present, which is also not needed anymore.
 
 //    testImplementation 'org.mockito.kotlin:mockito-kotlin:5.4.0'
 //    androidTestImplementation 'org.mockito.kotlin:mockito-kotlin:5.4.0'
 
-    implementation(libs.mockk.mockk.android)
 //    implementation "io.mockk:mockk:1.13.5"
 //    implementation "org.mockito:mockito-core:5.15.2" // For pure unit tests
 //    implementation "org.mockito:mockito-inline:5.2.0" // For final classes or static methods
@@ -194,8 +210,6 @@ dependencies {
 //    testImplementation "org.mockito:mockito-android:5.5.0"
 //    testImplementation "org.mockito:mockito-android:5.15.2"
 
-    testImplementation(libs.mockk)
-    androidTestImplementation(libs.mockk.mockk.android)
 //    androidTestImplementation "io.mockk:mockk:1.13.5"
 //    androidTestImplementation "org.mockito:mockito-core:5.15.2" // For pure unit tests
 //    androidTestImplementation "org.mockito:mockito-inline:5.2.0"
@@ -211,30 +225,10 @@ dependencies {
 
     // Robolectric: For UI-related ViewModel tests (e.g., testing interactions with UI elements).
     // Truth: A fluent testing library, often used with Google libraries.
-    testImplementation(libs.truth)
-
-    testImplementation(libs.paparazzi)
-    testImplementation(libs.androidx.compose.ui.ui.test.junit4)
-    // https://mvnrepository.com/artifact/com.squareup/kotlinpoet
-    runtimeOnly(libs.kotlinpoet)
 
 //    implementation(libs.androidx.benchmark.macro)
 //    androidTestImplementation(libs.androidx.benchmark.macro)
 //    androidTestImplementation(libs.androidx.benchmark.junit4)
-    androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
-
-    // archunit
-    testImplementation(libs.archunit)
-    testImplementation(libs.archunit.junit4)
-    testImplementation(libs.archunit.junit5) // If using JUnit 5
-
-    // konsist
-    testImplementation(libs.konsist) // Use the latest version
-
-    //endregion
-
-    api(project(":CommonLibrary"))
-    api(project(":CommonSDK"))
 }
 
 subprojects {

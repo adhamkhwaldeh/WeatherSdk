@@ -3,14 +3,20 @@ package com.adham.weatherSdk.providers
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.adham.weatherSdk.BuildConfig
 import com.adham.weatherSdk.data.repositories.WeatherLocalRepositoryImpl
+import com.adham.weatherSdk.data.repositories.WeatherMapLocalRepositoryImpl
+import com.adham.weatherSdk.data.repositories.WeatherMapRepositoryImpl
 import com.adham.weatherSdk.data.repositories.WeatherRepositoryImpl
 import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
+import com.adham.weatherSdk.domain.repositories.WeatherMapLocalRepository
 import com.adham.weatherSdk.domain.repositories.WeatherRepository
 import com.adham.weatherSdk.helpers.ConstantsHelpers
 import com.adham.weatherSdk.localStorages.SharedPrefsManager
 import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
 import com.adham.weatherSdk.networking.BaseWeatherServiceApi
+import com.adham.weatherSdk.networking.WeatherMapGeoServiceApi
+import com.adham.weatherSdk.networking.WeatherMapServiceApi
 import com.adham.weatherSdk.networking.WeatherMockedServiceApi
 import com.adham.weatherSdk.networking.WeatherServiceApi
 import com.squareup.moshi.Moshi
@@ -35,10 +41,25 @@ internal object DataProvider {
     private var weatherMockedServiceApi: BaseWeatherServiceApi? = null
 
     @Volatile
+    private var retrofitWeatherMap: Retrofit? = null
+
+    @Volatile
+    private var weatherMapServiceApi: WeatherMapServiceApi? = null
+
+    @Volatile
+    private var weatherMapGeoServiceApi: WeatherMapGeoServiceApi? = null
+
+    @Volatile
     private var weatherLocalRepository: WeatherLocalRepository? = null
 
     @Volatile
     private var weatherRepository: WeatherRepository? = null
+
+    @Volatile
+    private var weatherMapLocalRepository: WeatherMapLocalRepository? = null
+
+    @Volatile
+    private var weatherMapRepository: WeatherMapRepositoryImpl? = null
 
     fun provideSharedPrefsManager(context: Context): SharedPrefsManager {
         synchronized(this) {
@@ -69,12 +90,12 @@ internal object DataProvider {
             if (retrofit == null) {
                 val logger =
                     HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-
-//            if (BuildConfig.DEBUG)
-//                HttpLoggingInterceptor.Level.BODY
-//            else
-//                HttpLoggingInterceptor.Level.NONE
+                        level =
+                            if (BuildConfig.DEBUG) {
+                                HttpLoggingInterceptor.Level.BODY
+                            } else {
+                                HttpLoggingInterceptor.Level.NONE
+                            }
                     }
 
                 val retrofitBuilder = Retrofit.Builder()
@@ -123,6 +144,74 @@ internal object DataProvider {
         return weatherServiceApi!!
     }
 
+    fun provideRetrofitWeatherMap(): Retrofit {
+        synchronized(this) {
+            if (retrofitWeatherMap == null) {
+                val logger =
+                    HttpLoggingInterceptor().apply {
+                        level =
+                            if (BuildConfig.DEBUG) {
+                                HttpLoggingInterceptor.Level.BODY
+                            } else {
+                                HttpLoggingInterceptor.Level.NONE
+                            }
+                    }
+
+                val retrofitBuilder = Retrofit.Builder()
+                val moshi =
+                    Moshi
+                        .Builder() // adapter
+                        .add(KotlinJsonAdapterFactory())
+                        .build()
+                retrofitBuilder
+                    .apply {
+//            baseUrl(localRepository.getBaseUrl())
+                        baseUrl(ConstantsHelpers.BASE_URL)
+                        addConverterFactory(MoshiConverterFactory.create(moshi))
+                    }.also {
+                        val okHttpClientBuilder = OkHttpClient.Builder()
+
+                        okHttpClientBuilder.writeTimeout(
+                            ConstantsHelpers.NETWORK_REQUEST_TIMEOUT,
+                            TimeUnit.SECONDS,
+                        )
+                        okHttpClientBuilder.readTimeout(
+                            ConstantsHelpers.NETWORK_REQUEST_TIMEOUT,
+                            TimeUnit.SECONDS,
+                        )
+                        okHttpClientBuilder.connectTimeout(
+                            ConstantsHelpers.NETWORK_REQUEST_TIMEOUT,
+                            TimeUnit.SECONDS,
+                        )
+
+                        okHttpClientBuilder.addInterceptor(logger)
+                        it.client(okHttpClientBuilder.build())
+                    }
+
+                retrofitWeatherMap = retrofitBuilder.build()
+            }
+        }
+        return retrofitWeatherMap!!
+    }
+
+    fun provideWeatherMapServiceApi(): WeatherMapServiceApi {
+        synchronized(this) {
+            if (weatherMapServiceApi == null) {
+                weatherMapServiceApi = provideRetrofitWeatherMap().create(WeatherMapServiceApi::class.java)
+            }
+        }
+        return weatherMapServiceApi!!
+    }
+
+    fun provideWeatherMapGeoServiceApi(): WeatherMapGeoServiceApi {
+        synchronized(this) {
+            if (weatherMapGeoServiceApi == null) {
+                weatherMapGeoServiceApi = provideRetrofitWeatherMap().create(WeatherMapGeoServiceApi::class.java)
+            }
+        }
+        return weatherMapGeoServiceApi!!
+    }
+
     fun provideWeatherMockedServiceApi(context: Context): BaseWeatherServiceApi {
         synchronized(this) {
             if (weatherMockedServiceApi == null) {
@@ -142,6 +231,16 @@ internal object DataProvider {
         return weatherLocalRepository!!
     }
 
+    fun provideWeatherMapLocalRepository(context: Context): WeatherMapLocalRepository {
+        synchronized(this) {
+            if (weatherMapLocalRepository == null) {
+                weatherMapLocalRepository =
+                    WeatherMapLocalRepositoryImpl(provideSharedPrefsManager(context))
+            }
+        }
+        return weatherMapLocalRepository!!
+    }
+
     fun provideWeatherRepository(context: Context): WeatherRepository {
         synchronized(this) {
             if (weatherRepository == null) {
@@ -153,5 +252,18 @@ internal object DataProvider {
             }
         }
         return weatherRepository!!
+    }
+
+    fun provideWeatherMapRepository(context: Context): WeatherMapRepositoryImpl {
+        synchronized(this) {
+            if (weatherMapRepository == null) {
+                weatherMapRepository =
+                    WeatherMapRepositoryImpl(
+                        provideWeatherMapServiceApi(),
+                        provideWeatherMapGeoServiceApi(),
+                    )
+            }
+        }
+        return weatherMapRepository!!
     }
 }
