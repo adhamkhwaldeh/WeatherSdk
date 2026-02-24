@@ -1,14 +1,51 @@
 <resources>
     <string name="app_name">WeatherSDK</string>
-    <string name="ExampleApp">Example App</string>
+
     <string name="EnterYourCityName">Enter your city name</string>
     <string name="CityName">City Name</string>
     <string name="EnterTheCityNameForTheWeatherForecast">Enter the city name for the weather forecast</string>
     <string name="WeatherForecast">Weather forecast</string>
 
+    <string name="celsiusSign">°</string>
     <string name="celsius">°C</string>
     <string name="TwentyFourHoursForecast">24h Forecast</string>
     <string name="At">At</string>
     <string name="TheWeatherIn">The weather in</string>
     <string name="IS">is</string>
+
+    <string name="SaveTheAddress">Save the address %1$s</string>
+    <string name="ConfirmLocation">Confirm Location</string>
+    <string name="Close">Close</string>
+
+    <string name="typeTheNameOrSelectTheLocation">Type the name or select the location</string>
+    <string name="SavedAddresses">Saved Addresses</string>
+    <string name="min">min</string>
+    <string name="current">current</string>
+    <string name="max">max</string>
+    <string name="Default">Default</string>
+    <string name="delete_address_title">Delete address\n</string>
+    <string name="delete_address_confirmation">Confirm deleting the address?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="themeModel">Theme Mode</string>
+    <string name="choosePreferredTheme">Choose your preferred theme</string>
+    <string name="language">Language</string>
+    <string name="choosePreferredLanguage">Choose your preferred language</string>
+    <string name="English">English</string>
+    <string name="Arabic">Arabic</string>
+    <string name="minutes">15 minutes</string>
+    <string name="hourly">Hourly</string>
+    <string name="daily">Daily</string>
+    <string name="never">Never</string>
+    <string name="notifications">Notifications</string>
+    <string name="ReceiveWeatherNotifications">Receive weather notifications</string>
+    <string name="frequentUpdate">Frequent update</string>
+    <string name="chooseYourPreferredUpdateTime">Choose your preferred update time</string>
+    <string name="selectLocation">Select a location</string>
+    <string name="selectOrAddNewLocation">Select or add new location</string>
+
+    <string name="weatherInACity">Weather in %1$s</string>
+    <string name="temperatureToday">%1$s today · %2$s · Tap for more</string>
+
 </resources>

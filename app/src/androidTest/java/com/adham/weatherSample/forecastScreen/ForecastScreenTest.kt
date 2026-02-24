@@ -10,7 +10,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adham.weatherSample.R
 import com.adham.weatherSample.helpers.TestingConstantHelper
-import com.adham.weatherSample.ui.ForecastScreen
+import com.adham.weatherSample.presentation.ui.ForecastScreen
 import org.junit.Rule
 import org.junit.runner.RunWith
 import kotlin.test.Test

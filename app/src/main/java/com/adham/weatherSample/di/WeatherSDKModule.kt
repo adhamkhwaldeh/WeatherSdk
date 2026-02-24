@@ -14,14 +14,19 @@ var weatherSDKModule =
             WeatherSDK
                 .Builder(
                     androidApplication(),
-                    apiKey = AppConstantsHelper.API_KEY,
-                    weatherApiKey = AppConstantsHelper.API_WEATHER_MAP_KEY,
+                    AppConstantsHelper.API_KEY,
+                    AppConstantsHelper.API_WEATHER_MAP_KEY,
+//                    "API_KEY",
+                    "AIzaSyCC603JtJGcylfHzU2pu4auIPj-2WzhQxU",
 //                    AppConstantsHelper.API_KEY_EXPIRED,
                 ).setupOptions(
                     WeatherSDKOptions
                         .Builder(
-                            apiKey = AppConstantsHelper.API_KEY,
-                            weatherApiKey = AppConstantsHelper.API_WEATHER_MAP_KEY,
+                            //                            AppConstantsHelper.API_KEY_EXPIRED,
+                            AppConstantsHelper.API_KEY,
+                            AppConstantsHelper.API_WEATHER_MAP_KEY,
+                            //                "API_KEY",
+                            "AIzaSyCC603JtJGcylfHzU2pu4auIPj-2WzhQxU",
                         ).setLogLevel(LogLevel.DEBUG)
                         .setOverridable(false)
                         .setDebugMode(true)

@@ -3,8 +3,8 @@ package com.adham.weatherSample
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.adham.weatherSample.ui.EnterCityScreenFragment
-import com.adham.weatherSample.ui.ForecastScreenFragment
+import com.adham.weatherSample.presentation.ui.EnterCityScreenFragment
+import com.adham.weatherSample.presentation.ui.ForecastScreenFragment
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
 import org.koin.android.ext.android.inject

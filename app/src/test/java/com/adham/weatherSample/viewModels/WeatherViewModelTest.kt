@@ -3,6 +3,7 @@ package com.adham.weatherSample.viewModels
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adham.weatherSample.orm.WeatherDatabase
+import com.adham.weatherSample.presentation.viewModels.WeatherViewModel
 import com.adham.weatherSdk.WeatherSDK
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers

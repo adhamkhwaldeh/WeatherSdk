@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.adham.weatherSample.viewModels.WeatherViewModel
+import com.adham.weatherSample.presentation.viewModels.WeatherViewModel
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
 import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository

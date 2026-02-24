@@ -10,7 +10,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.core.app.ApplicationProvider
 import com.adham.weatherSample.helpers.TestingConstantHelper
-import com.adham.weatherSample.ui.AppNavHost
+import com.adham.weatherSample.presentation.ui.AppNavHost
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

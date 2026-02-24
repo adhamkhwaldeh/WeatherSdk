@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.adham.weatherSample.ui.AppNavHost
-import com.adham.weatherSample.ui.theme.WeatherSDKTheme
+import com.adham.weatherSample.presentation.ui.AppNavHost
+import com.adham.weatherSample.presentation.ui.theme.WeatherSDKTheme
 
 /**
  * Main activity

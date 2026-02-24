@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">توقعات الطقس</string>
+
+    <string name="EnterYourCityName">أدخل اسم مدينتك</string>
+    <string name="CityName">اسم المدينة</string>
+    <string name="EnterTheCityNameForTheWeatherForecast">أدخل اسم المدينة للحصول على توقعات الطقس</string>
+    <string name="WeatherForecast">توقعات الطقس</string>
+
+    <string name="celsiusSign">°</string>
+    <string name="celsius">°م</string>
+    <string name="TwentyFourHoursForecast">توقعات الـ 24 ساعة</string>
+    <string name="At">في</string>
+    <string name="TheWeatherIn">الطقس في</string>
+    <string name="IS">يكون</string>
+
+    <string name="SaveTheAddress">حفظ العنوان %1$s</string>
+    <string name="ConfirmLocation">تأكيد الموقع</string>
+    <string name="Close">إغلاق</string>
+
+    <string name="typeTheNameOrSelectTheLocation">اكتب الاسم أو حدد الموقع</string>
+    <string name="SavedAddresses">العناوين المحفوظة</string>
+    <string name="min">الصغرى</string>
+    <string name="current">الحالية</string>
+    <string name="max">العظمى</string>
+    <string name="Default">الافتراضي</string>
+    <string name="delete_address_title">حذف العنوان\n</string>
+    <string name="delete_address_confirmation">هل تؤكد حذف العنوان؟</string>
+    <string name="confirm">تأكيد</string>
+    <string name="cancel">إلغاء</string>
+
+    <string name="themeModel">نمط المظهر</string>
+    <string name="choosePreferredTheme">اختر المظهر المفضل لديك</string>
+    <string name="language">اللغة</string>
+    <string name="choosePreferredLanguage">اختر لغتك المفضلة</string>
+    <string name="English">الإنجليزية</string>
+    <string name="Arabic">العربية</string>
+    <string name="minutes">15 دقيقة</string>
+    <string name="hourly">كل ساعة</string>
+    <string name="daily">يومياً</string>
+    <string name="never">أبداً</string>
+    <string name="notifications">الإشعارات</string>
+    <string name="ReceiveWeatherNotifications">تلقي إشعارات الطقس</string>
+    <string name="frequentUpdate">التحديث المتكرر</string>
+    <string name="chooseYourPreferredUpdateTime">اختر وقت التحديث المفضل لديك</string>
+    <string name="selectLocation">اختر موقعاً</string>
+    <string name="selectOrAddNewLocation">اختر أو أضف موقعاً جديداً</string>
+
+    <string name="weatherInACity">الطقس في %1$s</string>
+    <string name="temperatureToday">"%1$s اليوم · %2$s · عرض التوقعات الكاملة"</string>
+
+</resources>
