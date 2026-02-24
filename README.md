@@ -157,9 +157,12 @@ The settings screen contains
 
 ---
 
----
-
 ## Demo & Screenshots
+
+- * You can download the release version here
+    *[Download Release APK](./Docs/WeatherForecast_release_v1.0.0.apk)
+- * [Watch a demo (Video)](https://youtube.com/shorts/Bp6K3VA1lB8?feature=share)
+
 
 
 |                Search                 |         Search (weather api)          |             Delete address              |           Search (Place API)             |
@@ -218,7 +221,11 @@ This project adheres to high-quality code standards and rigorous testing practic
 
 ---
 
+## Enhancements
+- **Implement testing thoroughly
+- **Improve the localization by delegating the Context properly in dialogs and BottomSheets I had to use custom Context to fetch string resource.
+
 ## Support & Resources
 
-- **API Reference**: [Weatherbit.io](https://www.weatherbit.io)
+- **API Reference**: [openweathermap.io](https://api.openweathermap.org/)
 - **Issues & Support**: [GitHub Issues](https://github.com/adhamkhwaldeh/WeatherSdk/issues)

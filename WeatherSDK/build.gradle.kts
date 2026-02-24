@@ -112,6 +112,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    testImplementation(libs.robolectric)
+
     testImplementation(libs.koin.test)
     debugImplementation(libs.koin.test)
 
