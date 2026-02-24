@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.adham.weatherSample.LocalAppContext
 import com.adham.weatherSample.R
 import com.adham.weatherSample.helpers.AppConstantsHelper
 import com.adham.weatherSample.helpers.DimensionsHelper
@@ -64,6 +65,9 @@ fun LocationPickerDialog(
     if (!showSheet) return
 
     val context = LocalContext.current
+
+    val contextLang = LocalAppContext.current
+
     val fusedLocationClient =
         remember {
             LocationServices.getFusedLocationProviderClient(context)
@@ -201,7 +205,7 @@ fun LocationPickerDialog(
                                 .fillMaxWidth()
                                 .padding(16.dp),
                     ) {
-                        Text(stringResource(R.string.ConfirmLocation))
+                        Text(contextLang.getString(R.string.ConfirmLocation))
                     }
                 }
             }

@@ -78,6 +78,27 @@ LaunchedEffect(sdkStatus) {
 
 ## Demo & Screenshots
 
+
+|                Search                 |         Search (weather api)          |             Delete address              |           Search (Place API)             |
+|:-------------------------------------:|:-------------------------------------:|:---------------------------------------:|:----------------------------------------:|
+| ![Search](./Docs/01-Screenshot.png)   | ![Forecast](./Docs/01-Screenshot.png) | ![Settings](./Docs/03-Screenshot.png)   | ![Dashboard](./Docs/04-Screenshot.png) |
+
+
+|           Search (Place API)           |    Select location (weather api)    |                Cloudy                 |                 Snowy                 |
+|:--------------------------------------:|:-----------------------------------:|:-------------------------------------:|:-------------------------------------:|
+| ![Dashboard](./Docs/04-Screenshot.png) | ![Search](./Docs/05-Screenshot.png) | ![Forecast](./Docs/07-Screenshot.png) | ![Forecast](./Docs/08-Screenshot.png) |
+
+
+|               Settings                |               Themes                |               Languages                |             Notifications             |
+|:--------------------------------------:|:-----------------------------------:|:-------------------------------------:|:-------------------------------------:|
+| ![Dashboard](./Docs/09-Screenshot.png) | ![Search](./Docs/10-Screenshot.png) | ![Forecast](./Docs/11-Screenshot.png) | ![Forecast](./Docs/12-Screenshot.png) |
+
+
+|               Dark mode                |              Settings               |            Arabic language            |               Settings                |
+|:--------------------------------------:|:-----------------------------------:|:-------------------------------------:|:-------------------------------------:|
+| ![Dashboard](./Docs/13-Screenshot.png) | ![Search](./Docs/14-Screenshot.png) | ![Forecast](./Docs/15-Screenshot.png) | ![Forecast](./Docs/16-Screenshot.png) |
+
+
 |                                    Dashboard                                     |                                    Search                                     |                                    Forecast                                     |
 |:--------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|
 | ![Dashboard](./Docs/Screenshot_2025-02-02-13-06-07-136_com.adham.weatherSDK.jpg) | ![Search](./Docs/Screenshot_2025-02-02-13-06-11-775_com.adham.weatherSDK.jpg) | ![Forecast](./Docs/Screenshot_2025-02-02-13-06-21-436_com.adham.weatherSDK.jpg) |

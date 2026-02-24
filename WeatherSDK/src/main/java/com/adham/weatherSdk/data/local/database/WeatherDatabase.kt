@@ -14,7 +14,7 @@ import com.adham.weatherSdk.data.local.entities.AddressEntity
 
 @Database(
     entities = [AddressEntity::class, AddressCacheEntity::class],
-    version = 5,
+    version = 6,
     exportSchema = false,
 )
 @TypeConverters(CurrentWeatherConverter::class, ForecastWeatherConverter::class)

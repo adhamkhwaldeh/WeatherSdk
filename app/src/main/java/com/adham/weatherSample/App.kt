@@ -6,6 +6,7 @@ import com.adham.weatherSample.di.servicesModule
 import com.adham.weatherSample.di.viewModelsModule
 import com.adham.weatherSample.di.weatherSDKModule
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.workmanager.koin.workManagerFactory
 import org.koin.core.context.startKoin
 
 /**
@@ -18,6 +19,7 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
+            workManagerFactory()
             modules(
                 listOf(
                     preferencesModule,
