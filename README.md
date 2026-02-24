@@ -33,9 +33,9 @@ dependencies {
 Configure the SDK using the `Builder` pattern:
 
 ```kotlin
-val weatherSDK = WeatherSDK.Builder(context, "YOUR_API_KEY")
+val weatherSDK = WeatherSDK.Builder(context, "SDK_API_KEY", "WEATHER_API_KEY", "PLACE_API_KEY")
     .setupOptions(
-        WeatherSDKOptions.Builder("YOUR_API_KEY")
+        WeatherSDKOptions.Builder("SDK_API_KEY", "WEATHER_API_KEY", "PLACE_API_KEY")
             .setLogLevel(LogLevel.DEBUG)
             .build()
     )
@@ -50,29 +50,112 @@ val viewModelsModule = module {
 }
 ```
 
----
+## Usage
 
-## Usage Example
-
-### Navigation and SDK Status
-
-Observe the `sdkStatus` to handle navigation between the city selection and forecast screens:
+### 1. Fetch Current Weather
 
 ```kotlin
-val sdkStatus by weatherSDK.sdkStatus.observeAsState()
-
-LaunchedEffect(sdkStatus) {
-    when (val current = sdkStatus) {
-        is WeatherSdkStatus.OnLaunchForecast -> {
-            navController.navigate("forecast/${current.cityName}")
+lifecycleScope.launch {
+    weatherSDK.currentWeatherMapUseCase(
+        AddressModel(
+            "Cape Town",
+            lat = "-33.9249",
+            lon = " 18.4241"
+        )
+    ).collect { state ->
+        when (state) {
+            is BaseState.Loading -> showLoading()
+            is BaseState.BaseStateLoadedSuccessfully -> displayWeather(state.data)
+            is BaseState.InternalServerError -> showError(state.errorMessage)
+            // Handle other states...
         }
-        is WeatherSdkStatus.OnFinish -> {
-            navController.popBackStack()
-        }
-        else -> Unit
     }
 }
 ```
+
+### 2. Fetch Weather Forecast
+
+```kotlin
+lifecycleScope.launch {
+    weatherSDK.forecastWeatherUseCase(AddressModel("Cape Town", lat = "-33.9249", lon = " 18.4241"))
+        .collect { state ->
+            // Handle forecast state
+        }
+}
+```
+
+### 3. Fetch the location by name (Geocoding within Weather Api)
+
+```kotlin
+lifecycleScope.launch {
+    weatherSDK.geoByNameWeatherMapUseCase(cityName = "Cape Town")
+        .collect { state ->
+            // Handle forecast state
+        }
+}
+```
+
+### 4. Fetch the name by location (Geocoding within Weather Api)
+
+```kotlin
+lifecycleScope.launch {
+    weatherSDK.nameByGeoWeatherMapUseCas(lat = "-33.9249", lon = " 18.4241")
+        .collect { state ->
+
+        }
+}
+```
+
+### 5. Implement place API for location search
+
+It works similarly to the geolocation feature in a weather API, but it provides higher accuracy and
+more detailed information. It requires a Places API key.
+I have utilized both of them and the could be used for different business plans
+
+```kotlin
+lifecycleScope.launch {
+    weatherSDK.placesSearchUseCase("Cape town")
+        .collect { state ->
+
+        }
+}
+```
+
+### 6. Save Addresses locally
+
+Save list of address locally, and one of them should be the default
+
+```kotlin
+lifecycleScope.launch {
+    weatherSDK.getDefaultAddressUseCase()
+        .collect { state ->
+
+        }
+}
+```
+
+### 7. Cache the latest weather and forecast data for each location
+
+Save list of address locally, and one of them should be the default
+I depend on (name,lon and lat) as primary keys
+the cache is already included in fetch the current weather and the forecast
+I'm using converters to save and retrieve the data from the orm database
+
+```kotlin
+lifecycleScope.launch {
+    val addressCache =
+        addressCacheDao.getAddressCache(address.name, address.lon, address.lat)
+}
+```
+
+### 8. Settings
+The settings screen contains
+- **Theme** light, dark and system
+- **Language** arabic and english
+- **Notification options** (never, 15 minutes, an hour , or a day)
+- **Select different city** navigate to the search screen
+
+---
 
 ---
 

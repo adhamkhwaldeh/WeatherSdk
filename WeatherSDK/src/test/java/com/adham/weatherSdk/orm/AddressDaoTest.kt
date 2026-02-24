@@ -1,8 +1,11 @@
-package com.adham.weatherSample.orm
+package com.adham.weatherSdk.orm
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import com.adham.weatherSdk.data.local.daos.AddressDao
+import com.adham.weatherSdk.data.local.database.WeatherDatabase
+import com.adham.weatherSdk.data.local.entities.AddressEntity
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -12,6 +15,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import java.io.IOException
+import kotlin.collections.get
 
 @RunWith(RobolectricTestRunner::class)
 class AddressDaoTest {
@@ -55,8 +59,8 @@ class AddressDaoTest {
         val currentAddresses = addressDao.loadAllData()
         addressDao.delete(currentAddresses)
 
-        val address1 = Address(id = 1, name = "London")
-        val address2 = Address(id = 2, name = "New York")
+        val address1 = AddressEntity(id = 1, name = "London")
+        val address2 = AddressEntity(id = 2, name = "New York")
         addressDao.insert(listOf(address1, address2))
 
         val allAddresses = addressDao.loadAllData()
@@ -66,7 +70,7 @@ class AddressDaoTest {
 
     @Test
     fun `getAddressById existing id`() {
-        val address = Address(id = 1, name = "London")
+        val address = AddressEntity(id = 1, name = "London")
         addressDao.insert(address)
 
         val found = addressDao.getAddressById(1)
@@ -82,7 +86,7 @@ class AddressDaoTest {
     @Test
     fun `loadAllDataFlow initial emission`() =
         runBlocking {
-            val address = Address(id = 1, name = "London")
+            val address = AddressEntity(id = 1, name = "London")
             addressDao.insert(address)
 
             val allAddresses = addressDao.loadAllDataFlow().first()
@@ -93,7 +97,7 @@ class AddressDaoTest {
     @Test
     fun `findByName exact match`() =
         runBlocking {
-            val address = Address(id = 1, name = "London")
+            val address = AddressEntity(id = 1, name = "London")
             addressDao.insert(address)
 
             val found = addressDao.findByName("London")
@@ -110,8 +114,8 @@ class AddressDaoTest {
     @Test
     fun `findByName limit constraint`() =
         runBlocking {
-            val address1 = Address(id = 1, name = "London")
-            val address2 = Address(id = 2, name = "London")
+            val address1 = AddressEntity(id = 1, name = "London")
+            val address2 = AddressEntity(id = 2, name = "London")
             addressDao.insert(listOf(address1, address2))
 
             val found = addressDao.findByName("London")

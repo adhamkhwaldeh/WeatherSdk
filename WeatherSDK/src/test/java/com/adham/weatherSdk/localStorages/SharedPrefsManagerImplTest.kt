@@ -1,6 +1,7 @@
 package com.adham.weatherSdk.localStorages
 
 import android.content.SharedPreferences
+import com.adham.weatherSdk.data.preferences.SharedPrefsManagerImpl
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

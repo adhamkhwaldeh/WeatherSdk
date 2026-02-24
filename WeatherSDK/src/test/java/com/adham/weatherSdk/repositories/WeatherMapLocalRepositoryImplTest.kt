@@ -1,7 +1,8 @@
 package com.adham.weatherSdk.repositories
 
-import com.adham.weatherSdk.data.repositories.WeatherLocalRepositoryImpl
+import com.adham.weatherSdk.data.repositories.WeatherMapLocalRepositoryImpl
 import com.adham.weatherSdk.domain.preferences.SharedPrefsManager
+import com.adham.weatherSdk.domain.repositories.WeatherMapLocalRepository
 import com.adham.weatherSdk.helpers.ConstantsHelpers
 import io.mockk.every
 import io.mockk.mockk
@@ -12,36 +13,45 @@ import org.junit.Test
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-class WeatherLocalRepositoryImplTest {
+class WeatherMapLocalRepositoryImplTest {
     private lateinit var sharedPrefsManager: SharedPrefsManager
-    private lateinit var repository: WeatherLocalRepositoryImpl
+    private lateinit var repository: WeatherMapLocalRepository
 
     @Before
     fun setUp() {
         sharedPrefsManager = mockk(relaxed = true)
-        repository = WeatherLocalRepositoryImpl(sharedPrefsManager)
+        repository = WeatherMapLocalRepositoryImpl(sharedPrefsManager)
     }
 
     @Test
     fun `saveApiKey standard persistence check`() {
-        val key = "abc123456"
+        val key = "123456789"
         repository.saveApiKey(key)
-        verify { sharedPrefsManager.save(ConstantsHelpers.API_KEY_TAG, key) }
+        verify(exactly = 1) {
+            sharedPrefsManager.save(ConstantsHelpers.API_WEATHER_KEY_TAG, key)
+        }
     }
 
     @Test
     fun `getApiKey retrieval consistency`() {
-        val expectedKey = "test_api_key"
-        every { sharedPrefsManager.getStringData(ConstantsHelpers.API_KEY_TAG) } returns expectedKey
+        val expectedKey = "1234567"
+
+        every {
+            sharedPrefsManager.getStringData(ConstantsHelpers.API_WEATHER_KEY_TAG)
+        } returns expectedKey
 
         val actualKey = repository.getApiKey()
 
         assertEquals(expectedKey, actualKey)
+
+        verify {
+            sharedPrefsManager.getStringData(ConstantsHelpers.API_WEATHER_KEY_TAG)
+        }
     }
 
     @Test
     fun `getApiKey initial empty state`() {
-        every { sharedPrefsManager.getStringData(ConstantsHelpers.API_KEY_TAG) } returns null
+        every { sharedPrefsManager.getStringData(ConstantsHelpers.API_WEATHER_KEY_TAG) } returns null
 
         val result = repository.getApiKey()
 
@@ -52,9 +62,9 @@ class WeatherLocalRepositoryImplTest {
     fun `saveApiKey empty string handling`() {
         val key = ""
         repository.saveApiKey(key)
-        verify { sharedPrefsManager.save(ConstantsHelpers.API_KEY_TAG, key) }
+        verify { sharedPrefsManager.save(ConstantsHelpers.API_WEATHER_KEY_TAG, key) }
 
-        every { sharedPrefsManager.getStringData(ConstantsHelpers.API_KEY_TAG) } returns null
+        every { sharedPrefsManager.getStringData(ConstantsHelpers.API_WEATHER_KEY_TAG) } returns null
         assertEquals("", repository.getApiKey())
     }
 
@@ -62,7 +72,7 @@ class WeatherLocalRepositoryImplTest {
     fun `saveApiKey null character or whitespace check`() {
         val key = "   "
         repository.saveApiKey(key)
-        verify { sharedPrefsManager.save(ConstantsHelpers.API_KEY_TAG, key) }
+        verify { sharedPrefsManager.save(ConstantsHelpers.API_WEATHER_KEY_TAG, key) }
     }
 
     @Test
@@ -70,15 +80,15 @@ class WeatherLocalRepositoryImplTest {
         repository.saveApiKey("first_key")
         repository.saveApiKey("second_key")
 
-        verify { sharedPrefsManager.save(ConstantsHelpers.API_KEY_TAG, "first_key") }
-        verify { sharedPrefsManager.save(ConstantsHelpers.API_KEY_TAG, "second_key") }
+        verify { sharedPrefsManager.save(ConstantsHelpers.API_WEATHER_KEY_TAG, "first_key") }
+        verify { sharedPrefsManager.save(ConstantsHelpers.API_WEATHER_KEY_TAG, "second_key") }
     }
 
     @Test
     fun `saveApiKey large string limit test`() {
         val largeKey = "a".repeat(10000)
         repository.saveApiKey(largeKey)
-        verify { sharedPrefsManager.save(ConstantsHelpers.API_KEY_TAG, largeKey) }
+        verify { sharedPrefsManager.save(ConstantsHelpers.API_WEATHER_KEY_TAG, largeKey) }
     }
 
     @Test
@@ -93,23 +103,18 @@ class WeatherLocalRepositoryImplTest {
         service.awaitTermination(1, TimeUnit.SECONDS)
 
         // Verifies that 100 calls were made without crashing
-        verify(exactly = 100) { sharedPrefsManager.save(ConstantsHelpers.API_KEY_TAG, any()) }
+        verify(exactly = 100) {
+            sharedPrefsManager.save(
+                ConstantsHelpers.API_WEATHER_KEY_TAG,
+                any(),
+            )
+        }
     }
 
     @Test
     fun `saveApiKey special character encoding`() {
         val key = "key_!@#$%^&*()_+"
         repository.saveApiKey(key)
-        verify { sharedPrefsManager.save(ConstantsHelpers.API_KEY_TAG, key) }
+        verify { sharedPrefsManager.save(ConstantsHelpers.API_WEATHER_KEY_TAG, key) }
     }
-
-//    @Test
-//    fun `saveApiKey exception handling`() {
-//        every { sharedPrefsManager.save(any(), any()) } throws RuntimeException("Storage Error")
-//
-//        // Should not throw exception due to try-catch in implementation
-//        repository.saveApiKey("test_key")
-//
-//        verify { sharedPrefsManager.save(any(), any()) }
-//    }
 }

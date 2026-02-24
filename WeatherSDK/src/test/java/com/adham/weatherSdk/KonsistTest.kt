@@ -69,7 +69,7 @@ class KonsistTest {
             .scopeFromProject()
             .interfaces()
             .withNameEndingWith("Repository")
-            .filter { it.name != "WeatherLocalRepository" }
+            .filter { it.name != "WeatherLocalRepository" && it.name != "WeatherMapLocalRepository" }
             .functions()
             .assertTrue {
                 it.hasSuspendModifier || it.returnType?.name?.contains("Flow") == true
@@ -376,6 +376,7 @@ class KonsistTest {
             }
     }
 
+    @Suppress("ComplexCondition")
     @Test
     fun `no nullable collections`() {
         Konsist
@@ -383,7 +384,16 @@ class KonsistTest {
             .functions()
             .assertTrue {
                 val type = it.returnType?.name ?: ""
-                if (type.contains("List") || type.contains("Set") || type.contains("Map")) {
+                if ((
+                        type.contains("List") ||
+                            type.contains("Set") ||
+                            type.contains("Map")
+                    ) &&
+                    (
+                        type != "CurrentWeatherMapResponse" &&
+                            type != "ForecastWeatherMapResponse"
+                    )
+                ) {
                     !(it.returnType?.isNullable ?: true)
                 } else {
                     true
