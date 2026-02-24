@@ -203,6 +203,7 @@ fun LocationPickerDialog(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
+                                .fillMaxWidth()
                                 .padding(16.dp),
                     ) {
                         Text(contextLang.getString(R.string.ConfirmLocation))

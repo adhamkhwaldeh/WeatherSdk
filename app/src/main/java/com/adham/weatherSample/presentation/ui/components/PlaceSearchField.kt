@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import com.adham.weatherSample.LocalAppContext
 import com.adham.weatherSample.R
 import com.adham.weatherSample.helpers.TestingConstantHelper
 import com.adham.weatherSample.presentation.viewModels.PlacesViewModel
@@ -31,6 +32,8 @@ fun PlaceSearchField(
     viewModel: PlacesViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
+
+    val context = LocalAppContext.current
 
     LaunchedEffect(uiState.selectedPlace) {
         uiState.selectedPlace?.apply {
@@ -47,8 +50,8 @@ fun PlaceSearchField(
             OutlinedTextField(
                 value = uiState.query,
                 onValueChange = viewModel::onQueryChange,
-                label = { Text(text = stringResource(R.string.EnterYourCityName)) },
-                placeholder = { Text(text = stringResource(R.string.CityName)) },
+                label = { Text(text = context.getString(R.string.EnterYourCityName)) },
+                placeholder = { Text(text = context.getString(R.string.CityName)) },
                 singleLine = true,
                 trailingIcon = {
                     if (uiState.query.isNotEmpty()) {
