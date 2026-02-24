@@ -5,6 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -14,9 +16,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.adham.weatherSample.presentation.ui.navigations.NavigationItem
+import com.adham.weatherSample.presentation.viewModels.AddressViewModel
 import com.adham.weatherSdk.WeatherSDK
-import com.adham.weatherSdk.data.states.WeatherSdkStatus
+import com.adham.weatherSdk.domain.models.AddressModel
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinActivityViewModel
 
 /**
  * App nav host
@@ -28,21 +32,25 @@ import org.koin.compose.koinInject
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
+    addressViewModel: AddressViewModel = koinActivityViewModel(),
     navController: NavHostController = rememberNavController(),
     startDestination: String = NavigationItem.City.route,
-    weatherSDK: WeatherSDK = koinInject(),
 ) {
-    val sdkStatus = weatherSDK.sdkStatus.observeAsState()
-    LaunchedEffect(sdkStatus.value) {
-        val current = sdkStatus.value
-        if (current is WeatherSdkStatus.OnFinish) {
-            navController.navigateUp()
-        } else if (current is WeatherSdkStatus.OnLaunchForecast) {
-            navController.navigate(NavigationItem.forecastRouteWithParams(current.cityName))
+    val addressUiState by addressViewModel.uiState.collectAsState()
+
+    LaunchedEffect(addressUiState.selectedAddress, addressUiState.isNavigateToForecast) {
+        if (addressUiState.isNavigateToForecast) {
+            addressUiState.selectedAddress?.let { address ->
+                navController.navigate(
+                    NavigationItem.weatherMapForecastRouteWithParams(
+                        address,
+                    ),
+                )
+            }
+            addressViewModel.updateState { it.copy(isNavigateToForecast = false) }
         }
     }
 
-    // A surface container using the 'background' color from the theme
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
@@ -52,8 +60,9 @@ fun AppNavHost(
             startDestination = startDestination,
         ) {
             composable(NavigationItem.City.route) {
-                EnterCityScreen()
+                WeatherMapEnterCityScreen()
             }
+
             composable(
                 NavigationItem.Forecast.route,
                 arguments =
@@ -65,7 +74,26 @@ fun AppNavHost(
             ) { backStackEntry ->
                 val cityName = backStackEntry.arguments?.getString(NavigationItem.CITY_TAG) ?: ""
 //                ForecastScreen(navController, cityName)
+//                navController.navigate(NavigationItem.forecastRouteWithParams(current.cityName))
                 ForecastScreen(cityName = cityName)
+            }
+
+            composable(
+                NavigationItem.WeatherMapForecast.route,
+                arguments =
+                    listOf(
+                        navArgument(NavigationItem.CITY_TAG) {
+                            type = NavType.StringType
+                        },
+                    ),
+            ) { backStackEntry ->
+                val cityName = backStackEntry.arguments?.getString(NavigationItem.CITY_TAG) ?: ""
+                val lat = backStackEntry.arguments?.getString(NavigationItem.LAT_TAG) ?: ""
+                val lon = backStackEntry.arguments?.getString(NavigationItem.LON_TAG) ?: ""
+                WeatherForecastScreen(
+                    address = AddressModel(name = cityName, lat = lat, lon = lon),
+                    navController = navController,
+                )
             }
         }
     }

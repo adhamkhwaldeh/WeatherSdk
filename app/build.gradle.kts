@@ -85,48 +85,60 @@ android {
 }
 
 dependencies {
-    // Support Packages
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
 
-    implementation(platform(libs.kotlin.bom))
+    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(platform(libs.kotlin.bom))
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.ui.ui)
+    implementation(libs.androidx.compose.material3.material3)
     implementation(libs.androidx.compose.ui.ui.graphics)
     implementation(libs.androidx.compose.ui.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3.material3)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.compose.runtime.livedata)
 
-    //region Koin
-    val koinVersion = "3.4.3"
-    implementation("io.insert-koin:koin-core:$koinVersion")
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidx.compose)
+    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.datastore.preferences)
 
-    //region Testing package
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.paging)
-    implementation(libs.androidx.security.crypto)
-    kapt(libs.androidx.room.compiler)
-    testImplementation(libs.androidx.room.testing)
+    implementation(libs.androidx.compose.runtime.livedata)
 
-    androidTestImplementation("io.insert-koin:koin-test:$koinVersion")
-    testImplementation("io.insert-koin:koin-test:$koinVersion")
-    debugImplementation("io.insert-koin:koin-test:$koinVersion")
+    //region Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+    implementation(libs.kotlinx.coroutines.play.services)
+
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.koin.androidx.workmanager)
+
+    api(project(":CommonLibrary"))
+    api(project(":WeatherSDK"))
+
+    //region Testing package
 
     androidTestImplementation(libs.core.testing)
     androidTestImplementation(libs.core)
@@ -149,7 +161,6 @@ dependencies {
     testImplementation(libs.robolectric)
 
     detektPlugins(libs.detekt)
-    implementation(project(":WeatherSDK"))
 
     // Documentation
     implementation(libs.dokka.gradle.plugin)

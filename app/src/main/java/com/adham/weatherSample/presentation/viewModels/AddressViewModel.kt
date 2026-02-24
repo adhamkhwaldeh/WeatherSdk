@@ -2,11 +2,11 @@ package com.adham.weatherSample.presentation.viewModels
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
-import com.adham.dvt.commonlibrary.base.BaseRefactorViewModel
-import com.adham.dvt.commonlibrary.base.states.BaseState
 import com.adham.weatherSample.presentation.states.AddressState
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.domain.models.AddressModel
+import com.github.adhamkhwaldeh.commonlibrary.base.BaseRefactorViewModel
+import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

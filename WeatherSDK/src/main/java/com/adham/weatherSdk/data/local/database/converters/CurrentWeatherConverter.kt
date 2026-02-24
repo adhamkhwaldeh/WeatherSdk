@@ -1,6 +1,7 @@
 package com.adham.weatherSdk.data.local.database.converters
 
 import androidx.room.TypeConverter
+import com.adham.weatherSdk.data.remote.dtos.weatherMap.CurrentWeatherMapResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 

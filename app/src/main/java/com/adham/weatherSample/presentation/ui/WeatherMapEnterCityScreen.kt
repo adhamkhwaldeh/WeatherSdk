@@ -45,9 +45,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.adham.dvt.weathersdk.data.remote.mappers.toAddressModel
-import com.adham.dvt.weathersdk.domain.models.AddressModel
-import com.adham.dvt.weathersdk.domain.models.GeoByNameModel
 import com.adham.weatherSample.R
 import com.adham.weatherSample.extensions.showToast
 import com.adham.weatherSample.helpers.TestingConstantHelper
@@ -55,6 +52,9 @@ import com.adham.weatherSample.presentation.ui.components.AddressListItem
 import com.adham.weatherSample.presentation.ui.components.LocationPickerDialog
 import com.adham.weatherSample.presentation.viewModels.AddressGeoViewModel
 import com.adham.weatherSample.presentation.viewModels.AddressViewModel
+import com.adham.weatherSdk.data.remote.mappers.toAddressModel
+import com.adham.weatherSdk.domain.models.AddressModel
+import com.adham.weatherSdk.domain.models.GeoByNameModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.viewmodel.koinActivityViewModel
 import kotlin.collections.isNotEmpty
@@ -318,11 +318,11 @@ private fun CityInputSection(
 
 @Composable
 private fun SavedAddressesSection(
+    modifier: Modifier = Modifier,
     savedAddresses: List<AddressModel>,
     onAddressClick: (AddressModel) -> Unit,
     onDeleteAddress: (AddressModel) -> Unit,
     addressViewModel: AddressViewModel = koinActivityViewModel(),
-    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         Spacer(modifier = Modifier.height(24.dp))

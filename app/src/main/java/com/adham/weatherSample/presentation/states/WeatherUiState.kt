@@ -1,8 +1,8 @@
 package com.adham.weatherSample.presentation.states
 
-import com.adham.dvt.commonlibrary.base.states.BaseState
 import com.adham.weatherSdk.domain.models.CurrentWeatherMapResponseModel
 import com.adham.weatherSdk.domain.models.ForecastWeatherMapResponseModel
+import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 
 data class WeatherUiState(
     val currentWeather: BaseState<CurrentWeatherMapResponseModel> = BaseState.Initial(),

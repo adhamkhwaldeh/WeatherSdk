@@ -4,9 +4,9 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
-import com.adham.dvt.commonlibrary.R
-import com.adham.dvt.commonlibrary.base.BaseRefactorViewModel
-import com.adham.dvt.commonlibrary.base.states.BaseState
+import com.github.adhamkhwaldeh.commonlibrary.R
+import com.github.adhamkhwaldeh.commonlibrary.base.BaseRefactorViewModel
+import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import kotlinx.coroutines.launch
 
 fun BaseRefactorViewModel.showToast(

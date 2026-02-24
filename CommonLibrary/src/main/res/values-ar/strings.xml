@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="noConnection">"يبدو أن هناك مشكلة في الاتصال \n هل يمكنك الضغط على إعادة المحاولة لتحميل البيانات؟"</string>
+    <string name="Retry">إعادة المحاولة</string>
+    <string name="youAreNotAuthorized">أنت غير مخول للقيام بهذا الإجراء</string>
+    <string name="internalServerError">خطأ داخلي في الخادم</string>
+    <string name="noDataFound">لم يتم العثور على بيانات</string>
+</resources>

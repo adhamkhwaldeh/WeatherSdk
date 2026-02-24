@@ -2,14 +2,14 @@ package com.adham.weatherSample.presentation.viewModels
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
-import com.adham.dvt.commonlibrary.base.BaseRefactorViewModel
-import com.adham.dvt.commonlibrary.base.states.BaseState
 import com.adham.weatherSample.extensions.defaultSideEffect
 import com.adham.weatherSample.helpers.AppConstantsHelper
 import com.adham.weatherSample.presentation.states.PlaceState
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.domain.models.GeoByNameModel
 import com.adham.weatherSdk.domain.models.PlaceModel
+import com.github.adhamkhwaldeh.commonlibrary.base.BaseRefactorViewModel
+import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow

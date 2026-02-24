@@ -4,6 +4,8 @@ import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
+import com.adham.weatherSdk.data.remote.dtos.weatherMap.CurrentWeatherMapResponse
+import com.adham.weatherSdk.data.remote.dtos.weatherMap.ForecastWeatherMapResponse
 
 @Keep
 @Entity(

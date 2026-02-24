@@ -4,13 +4,13 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.viewModelScope
-import com.adham.dvt.commonlibrary.base.BaseRefactorViewModel
 import com.adham.weatherSample.domain.models.LanguageMode
 import com.adham.weatherSample.domain.models.ThemeMode
 import com.adham.weatherSample.domain.models.WeatherNotificationMode
 import com.adham.weatherSample.preferences.PreferencesManager
 import com.adham.weatherSample.presentation.states.SettingsState
 import com.adham.weatherSample.services.NotificationSchedulerManager
+import com.github.adhamkhwaldeh.commonlibrary.base.BaseRefactorViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

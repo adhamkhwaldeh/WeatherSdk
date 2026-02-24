@@ -45,13 +45,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.adham.dvt.commonlibrary.base.stateLayout.StatesLayoutCompose
-import com.adham.dvt.commonlibrary.base.stateLayout.StatesLayoutCustomActionInterface
-import com.adham.dvt.commonlibrary.base.states.BaseState
-import com.adham.dvt.weathersdk.domain.models.AddressModel
-import com.adham.dvt.weathersdk.domain.models.CurrentWeatherMapResponseModel
-import com.adham.dvt.weathersdk.domain.models.ForecastWeatherMapResponseModel
-import com.adham.dvt.weathersdk.extensions.kelvinToCelsiusInt
 import com.adham.weatherSample.R
 import com.adham.weatherSample.extensions.getBackground
 import com.adham.weatherSample.extensions.getColor
@@ -62,6 +55,13 @@ import com.adham.weatherSample.presentation.ui.components.WeatherForecastItem
 import com.adham.weatherSample.presentation.ui.components.WeatherMainItem
 import com.adham.weatherSample.presentation.ui.providers.LocalWeatherThemeController
 import com.adham.weatherSample.presentation.viewModels.WeatherMapViewModel
+import com.adham.weatherSdk.domain.models.AddressModel
+import com.adham.weatherSdk.domain.models.CurrentWeatherMapResponseModel
+import com.adham.weatherSdk.domain.models.ForecastWeatherMapResponseModel
+import com.adham.weatherSdk.extensions.kelvinToCelsiusInt
+import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCompose
+import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCustomActionInterface
+import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import org.koin.androidx.compose.koinViewModel
 
 /**

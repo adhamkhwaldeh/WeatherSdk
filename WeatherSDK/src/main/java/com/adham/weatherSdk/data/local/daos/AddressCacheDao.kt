@@ -5,6 +5,8 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.adham.weatherSdk.data.local.entities.AddressCacheEntity
 import com.adham.weatherSdk.data.local.entities.AddressEntity
+import com.adham.weatherSdk.data.remote.dtos.weatherMap.CurrentWeatherMapResponse
+import com.adham.weatherSdk.data.remote.dtos.weatherMap.ForecastWeatherMapResponse
 
 @Dao
 interface AddressCacheDao : BaseDao<AddressCacheEntity> {

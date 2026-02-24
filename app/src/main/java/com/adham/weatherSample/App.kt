@@ -1,7 +1,8 @@
 package com.adham.weatherSample
 
 import android.app.Application
-import com.adham.weatherSample.di.dataBaseModule
+import com.adham.weatherSample.di.preferencesModule
+import com.adham.weatherSample.di.servicesModule
 import com.adham.weatherSample.di.viewModelsModule
 import com.adham.weatherSample.di.weatherSDKModule
 import org.koin.android.ext.koin.androidContext
@@ -19,13 +20,9 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 listOf(
-//                    generalModule,
-//                    localStorageModule,
-//                    networkModule,
-//                    repositoriesModule,
-//                    useCasesModule,
-                    dataBaseModule,
+                    preferencesModule,
                     weatherSDKModule,
+                    servicesModule,
                     viewModelsModule,
                 ),
             )

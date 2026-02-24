@@ -3,12 +3,12 @@ package com.adham.weatherSample.services
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.adham.dvt.commonlibrary.base.states.BaseState
 import com.adham.weatherSample.domain.models.UserSettingsModel
 import com.adham.weatherSample.domain.models.WeatherNotificationMode
 import com.adham.weatherSample.preferences.PreferencesManager
 import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.domain.models.AddressModel
+import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull

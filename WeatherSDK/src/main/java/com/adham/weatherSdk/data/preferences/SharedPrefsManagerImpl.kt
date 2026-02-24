@@ -26,7 +26,7 @@ internal class SharedPrefsManagerImpl(
         value: String,
     ) {
         sharedPreferences.edit {
-            SharedPreferences.Editor.putString(key, value)
+            putString(key, value)
         }
     }
 

@@ -4,4 +4,5 @@
     <string name="Retry">Retry</string>
     <string name="youAreNotAuthorized">You are not authorized</string>
     <string name="internalServerError">Internal server error</string>
+    <string name="noDataFound">No data found</string>
 </resources>

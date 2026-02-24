@@ -66,6 +66,7 @@ android {
 }
 
 dependencies {
+
     //region Support Packages
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -155,13 +156,6 @@ dependencies {
     implementation(libs.androidx.security.crypto)
     kapt(libs.androidx.room.compiler)
     testImplementation(libs.androidx.room.testing)
-
-//    implementation(libs.androidx.room.runtime)
-//    implementation(libs.androidx.room.ktx)
-//    implementation(libs.androidx.room.paging)
-//    implementation(libs.androidx.security.crypto)
-//    kapt(libs.androidx.room.compiler)
-//    testImplementation(libs.androidx.room.testing)
 
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)

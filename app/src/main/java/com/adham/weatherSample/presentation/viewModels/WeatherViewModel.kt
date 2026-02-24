@@ -1,15 +1,14 @@
 package com.adham.weatherSample.presentation.viewModels
 
 import android.app.Application
+import android.location.Address
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import com.adham.weatherSample.orm.Address
-import com.adham.weatherSample.orm.WeatherDatabase
 import com.adham.weatherSdk.WeatherSDK
+import com.adham.weatherSdk.data.local.database.WeatherDatabase
 import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
 import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
-import com.adham.weatherSdk.data.states.WeatherSdkStatus
 import com.adham.weatherSdk.domain.useCases.params.ForecastWeatherUseCaseParams
 import com.github.adhamkhwaldeh.commonlibrary.base.BaseRefactorViewModel
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
@@ -28,52 +27,7 @@ import kotlinx.coroutines.launch
 class WeatherViewModel(
     private val application: Application,
     private val weatherSDK: WeatherSDK,
-    private val dataBase: WeatherDatabase,
 ) : BaseRefactorViewModel(application) {
-    private val addressDao = dataBase.addressDao()
-    val savedAddresses: Flow<List<Address>> = addressDao.loadAllDataFlow()
-
-    init {
-        listenToSdkStatus()
-    }
-
-    fun updateSdkStatus(status: WeatherSdkStatus) {
-        weatherSDK.sdkStatus.value = status
-    }
-
-    private fun listenToSdkStatus() {
-        viewModelScope.launch {
-            weatherSDK.sdkStatus.asFlow().collectLatest { status ->
-//                if (status is WeatherSdkStatus.OnLaunchForecast) {
-//                    loadCurrentWeather(status.cityName)
-//                    loadForecast(ForecastWeatherUseCaseParams(status.cityName))
-//                }
-            }
-        }
-    }
-
-    fun saveAddress(
-        cityName: String,
-        onBlank: () -> Unit,
-    ) {
-        if (cityName.isNotBlank()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                val trimmed = cityName.trim()
-                if (addressDao.findByName(trimmed) == null) {
-                    addressDao.insert(Address(name = trimmed))
-                }
-            }
-        } else {
-            onBlank()
-        }
-    }
-
-    fun deleteAddress(address: Address) {
-        viewModelScope.launch(Dispatchers.IO) {
-            addressDao.delete(address)
-        }
-    }
-
     val currentWeather = MutableLiveData<BaseState<CurrentWeatherResponse>>(BaseState.Initial())
 //    private val _currentWeather= MutableSharedFlow<BaseState<Unit>>()
 //    val currentWeather: SharedFlow<BaseState<Unit>> = _currentWeather
