@@ -4,9 +4,15 @@ import android.content.Context
 import com.adham.weatherSdk.domain.useCases.CurrentWeatherMapForecastUseCase
 import com.adham.weatherSdk.domain.useCases.CurrentWeatherMapUseCase
 import com.adham.weatherSdk.domain.useCases.CurrentWeatherUseCase
+import com.adham.weatherSdk.domain.useCases.DeleteAddressUseCase
 import com.adham.weatherSdk.domain.useCases.ForecastWeatherUseCase
 import com.adham.weatherSdk.domain.useCases.GeoByNameWeatherMapUseCase
+import com.adham.weatherSdk.domain.useCases.GetAllSavedAddressesUseCase
+import com.adham.weatherSdk.domain.useCases.GetDefaultAddressUseCase
+import com.adham.weatherSdk.domain.useCases.InsertOrUpdateAddressWithDefaultUseCase
 import com.adham.weatherSdk.domain.useCases.NameByGeoWeatherMapUseCase
+import com.adham.weatherSdk.domain.useCases.PlacesPlaceByIdUseCase
+import com.adham.weatherSdk.domain.useCases.PlacesSearchUseCase
 
 internal object DomainProvider {
     fun provideCurrentWeatherUseCase(context: Context) =
@@ -43,5 +49,35 @@ internal object DomainProvider {
         NameByGeoWeatherMapUseCase(
             DataProvider.provideWeatherMapRepository(context),
             DataProvider.provideWeatherMapLocalRepository(context),
+        )
+
+    fun provideGetAllSavedAddressesUseCase(context: Context) =
+        GetAllSavedAddressesUseCase(
+            DataProvider.provideAddressDao(context),
+        )
+
+    fun provideGetDefaultAddressUseCase(context: Context) =
+        GetDefaultAddressUseCase(
+            DataProvider.provideAddressDao(context),
+        )
+
+    fun provideInsertOrUpdateAddressWithDefaultUseCase(context: Context) =
+        InsertOrUpdateAddressWithDefaultUseCase(
+            DataProvider.provideAddressDao(context),
+        )
+
+    fun provideDeleteAddressUseCase(context: Context) =
+        DeleteAddressUseCase(
+            DataProvider.provideAddressDao(context),
+        )
+
+    fun providePlacesSearchUseCase(context: Context) =
+        PlacesSearchUseCase(
+            DataProvider.providePlacesRepository(context),
+        )
+
+    fun providePlacesPlaceByIdUseCase(context: Context) =
+        PlacesPlaceByIdUseCase(
+            DataProvider.providePlacesRepository(context),
         )
 }

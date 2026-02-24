@@ -4,21 +4,27 @@ import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.adham.weatherSdk.BuildConfig
+import com.adham.weatherSdk.data.local.daos.AddressCacheDao
+import com.adham.weatherSdk.data.local.daos.AddressDao
+import com.adham.weatherSdk.data.local.database.WeatherDatabase
+import com.adham.weatherSdk.data.preferences.SharedPrefsManagerImpl
+import com.adham.weatherSdk.data.remote.networking.BaseWeatherServiceApi
+import com.adham.weatherSdk.data.remote.networking.WeatherMapGeoServiceApi
+import com.adham.weatherSdk.data.remote.networking.WeatherMapServiceApi
+import com.adham.weatherSdk.data.remote.networking.WeatherMockedServiceApi
+import com.adham.weatherSdk.data.remote.networking.WeatherServiceApi
+import com.adham.weatherSdk.data.repositories.PlacesRepositoryImpl
 import com.adham.weatherSdk.data.repositories.WeatherLocalRepositoryImpl
 import com.adham.weatherSdk.data.repositories.WeatherMapLocalRepositoryImpl
 import com.adham.weatherSdk.data.repositories.WeatherMapRepositoryImpl
 import com.adham.weatherSdk.data.repositories.WeatherRepositoryImpl
+import com.adham.weatherSdk.domain.preferences.SharedPrefsManager
+import com.adham.weatherSdk.domain.repositories.PlacesRepository
 import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
 import com.adham.weatherSdk.domain.repositories.WeatherMapLocalRepository
+import com.adham.weatherSdk.domain.repositories.WeatherMapRepository
 import com.adham.weatherSdk.domain.repositories.WeatherRepository
 import com.adham.weatherSdk.helpers.ConstantsHelpers
-import com.adham.weatherSdk.localStorages.SharedPrefsManager
-import com.adham.weatherSdk.localStorages.SharedPrefsManagerImpl
-import com.adham.weatherSdk.networking.BaseWeatherServiceApi
-import com.adham.weatherSdk.networking.WeatherMapGeoServiceApi
-import com.adham.weatherSdk.networking.WeatherMapServiceApi
-import com.adham.weatherSdk.networking.WeatherMockedServiceApi
-import com.adham.weatherSdk.networking.WeatherServiceApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -41,6 +47,12 @@ internal object DataProvider {
     private var weatherMockedServiceApi: BaseWeatherServiceApi? = null
 
     @Volatile
+    private var weatherLocalRepository: WeatherLocalRepository? = null
+
+    @Volatile
+    private var weatherRepository: WeatherRepository? = null
+
+    @Volatile
     private var retrofitWeatherMap: Retrofit? = null
 
     @Volatile
@@ -50,17 +62,24 @@ internal object DataProvider {
     private var weatherMapGeoServiceApi: WeatherMapGeoServiceApi? = null
 
     @Volatile
-    private var weatherLocalRepository: WeatherLocalRepository? = null
-
-    @Volatile
-    private var weatherRepository: WeatherRepository? = null
-
-    @Volatile
     private var weatherMapLocalRepository: WeatherMapLocalRepository? = null
 
     @Volatile
-    private var weatherMapRepository: WeatherMapRepositoryImpl? = null
+    private var weatherMapRepository: WeatherMapRepository? = null
 
+    @Volatile
+    private var database: WeatherDatabase? = null
+
+    @Volatile
+    private var addressDao: AddressDao? = null
+
+    @Volatile
+    private var addressCacheDao: AddressCacheDao? = null
+
+    @Volatile
+    private var placeRepository: PlacesRepository? = null
+
+    // #region  Weather
     fun provideSharedPrefsManager(context: Context): SharedPrefsManager {
         synchronized(this) {
             if (sharedPrefsManager == null) {
@@ -144,6 +163,42 @@ internal object DataProvider {
         return weatherServiceApi!!
     }
 
+    fun provideWeatherMockedServiceApi(context: Context): BaseWeatherServiceApi {
+        synchronized(this) {
+            if (weatherMockedServiceApi == null) {
+                weatherMockedServiceApi = WeatherMockedServiceApi(context)
+            }
+        }
+        return weatherMockedServiceApi!!
+    }
+
+    fun provideWeatherLocalRepository(context: Context): WeatherLocalRepository {
+        synchronized(this) {
+            if (weatherLocalRepository == null) {
+                weatherLocalRepository =
+                    WeatherLocalRepositoryImpl(provideSharedPrefsManager(context))
+            }
+        }
+        return weatherLocalRepository!!
+    }
+
+    fun provideWeatherRepository(context: Context): WeatherRepository {
+        synchronized(this) {
+            if (weatherRepository == null) {
+                weatherRepository =
+                    WeatherRepositoryImpl(
+                        provideWeatherServiceApi(),
+                        provideWeatherMockedServiceApi(context),
+                    )
+            }
+        }
+        return weatherRepository!!
+    }
+
+    // #endregion
+
+    // #region Weather Map
+
     fun provideRetrofitWeatherMap(): Retrofit {
         synchronized(this) {
             if (retrofitWeatherMap == null) {
@@ -197,7 +252,8 @@ internal object DataProvider {
     fun provideWeatherMapServiceApi(): WeatherMapServiceApi {
         synchronized(this) {
             if (weatherMapServiceApi == null) {
-                weatherMapServiceApi = provideRetrofitWeatherMap().create(WeatherMapServiceApi::class.java)
+                weatherMapServiceApi =
+                    provideRetrofitWeatherMap().create(WeatherMapServiceApi::class.java)
             }
         }
         return weatherMapServiceApi!!
@@ -206,29 +262,11 @@ internal object DataProvider {
     fun provideWeatherMapGeoServiceApi(): WeatherMapGeoServiceApi {
         synchronized(this) {
             if (weatherMapGeoServiceApi == null) {
-                weatherMapGeoServiceApi = provideRetrofitWeatherMap().create(WeatherMapGeoServiceApi::class.java)
+                weatherMapGeoServiceApi =
+                    provideRetrofitWeatherMap().create(WeatherMapGeoServiceApi::class.java)
             }
         }
         return weatherMapGeoServiceApi!!
-    }
-
-    fun provideWeatherMockedServiceApi(context: Context): BaseWeatherServiceApi {
-        synchronized(this) {
-            if (weatherMockedServiceApi == null) {
-                weatherMockedServiceApi = WeatherMockedServiceApi(context)
-            }
-        }
-        return weatherMockedServiceApi!!
-    }
-
-    fun provideWeatherLocalRepository(context: Context): WeatherLocalRepository {
-        synchronized(this) {
-            if (weatherLocalRepository == null) {
-                weatherLocalRepository =
-                    WeatherLocalRepositoryImpl(provideSharedPrefsManager(context))
-            }
-        }
-        return weatherLocalRepository!!
     }
 
     fun provideWeatherMapLocalRepository(context: Context): WeatherMapLocalRepository {
@@ -241,29 +279,58 @@ internal object DataProvider {
         return weatherMapLocalRepository!!
     }
 
-    fun provideWeatherRepository(context: Context): WeatherRepository {
-        synchronized(this) {
-            if (weatherRepository == null) {
-                weatherRepository =
-                    WeatherRepositoryImpl(
-                        provideWeatherServiceApi(),
-                        provideWeatherMockedServiceApi(context),
-                    )
-            }
-        }
-        return weatherRepository!!
-    }
-
-    fun provideWeatherMapRepository(context: Context): WeatherMapRepositoryImpl {
+    fun provideWeatherMapRepository(context: Context): WeatherMapRepository {
         synchronized(this) {
             if (weatherMapRepository == null) {
                 weatherMapRepository =
                     WeatherMapRepositoryImpl(
                         provideWeatherMapServiceApi(),
                         provideWeatherMapGeoServiceApi(),
+                        addressCacheDao = provideAddressCacheDao(context),
                     )
             }
         }
         return weatherMapRepository!!
     }
+
+    fun provideWeatherDatabase(context: Context): WeatherDatabase {
+        synchronized(this) {
+            if (database == null) {
+                database = WeatherDatabase.getDatabase(context)
+            }
+        }
+        return database!!
+    }
+
+    fun provideAddressDao(context: Context): AddressDao {
+        synchronized(this) {
+            if (addressDao == null) {
+                addressDao = provideWeatherDatabase(context).addressDao()
+            }
+        }
+        return addressDao!!
+    }
+
+    fun provideAddressCacheDao(context: Context): AddressCacheDao {
+        synchronized(this) {
+            if (addressCacheDao == null) {
+                addressCacheDao = provideWeatherDatabase(context).addressCacheDao()
+            }
+        }
+        return addressCacheDao!!
+    }
+
+    fun providePlacesRepository(context: Context): PlacesRepository {
+        synchronized(this) {
+            if (placeRepository == null) {
+                placeRepository =
+                    PlacesRepositoryImpl(
+                        context = context,
+                    )
+            }
+        }
+        return placeRepository!!
+    }
+
+    // #endregion
 }

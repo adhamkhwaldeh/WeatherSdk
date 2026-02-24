@@ -1,56 +1,29 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.detekt)
-//    alias(libs.plugins.kotlin.jvm)
-
-    id("maven-publish")
+    alias(libs.plugins.dokka)
+    id("kotlin-kapt")
 }
 
 android {
     namespace = "com.adham.weatherSdk"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
-        minSdk = 30
-//        targetSdk = 36
-        multiDexEnabled = true
+        minSdk = 26
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
-//    defaultConfig {
-//        testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
-//    }
-//
-//    testOptions {
-//        managedDevices {
-//            devices {
-//                pixel2Api30(com.android.build.api.dsl.ManagedVirtualDevice::class) {
-//                    device = "Pixel 2"
-//                    apiLevel = 30
-//                    systemImageSource = "aosp"
-//                }
-//            }
-//        }
-//    }
-//
-    testOptions {
-//        unitTests.includeAndroidResources = true
-//        unitTests.all {
-//            useJUnitPlatform()
-//        }
-    }
     testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
+//        unitTests.isReturnDefaultValues = true
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -58,10 +31,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlin {
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
@@ -78,34 +53,19 @@ android {
         compose = true
         buildConfig = true
     }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            excludes += "META-INF/NOTICE.md"
-            excludes += "META-INF/LICENSE.md"
-            excludes += "META-INF/LICENSE-notice.md"
-            excludes += "mockito-extensions/org.mockito.plugins.MemberAccessor"
-            excludes += "mockito-extensions/org.mockito.plugins.MockMaker"
-        }
-    }
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                from(components["release"])
-                groupId = "com.github.adhamkhwaldeh.WeatherSdk"
-                artifactId = "WeatherSDK"
-                version = "1.0"
-            }
-        }
-    }
+//    packaging {
+//        resources {
+//            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+//            excludes += "META-INF/NOTICE.md"
+//            excludes += "META-INF/LICENSE.md"
+//            excludes += "META-INF/LICENSE-notice.md"
+//            excludes += "mockito-extensions/org.mockito.plugins.MemberAccessor"
+//            excludes += "mockito-extensions/org.mockito.plugins.MockMaker"
+//        }
+//    }
 }
 
 dependencies {
-
     //region Support Packages
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -189,46 +149,28 @@ dependencies {
 
     //endregion
 
+    api(libs.androidx.room.runtime)
+    api(libs.androidx.room.ktx)
+    api(libs.androidx.room.paging)
+    implementation(libs.androidx.security.crypto)
+    kapt(libs.androidx.room.compiler)
+    testImplementation(libs.androidx.room.testing)
+
+//    implementation(libs.androidx.room.runtime)
+//    implementation(libs.androidx.room.ktx)
+//    implementation(libs.androidx.room.paging)
+//    implementation(libs.androidx.security.crypto)
+//    kapt(libs.androidx.room.compiler)
+//    testImplementation(libs.androidx.room.testing)
+
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+//    kapt(libs.moshi.kotlin.codegen)
+
+    implementation(libs.places)
+
     api(project(":CommonLibrary"))
     api(project(":CommonSDK"))
-
-    // Having the actual dependency helps, instead of removing it by accident
-    // when adding the fix originally present, which is also not needed anymore.
-
-//    testImplementation 'org.mockito.kotlin:mockito-kotlin:5.4.0'
-//    androidTestImplementation 'org.mockito.kotlin:mockito-kotlin:5.4.0'
-
-//    implementation "io.mockk:mockk:1.13.5"
-//    implementation "org.mockito:mockito-core:5.15.2" // For pure unit tests
-//    implementation "org.mockito:mockito-inline:5.2.0" // For final classes or static methods
-//    implementation "org.mockito:mockito-android:5.15.2"
-//    implementation("org.mockito:mockito-android:")
-
-//    testImplementation "io.mockk:mockk:1.13.5"
-//    testImplementation "org.mockito:mockito-core:5.15.2" // For pure unit tests
-//    testImplementation "org.mockito:mockito-inline:5.2.0" // For final classes or static methods
-//    testImplementation "org.mockito:mockito-android:5.5.0"
-//    testImplementation "org.mockito:mockito-android:5.15.2"
-
-//    androidTestImplementation "io.mockk:mockk:1.13.5"
-//    androidTestImplementation "org.mockito:mockito-core:5.15.2" // For pure unit tests
-//    androidTestImplementation "org.mockito:mockito-inline:5.2.0"
-    // For final classes or static methods
-//    androidTestImplementation "org.mockito:mockito-android:5.5.0"
-//    androidTestImplementation "org.mockito:mockito-android:5.15.2"
-//    androidTestImplementation 'com.squareup.retrofit2:retrofit-mock:2.11.0'
-
-//    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC3'
-//    testImplementation ("org.mockito.kotlin:mockito-kotlin:$latest_version")
-
-    // For Android instrumentation tests
-
-    // Robolectric: For UI-related ViewModel tests (e.g., testing interactions with UI elements).
-    // Truth: A fluent testing library, often used with Google libraries.
-
-//    implementation(libs.androidx.benchmark.macro)
-//    androidTestImplementation(libs.androidx.benchmark.macro)
-//    androidTestImplementation(libs.androidx.benchmark.junit4)
 }
 
 subprojects {
@@ -245,7 +187,7 @@ dokka {
         // Only set the actual Kotlin/Java dirs once
         sourceRoots.from("src/main/java")
 //    dokkaSourceSets.named("main") {
-        includes.from("IntegrationGuide.md")
+        includes.from("README.md")
         skipEmptyPackages.set(true)
 //        includeNonPublic.set(false)
 //        includes.from("IntegrationGuide.md")

@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adham.weatherSample.R
-import com.adham.weatherSdk.data.dtos.HourlyForecastModel
+import com.adham.weatherSdk.data.remote.dtos.weather.HourlyForecastModel
 import com.adham.weatherSdk.helpers.DateHelpers
 
 /**

@@ -6,7 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.adham.weatherSample.viewModels.WeatherViewModel
 import com.adham.weatherSdk.WeatherSDK
-import com.adham.weatherSdk.data.dtos.ForecastResponse
+import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
 import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
 import com.adham.weatherSdk.domain.repositories.WeatherRepository
 import com.adham.weatherSdk.helpers.ConstantsHelpers

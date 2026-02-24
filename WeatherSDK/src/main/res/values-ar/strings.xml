@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="light">فاتح</string>
+    <string name="dark">داكن</string>
+    <string name="system">تلقائي (حسب النظام)</string>
+</resources>

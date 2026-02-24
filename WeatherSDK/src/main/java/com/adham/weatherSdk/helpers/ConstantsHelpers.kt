@@ -18,4 +18,6 @@ object ConstantsHelpers {
     const val API_KEY_TAG = "apiKey"
 
     const val API_WEATHER_KEY_TAG = "API_WEATHER_KEY_TAG"
+
+    const val KELVIN_TO_CELSIUS: Double = 273.15
 }

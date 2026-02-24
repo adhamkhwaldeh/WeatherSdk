@@ -1,10 +1,10 @@
 package com.adham.weatherSdk.useCases
 
-import com.adham.weatherSdk.data.dtos.ForecastResponse
-import com.adham.weatherSdk.data.params.ForecastWeatherUseCaseParams
+import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
 import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
 import com.adham.weatherSdk.domain.repositories.WeatherRepository
 import com.adham.weatherSdk.domain.useCases.ForecastWeatherUseCase
+import com.adham.weatherSdk.domain.useCases.params.ForecastWeatherUseCaseParams
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import io.mockk.coEvery
 import io.mockk.every

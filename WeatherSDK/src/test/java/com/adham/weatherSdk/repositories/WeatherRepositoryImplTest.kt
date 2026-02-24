@@ -1,10 +1,10 @@
 package com.adham.weatherSdk.repositories
 
-import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
-import com.adham.weatherSdk.data.dtos.ForecastResponse
+import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
+import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
+import com.adham.weatherSdk.data.remote.networking.BaseWeatherServiceApi
+import com.adham.weatherSdk.data.remote.networking.WeatherServiceApi
 import com.adham.weatherSdk.data.repositories.WeatherRepositoryImpl
-import com.adham.weatherSdk.networking.BaseWeatherServiceApi
-import com.adham.weatherSdk.networking.WeatherServiceApi
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

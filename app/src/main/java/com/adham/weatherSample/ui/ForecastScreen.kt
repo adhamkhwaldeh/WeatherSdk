@@ -33,10 +33,10 @@ import com.adham.weatherSample.helpers.AppConstantsHelper
 import com.adham.weatherSample.helpers.TestingConstantHelper
 import com.adham.weatherSample.viewModels.WeatherViewModel
 import com.adham.weatherSdk.WeatherSDK
-import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
-import com.adham.weatherSdk.data.dtos.ForecastResponse
-import com.adham.weatherSdk.data.params.ForecastWeatherUseCaseParams
+import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
+import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
+import com.adham.weatherSdk.domain.useCases.params.ForecastWeatherUseCaseParams
 import com.adham.weatherSdk.helpers.DateHelpers
 import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCompose
 import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCustomActionInterface

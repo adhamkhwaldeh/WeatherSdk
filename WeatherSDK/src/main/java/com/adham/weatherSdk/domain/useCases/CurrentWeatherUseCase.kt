@@ -1,6 +1,6 @@
 package com.adham.weatherSdk.domain.useCases
 
-import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
+import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
 import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
 import com.adham.weatherSdk.domain.repositories.WeatherRepository
 import com.github.adhamkhwaldeh.commonlibrary.base.domain.BaseSealedUseCase

@@ -1,10 +1,10 @@
 package com.adham.weatherSdk.data.repositories
 
+import com.adham.weatherSdk.domain.preferences.SharedPrefsManager
 import com.adham.weatherSdk.domain.repositories.WeatherMapLocalRepository
 import com.adham.weatherSdk.helpers.ConstantsHelpers
-import com.adham.weatherSdk.localStorages.SharedPrefsManager
 
-class WeatherMapLocalRepositoryImpl(
+internal class WeatherMapLocalRepositoryImpl(
     private val sharedPrefsManager: SharedPrefsManager,
 ) : WeatherMapLocalRepository {
     /**

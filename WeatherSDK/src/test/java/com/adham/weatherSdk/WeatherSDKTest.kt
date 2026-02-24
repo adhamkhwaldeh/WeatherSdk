@@ -2,10 +2,10 @@ package com.adham.weatherSdk
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
-import com.adham.weatherSdk.data.dtos.ForecastResponse
-import com.adham.weatherSdk.data.params.ForecastWeatherUseCaseParams
+import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
+import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
 import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
+import com.adham.weatherSdk.domain.useCases.params.ForecastWeatherUseCaseParams
 import com.adham.weatherSdk.providers.DataProvider
 import com.adham.weatherSdk.providers.DomainProvider
 import com.adham.weatherSdk.settings.WeatherSDKOptions
@@ -34,6 +34,8 @@ class WeatherSDKTest {
     private lateinit var weatherSDK: WeatherSDK
     private val apiKey = "test_api_key"
 
+    private val weatherApiKey = "weather_test_api_key"
+
     @Before
     fun setUp() {
         context = mockk(relaxed = true)
@@ -43,7 +45,7 @@ class WeatherSDKTest {
         val localRepo = mockk<WeatherLocalRepository>(relaxed = true)
         every { DataProvider.provideWeatherLocalRepository(any()) } returns localRepo
 
-        weatherSDK = WeatherSDK.Builder(context, apiKey).build()
+        weatherSDK = WeatherSDK.Builder(context, apiKey, weatherApiKey).build()
     }
 
     @After
@@ -84,13 +86,13 @@ class WeatherSDKTest {
     fun `updateSDKConfig with Function1 applies transformation correctly`() {
         val newApiKey = "new_api_key"
         weatherSDK.updateSDKConfig { config ->
-            WeatherSDKOptions.Builder(newApiKey).build()
+            WeatherSDKOptions.Builder(newApiKey, weatherApiKey).build()
         }
     }
 
     @Test
     fun `updateSDKConfig with newConfig object replaces existing config`() {
-        val newConfig = WeatherSDKOptions.Builder("new_key").build()
+        val newConfig = WeatherSDKOptions.Builder("new_key", weatherApiKey).build()
         weatherSDK.updateSDKConfig(newConfig)
     }
 
@@ -130,7 +132,10 @@ class WeatherSDKTest {
 
             resultFlow.collect { state ->
                 assertTrue(state is BaseState.BaseStateLoadedSuccessfully)
-                assertEquals(expectedResponse, (state as BaseState.BaseStateLoadedSuccessfully).data)
+                assertEquals(
+                    expectedResponse,
+                    (state as BaseState.BaseStateLoadedSuccessfully).data,
+                )
             }
         }
 
@@ -153,7 +158,10 @@ class WeatherSDKTest {
 
             resultFlow.collect { state ->
                 assertTrue(state is BaseState.BaseStateLoadedSuccessfully)
-                assertEquals(expectedResponse, (state as BaseState.BaseStateLoadedSuccessfully).data)
+                assertEquals(
+                    expectedResponse,
+                    (state as BaseState.BaseStateLoadedSuccessfully).data,
+                )
             }
         }
 

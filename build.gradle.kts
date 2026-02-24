@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 // import androidx.compose.ui.graphics.setFrom
 // import androidx.glance.appwidget.compose
 
@@ -23,20 +25,20 @@ subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
-//    ktlint {
-//        android = true
-//        ignoreFailures = false
-//        reporters {
-//            reporter(ReporterType.PLAIN)
-//            reporter(ReporterType.CHECKSTYLE)
-//        }
-//    }
+    ktlint {
+        android = true
+        ignoreFailures = false
+        reporters {
+            reporter(ReporterType.PLAIN)
+            reporter(ReporterType.CHECKSTYLE)
+        }
+    }
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
         android.set(true)
         ignoreFailures.set(false)
         reporters {
-            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
-            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+            reporter(ReporterType.PLAIN)
+            reporter(ReporterType.CHECKSTYLE)
         }
     }
 

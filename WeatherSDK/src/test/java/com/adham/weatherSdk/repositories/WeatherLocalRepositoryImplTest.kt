@@ -2,7 +2,6 @@ package com.adham.weatherSdk.repositories
 
 import com.adham.weatherSdk.data.repositories.WeatherLocalRepositoryImpl
 import com.adham.weatherSdk.helpers.ConstantsHelpers
-import com.adham.weatherSdk.localStorages.SharedPrefsManager
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

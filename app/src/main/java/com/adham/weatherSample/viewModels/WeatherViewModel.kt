@@ -7,10 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.adham.weatherSample.orm.Address
 import com.adham.weatherSample.orm.WeatherDatabase
 import com.adham.weatherSdk.WeatherSDK
-import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
-import com.adham.weatherSdk.data.dtos.ForecastResponse
-import com.adham.weatherSdk.data.params.ForecastWeatherUseCaseParams
+import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
+import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
 import com.adham.weatherSdk.data.states.WeatherSdkStatus
+import com.adham.weatherSdk.domain.useCases.params.ForecastWeatherUseCaseParams
 import com.github.adhamkhwaldeh.commonlibrary.base.BaseRefactorViewModel
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import kotlinx.coroutines.Dispatchers

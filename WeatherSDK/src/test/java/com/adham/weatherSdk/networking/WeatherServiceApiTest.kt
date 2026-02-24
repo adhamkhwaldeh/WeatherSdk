@@ -1,5 +1,6 @@
 package com.adham.weatherSdk.networking
 
+import com.adham.weatherSdk.data.remote.networking.WeatherServiceApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.test.runTest

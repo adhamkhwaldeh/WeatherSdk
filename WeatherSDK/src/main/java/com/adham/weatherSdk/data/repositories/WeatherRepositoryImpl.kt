@@ -1,10 +1,10 @@
 package com.adham.weatherSdk.data.repositories
 
-import com.adham.weatherSdk.data.dtos.CurrentWeatherResponse
-import com.adham.weatherSdk.data.dtos.ForecastResponse
+import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
+import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
+import com.adham.weatherSdk.data.remote.networking.BaseWeatherServiceApi
+import com.adham.weatherSdk.data.remote.networking.WeatherServiceApi
 import com.adham.weatherSdk.domain.repositories.WeatherRepository
-import com.adham.weatherSdk.networking.BaseWeatherServiceApi
-import com.adham.weatherSdk.networking.WeatherServiceApi
 
 /**
  * Weather repository
