@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import com.adham.weatherSample.LocalAppContext
 import com.adham.weatherSample.R
 import com.adham.weatherSample.helpers.TestingConstantHelper

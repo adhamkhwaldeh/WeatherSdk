@@ -1,4 +1,4 @@
-package com.adham.weatherForecast.viewModels
+package com.adham.weatherSample.viewModels
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

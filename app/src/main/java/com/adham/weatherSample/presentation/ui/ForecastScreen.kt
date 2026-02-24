@@ -32,7 +32,6 @@ import com.adham.weatherSample.R
 import com.adham.weatherSample.helpers.AppConstantsHelper
 import com.adham.weatherSample.helpers.TestingConstantHelper
 import com.adham.weatherSample.presentation.viewModels.WeatherViewModel
-import com.adham.weatherSdk.WeatherSDK
 import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
 import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
 import com.adham.weatherSdk.domain.useCases.params.ForecastWeatherUseCaseParams
@@ -41,7 +40,6 @@ import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCompo
 import com.github.adhamkhwaldeh.commonlibrary.base.stateLayout.StatesLayoutCustomActionInterface
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.koinInject
 
 /**
  * Forecast screen
@@ -55,7 +53,6 @@ fun ForecastScreen(
     cityName: String,
     modifier: Modifier = Modifier,
     viewModel: WeatherViewModel = koinViewModel(),
-    weatherSDK: WeatherSDK = koinInject(),
 ) {
     val currentWeatherState = viewModel.currentWeather.observeAsState()
     val forecastState = viewModel.forecast.observeAsState()

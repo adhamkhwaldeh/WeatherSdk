@@ -33,6 +33,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
+@Suppress("TooManyFunctions")
 internal object DataProvider {
     @Volatile
     private var sharedPrefsManager: SharedPrefsManager? = null

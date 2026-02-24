@@ -15,7 +15,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import java.io.IOException
-import kotlin.collections.get
 
 @RunWith(RobolectricTestRunner::class)
 class AddressDaoTest {

@@ -1,19 +1,15 @@
 package com.adham.weatherSample.presentation.viewModels
 
 import android.app.Application
-import android.location.Address
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.adham.weatherSdk.WeatherSDK
-import com.adham.weatherSdk.data.local.database.WeatherDatabase
 import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
 import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
 import com.adham.weatherSdk.domain.useCases.params.ForecastWeatherUseCaseParams
 import com.github.adhamkhwaldeh.commonlibrary.base.BaseRefactorViewModel
 import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

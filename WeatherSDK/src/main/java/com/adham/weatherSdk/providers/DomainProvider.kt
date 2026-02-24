@@ -14,6 +14,7 @@ import com.adham.weatherSdk.domain.useCases.NameByGeoWeatherMapUseCase
 import com.adham.weatherSdk.domain.useCases.PlacesPlaceByIdUseCase
 import com.adham.weatherSdk.domain.useCases.PlacesSearchUseCase
 
+@Suppress("TooManyFunctions")
 internal object DomainProvider {
     fun provideCurrentWeatherUseCase(context: Context) =
         CurrentWeatherUseCase(

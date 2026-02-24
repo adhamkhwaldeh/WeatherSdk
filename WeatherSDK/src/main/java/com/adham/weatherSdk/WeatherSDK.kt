@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.Flow
  * Weather sdk builder
  *
  */
+@Suppress("TooManyFunctions")
 class WeatherSDK private constructor(
     context: Context,
     sdkConfig: WeatherSDKOptions,
