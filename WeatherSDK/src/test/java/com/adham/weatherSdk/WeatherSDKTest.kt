@@ -2,29 +2,16 @@ package com.adham.weatherSdk
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.adham.weatherSdk.data.remote.dtos.weather.CurrentWeatherResponse
-import com.adham.weatherSdk.data.remote.dtos.weather.ForecastResponse
 import com.adham.weatherSdk.domain.repositories.WeatherLocalRepository
-import com.adham.weatherSdk.domain.useCases.params.ForecastWeatherUseCaseParams
 import com.adham.weatherSdk.providers.DataProvider
 import com.adham.weatherSdk.providers.DomainProvider
-import com.adham.weatherSdk.settings.WeatherSDKOptions
-import com.github.adhamkhwaldeh.commonlibrary.base.states.BaseState
-import com.github.adhamkhwaldeh.commonsdk.listeners.errors.ErrorListener
-import com.github.adhamkhwaldeh.commonsdk.logging.Logger
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 
 class WeatherSDKTest {
     @get:Rule
