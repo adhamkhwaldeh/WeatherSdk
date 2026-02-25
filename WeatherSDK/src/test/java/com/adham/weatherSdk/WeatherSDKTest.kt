@@ -147,7 +147,7 @@ class WeatherSDKTest {
 //            }
 //        }
 
-    private fun assertTrue(condition: Boolean) {
-        assert(condition)
-    }
+//    private fun assertTrue(condition: Boolean) {
+//        assert(condition)
+//    }
 }
