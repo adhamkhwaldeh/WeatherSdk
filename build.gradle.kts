@@ -1,3 +1,4 @@
+import org.gradle.testing.jacoco.tasks.JacocoReport
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 // import androidx.compose.ui.graphics.setFrom
@@ -18,9 +19,41 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.compose)
+    id("jacoco")
 }
 
+val jacocoFileFilter = setOf(
+    "**/R.class",
+    "**/R\$*.class",
+    "**/BuildConfig.*",
+    "**/Manifest*.*",
+    "**/*Test*.*",
+    "android/**/*.*",
+    "**/Lambda\$*.class",
+    "**/Lambda.class",
+    "**/*Lambda.class",
+    "**/*Lambda*.class",
+    "**/*_LifecycleAdapter.class",
+    "**/androidx/databinding/*",
+    "**/com/adham/weatherSample/DataBinderMapperImpl*.*",
+    "**/com/adham/weatherSample/DataBindingInfo.*",
+    "**/*JsonAdapter.*",
+    "**/*_Factory.*",
+    "**/*_MembersInjector.*",
+    "**/*\$ViewInjector*.*",
+    "**/*\$ViewBinder*.*",
+    "**/*\$Companion*.*",
+    "**/*\$Lambda\$*.*",
+    "**/*BR*.*",
+    "**/*_HiltModules*.*",
+    "**/Hilt_*.*",
+    "**/*_ProvideFieldDelegate.*"
+)
+
+extra.set("jacocoFileFilter", jacocoFileFilter)
+
 subprojects {
+    apply(plugin = "jacoco")
     apply(plugin = "org.jetbrains.dokka")
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
@@ -73,6 +106,41 @@ subprojects {
             txt.required.set(false)
         }
     }
+
+    apply(from = "$rootDir/config/jacoco/jacoco.gradle.kts")
+}
+
+tasks.register<JacocoReport>("jacocoFullReport") {
+    group = "Reporting"
+    description = "Generate an aggregated Jacoco coverage report for all modules."
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+
+    val fileFilter = project.extra["jacocoFileFilter"] as Set<String>
+
+    val sourceDirs = mutableListOf<String>()
+    val classDirs = mutableListOf<FileTree>()
+    val execData = mutableListOf<FileTree>()
+
+    subprojects {
+        val proj = this
+        sourceDirs.add("${proj.projectDir}/src/main/java")
+        sourceDirs.add("${proj.projectDir}/src/main/kotlin")
+        classDirs.add(proj.fileTree("${proj.layout.buildDirectory.get().asFile}/tmp/kotlin-classes/debug") {
+            exclude(fileFilter)
+        })
+        execData.add(proj.fileTree(proj.layout.buildDirectory.get().asFile) {
+            include("jacoco/testDebugUnitTest.exec", "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
+            include("outputs/code_coverage/debugAndroidTest/connected/*coverage.ec")
+        })
+    }
+
+    sourceDirectories.setFrom(files(sourceDirs))
+    classDirectories.setFrom(files(classDirs))
+    executionData.setFrom(files(execData))
 }
 
 dokka {
