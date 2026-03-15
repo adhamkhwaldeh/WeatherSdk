@@ -39,6 +39,8 @@ android {
             }
         }
         debug {
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
             packagingOptions {
                 jniLibs {
                     useLegacyPackaging = false

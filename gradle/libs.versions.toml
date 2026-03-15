@@ -70,6 +70,7 @@ truth = "1.4.5"
 uiautomator = "2.3.0"
 robolectric = "4.16.1"
 ktlint = "14.0.1"
+jacoco = "0.8.12"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
