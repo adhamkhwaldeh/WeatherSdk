@@ -121,6 +121,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+    debugImplementation(libs.leakcanary.android)
 
     implementation(libs.androidx.compose.runtime.livedata)
 
