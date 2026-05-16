@@ -20,3 +20,6 @@ include ':app'
 include ':WeatherSDK'
 include ':CommonLibrary'
 include ':CommonSDK'
+
+include ':benchmark-macro'
+include ':benchmark-micro'
